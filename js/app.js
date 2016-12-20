@@ -1,8 +1,17 @@
 "use strict";
 
-ReactDOM.render(
-	<h1>Hello, world!</h1>,
-	document.getElementById('title')
-);
+const products = [1, 2, 3, 4, 5];
 
-//http://angular.github.io/angular-phonecat/step-13/app/phones/phones.json
+function ProductsList(props){
+
+	const list = props.products.map((product) =>
+		<div>{product}</div>
+	);
+
+	return <div>{list}</div>;
+}
+
+ReactDOM.render(
+	<ProductsList products={products} />,
+	document.getElementById('productsList')
+);
