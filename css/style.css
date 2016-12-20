@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: Arial, Verdana, Tahoma;
+    color: #456;
+}
+
+#main {
+    overflow: hidden;
+    min-height: 100%;
+    background: white;
+    width: 800px;
+    margin: 0 auto;
+}
+
+nav.navbar.navbar-default {
+    border-radius: 0;
+    border-top: 0;
+}
+
+.phone {
+    float: left;
+    width: 20%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone img {
+    width: 100%;
+    height: auto;
+}
+
+.phone strong {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
