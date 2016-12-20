@@ -6,10 +6,12 @@ class Product extends React.Component {
 
 		super(props);
 		this.phone = props.phone;
+		this.handler = this.handler.bind(this);
 	}
 
 	handler(e){
-		console.info(e.target);
+		console.info(this);
+		window.location.hash = '#'+this.phone.id;
 	}
 
 	render(){
