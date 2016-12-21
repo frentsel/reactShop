@@ -15,6 +15,7 @@ class Sorting extends React.Component {
 	}
 
 	handler(e){
+		console.info(e.target.value);
 		console.info(this);
 	}
 
