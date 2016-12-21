@@ -18,8 +18,9 @@ body {
     overflow: hidden;
     min-height: 100%;
     background: white;
-    width: 800px;
+    max-width: 800px;
     margin: 0 auto;
+    width: 100%;
 }
 
 nav.navbar.navbar-default {
@@ -38,6 +39,7 @@ input.form-control {
 
 .sortBy {
     margin-top: 10px;
+    margin-bottom: 10px;
     margin-right: -15px;
     line-height: 30px;
 }
@@ -53,7 +55,6 @@ input.form-control {
     float: left;
     width: 20%;
     height: 200px;
-    overflow: hidden;
     position: relative;
     text-align: center;
     text-transform: uppercase;
@@ -61,8 +62,10 @@ input.form-control {
 }
 
 .phone img {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
+    max-height: 100%;
 }
 
 .phone strong {
@@ -70,4 +73,31 @@ input.form-control {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+    .sortBy {
+        margin-right: 0;
+    }
+    .phone {
+        width: 25%;
+    }
+}
+
+@media (max-width: 600px) {
+    .phone {
+        width: 33.33333%;
+    }
+}
+
+@media (max-width: 400px) {
+    .phone {
+        width: 50%;
+    }
+}
+
+@media (max-width: 320px) {
+    .phone {
+        width: 100%;
+    }
 }
