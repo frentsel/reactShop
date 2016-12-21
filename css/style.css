@@ -31,6 +31,20 @@ nav.navbar.navbar-default {
     font-weight: bold;
 }
 
+input.form-control {
+    border-radius: 0;
+}
+
+.sortBy {
+    margin-top: 10px;
+    margin-right: -15px;
+}
+
+.sortBy select {
+    border-color: #ccc;
+    padding: 0 5px;
+}
+
 .phone {
     margin-top: 26px;
     float: left;
