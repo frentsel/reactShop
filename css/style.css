@@ -10,7 +10,7 @@ html, body {
 }
 
 body {
-    font-family: 'Indie Flower', monospace;
+    font-family: 'Dekko', monospace;
     font-size: 16px;
 }
 
@@ -33,16 +33,19 @@ nav.navbar.navbar-default {
 
 input.form-control {
     border-radius: 0;
+    height: 30px;
 }
 
 .sortBy {
     margin-top: 10px;
     margin-right: -15px;
+    line-height: 30px;
 }
 
 .sortBy select {
     border-color: #ccc;
     padding: 0 5px;
+    height: 30px;
 }
 
 .phone {

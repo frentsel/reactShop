@@ -11,12 +11,14 @@ class Sorting extends React.Component {
 
 		super(props);
 		this.filters = props.filters;
+		this.state = {value: ''};
 		this.handler = this.handler.bind(this);
 	}
 
 	handler(e){
 		console.info(e.target.value);
 		console.info(this);
+		this.setState({value: e.target.value});
 	}
 
 	render(){
@@ -34,6 +36,7 @@ class Product extends React.Component {
 	constructor (props) {
 
 		super(props);
+
 		this.phone = props.phone;
 		this.handler = this.handler.bind(this);
 	}
