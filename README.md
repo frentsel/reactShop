@@ -1,3 +1,3 @@
 # ReactJS Test Shop
 
-**[Demo](https://github.com/frentsel/reactShop/)**
+**[Demo](https://frentsel.github.io/reactShop/)**

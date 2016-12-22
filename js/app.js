@@ -5,6 +5,7 @@ class Product extends React.Component {
 	constructor (props) {
 
 		super(props);
+
 		this.phone = props.phone;
 		this.handler = this.handler.bind(this);
 	}
@@ -19,7 +20,6 @@ class Product extends React.Component {
 			<div id={this.phone.id} className="phone" onClick={this.handler}>
 				<strong>{this.phone.name}</strong>
 				<img src={this.phone.imageUrl} alt={this.phone.name}/>
-				{/*<p>{this.phone.snippet}</p>*/}
 			</div>
 		)
 	}
