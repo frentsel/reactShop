@@ -6,7 +6,7 @@
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ReactJS Test Shop</title>
-	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Dekko" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css?v=1">
 
@@ -26,35 +26,29 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">ReactJS Shop</a>
+				<a class="navbar-brand" href="#/">ReactJS Shop</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="active">
-						<a href="#">Home <span class="sr-only">(current)</span></a>
+						<a href="#/">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li><a href="#">Delivery</a></li>
-					<li><a href="#">Contact</a></li>
+					<li><a href="#/delivery">Delivery</a></li>
+					<li><a href="#/contact">Contact</a></li>
 				</ul>
 				<form class="navbar-form navbar-left">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search">
 					</div>
 				</form>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Settings</a></li>
-							<li><a href="#">Statistic</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="#">Logout</a></li>
-						</ul>
-					</li>
-				</ul>
+				<div class="sortBy pull-right">
+					<div class="pull-left">Sort by:&nbsp;</div>
+					<div id="sortBy" class="pull-left"></div>
+				</div>
 			</div>
 		</div>
 	</nav>
+
 	<div id="productsList"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
