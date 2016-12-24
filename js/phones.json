@@ -1,6 +1,7 @@
 [
 	{
 		"age": 0,
+		"carrier": "AT&T",
 		"id": "motorola-xoom-with-wi-fi",
 		"imageUrl": "http://angular.github.io/angular-phonecat/step-13/app/img/phones/motorola-xoom-with-wi-fi.0.jpg",
 		"name": "Motorola XOOM\u2122 with Wi-Fi",
@@ -8,6 +9,7 @@
 	},
 	{
 		"age": 1,
+		"carrier": "US Cellular",
 		"id": "motorola-xoom",
 		"imageUrl": "http://angular.github.io/angular-phonecat/step-13/app/img/phones/motorola-xoom.0.jpg",
 		"name": "MOTOROLA XOOM\u2122",
@@ -23,6 +25,7 @@
 	},
 	{
 		"age": 3,
+		"carrier": "US Cellular",
 		"id": "dell-streak-7",
 		"imageUrl": "http://angular.github.io/angular-phonecat/step-13/app/img/phones/dell-streak-7.0.jpg",
 		"name": "Dell Streak 7",
@@ -62,6 +65,7 @@
 	},
 	{
 		"age": 8,
+		"carrier": "US Cellular",
 		"id": "samsung-galaxy-tab",
 		"imageUrl": "http://angular.github.io/angular-phonecat/step-13/app/img/phones/samsung-galaxy-tab.0.jpg",
 		"name": "Samsung Galaxy Tab\u2122",
