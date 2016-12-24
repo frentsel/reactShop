@@ -2,8 +2,7 @@
 
 const rules = [
 	{key: "name", title: "Alphabetical"},
-	{key: "age", title: "Newest"},
-	{key: "carrier", title: "Carrier"},
+	{key: "age", title: "Newest"}
 ];
 
 function Product (props) {
@@ -15,14 +14,22 @@ function Product (props) {
 	)
 }
 
-function Search(props) {
-	return (
-		<form className="navbar-form navbar-left">
-			<div className="form-group">
-				<input type="text" className="form-control" placeholder="Search" onInput={props.updateFilter} />
-			</div>
-		</form>
-	);
+class Search extends React.Component {
+
+	constructor (props) {
+		super(props);
+		this.props = props;
+	}
+
+	render(){
+		return (
+			<form className="navbar-form navbar-left">
+				<div className="form-group">
+					<input type="text" className="form-control" placeholder="Search" onInput={this.props.updateFilter} />
+				</div>
+			</form>
+		);
+	}
 }
 
 class Sort extends React.Component {
@@ -87,10 +94,21 @@ class Store extends React.Component {
 
 		super(props);
 
-		this.state = {products: this.props.products};
+		let products = this.props.products;
+
+		products = this._Sort(products, rules[0].key);
+		this.state = {products: products};
 
 		this.handleSort = this.handleSort.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
+	}
+
+	_Sort(data, key){
+		return data.sort(function(a, b) {
+			if (a[key] > b[key]) return 1;
+			if (a[key] < b[key]) return -1;
+			return 0;
+		});
 	}
 
 	handleFilter(e){
@@ -100,6 +118,8 @@ class Store extends React.Component {
 			return product.name.toLowerCase().indexOf(q) > -1;
 		});
 
+		console.info("handleFilter: ", q);
+
 		this.setState({
 			products: products
 		});
@@ -107,15 +127,11 @@ class Store extends React.Component {
 
 	handleSort(e){
 
-		let key = e.target.value;
-		let products = this.state.products.sort(function(a, b) {
-			if (a[key] > b[key]) return 1;
-			if (a[key] < b[key]) return -1;
-			return 0;
-		});
+		let key = e.target.value,
+			products = this.props.products;
 
 		this.setState({
-			products: products
+			products: this._Sort(products, key)
 		});
 	}
 

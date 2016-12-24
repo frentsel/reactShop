@@ -9,6 +9,10 @@ body {
     font-size: 16px;
 }
 
+div {
+    transition: all .3s;
+}
+
 #main {
     overflow: hidden;
     min-height: 100%;
@@ -45,18 +49,23 @@ input.form-control {
     height: 30px;
 }
 
+.phone.selected {
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.12) inset;
+}
+
 .phone {
-    margin-top: 26px;
     float: left;
+    margin-top: 10px;
     width: 20%;
     height: 200px;
     position: relative;
     text-align: center;
     text-transform: uppercase;
-    padding: 0 10px;
+    padding: 7px 12px 0;
 }
 
 .phone img {
+    cursor: pointer;
     width: auto;
     max-width: 100%;
     height: auto;
@@ -64,6 +73,7 @@ input.form-control {
 }
 
 .phone strong {
+    cursor: pointer;
     display: block;
     white-space: nowrap;
     overflow: hidden;
