@@ -31,15 +31,15 @@
 				</ul>
 				<form class="navbar-form navbar-left">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
+						<input type="text" class="form-control" placeholder="Search" oninput="App.handler.filter(this)">
 					</div>
 				</form>
 				<div class="sortBy pull-right">
 					<div class="pull-left">Sort by:&nbsp;</div>
 					<div class="pull-left">
-						<select>
-							<option value="name">Alphabetical</option>
+						<select onchange="App.handler.sort(this)">
 							<option value="age">Newest</option>
+							<option value="name">Alphabetical</option>
 						</select>
 					</div>
 				</div>
