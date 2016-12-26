@@ -24,9 +24,6 @@ var App = {
 				html = tpl(template, product);
 
 			$('#content').html(html);
-		},
-		init: function () {
-
 		}
 	},
 	handler: {
@@ -90,15 +87,10 @@ var App = {
 		var _this = this;
 
 		$.getJSON('js/phones.json', {}, function (_data) {
-
 			_this.data = _data;
-			_this.render.init();
-
 			eRouter.init(_this.handler);
 		});
 	},
 };
 
-$(function () {
-	App.init();
-});
+$(App.init());
