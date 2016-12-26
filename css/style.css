@@ -94,6 +94,12 @@ input.form-control {
     text-overflow: ellipsis;
 }
 
+a.thumbnail {
+    max-width: 20%;
+    float: left;
+    margin-right: 14px;
+}
+
 @media (max-width: 768px) {
     .sortBy {
         margin-right: 0;

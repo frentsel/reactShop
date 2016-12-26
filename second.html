@@ -50,11 +50,61 @@
 	</div>
 </div>
 <script type="text/html" id="productItemTpl">
-	<img src="{phone.imageUrl}" alt="{phone.name}" class="pull-left">
-	<div class="info">
-		<h1>{phone.name}</h1>
-		<p>{phone.snippet}</p>
-		<button class="btn btn-primary"><strong>Buy {phone.name}</strong></button>
+	<div class="row">
+		<div class="col-md-6">
+			<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=images[0]%>" alt="<%=name%>">
+			<div class="images">
+				<% images.map(function(img){ %>
+					<a href="javascript:" class="thumbnail">
+						<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=img%>">
+					</a>
+				<%});%>
+			</div>
+		</div>
+		<div class="col-md-6 info">
+			<h1><%=name%></h1>
+			<p><%=description%></p>
+			<button class="btn btn-primary"><strong>Buy <%=name%></strong></button>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="options">
+				<strong>Hardware</strong>
+				<ul>
+					<% $.each(hardware, function(key, val){ %>
+					<li><strong><%= key %></strong>: <%= val %></li>
+					<% }); %>
+				</ul>
+			</div>
+			<div class="options">
+				<strong>Display</strong>
+				<ul>
+					<% $.each(display, function(key, val){ %>
+					<li><strong><%= key %></strong>: <%= val %></li>
+					<% }); %>
+				</ul>
+			</div>
+			<div class="options">
+				<strong>Battery</strong>
+				<ul>
+					<% $.each(battery, function(key, val){ %>
+					<li><strong><%= key %></strong>: <%= val %></li>
+					<% }); %>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="options">
+				<strong>Connectivity</strong>
+				<ul>
+					<% $.each(connectivity, function(key, val){ %>
+					<li><strong><%= key %></strong>: <%= val %></li>
+					<% }); %>
+				</ul>
+			</div>
+		</div>
 	</div>
 </script>
 <script type="text/html" id="contactPageTpl">
@@ -72,17 +122,16 @@
 	<p>Page Not Found.</p>
 </script>
 <script type="text/html" id="productTpl">
-	<div id="{phone.id}" class="phone">
-		<a href="#!/product/{phone.id}">
-			<strong>{phone.name}</strong>
-			<img src="{phone.imageUrl}" alt="{phone.name}">
+	<div id="<%=id%>" class="phone">
+		<a href="#!/product/<%=id%>">
+			<strong><%=name%></strong>
+			<img src="<%=imageUrl%>" alt="<%=name%>">
 		</a>
 	</div>
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdn.rawgit.com/frentsel/eRouter/master/eRouter.min.js"></script>
-<script src="https://cdn.rawgit.com/frentsel/_tpl/master/tpl.min.js"></script>
 <script src="js/second.js"></script>
 </body>
 </html>

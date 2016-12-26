@@ -3,13 +3,25 @@
 var App = {
 	data: {},
 	render: {
+		_tpl: function (str, data){
+			var fn = new Function("obj", "var p=[],print=function(){p.push.apply(p,arguments);}; with(obj){p.push('" +
+				str.replace(/[\r\t\n]/g, " ")
+					.split("<%").join("\t")
+					.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+					.replace(/\t=(.*?)%>/g, "',$1,'")
+					.split("\t").join("');")
+					.split("%>").join("p.push('")
+					.split("\r").join("\\'") + "');}return p.join('');");
+			return data ? fn( data ) : fn;
+		},
 		index: function (products) {
 
 			var template = $('#productTpl').html(),
-				html = '';
+				html = '',
+				_this = this;
 
 			products.map(function (product) {
-				html += tpl(template, product);
+				html += _this._tpl(template, product);
 			});
 
 			$('#content').html(html);
@@ -21,9 +33,37 @@ var App = {
 		product: function (product) {
 
 			var template = $('#productItemTpl').html(),
-				html = tpl(template, product);
+				html = this._tpl(template, product);
 
 			$('#content').html(html);
+		}
+	},
+	http: {
+		ajaxSpinner: function (status) {
+			$('body').toggleClass('loadMore', status);
+		},
+		get: function (path, params, callback) {
+
+			var _this = this;
+
+			$.ajax({
+				url: path,
+				type: 'get',
+				dataType: 'json',
+				data: params,
+				beforeSend: function() {
+					_this.ajaxSpinner(true);
+				},
+				complete: function(){
+					_this.ajaxSpinner(false);
+				},
+				success: callback,
+				error: function (e) {
+					if(e.status === 404) {
+						App.render.page('notFound');
+					}
+				}
+			});
 		}
 	},
 	handler: {
@@ -54,7 +94,12 @@ var App = {
 			App.render.index(result);
 		},
 		index: function () {
-			App.render.index(App.data);
+
+			App.http.get('js/phones.json', {}, function (_data) {
+
+				App.data = _data;
+				App.render.index(_data);
+			});
 		},
 		delivery: function () {
 			App.render.page('delivery');
@@ -64,32 +109,16 @@ var App = {
 		},
 		product: function (id) {
 
-			var products = App.data,
-				phone = {};
+			var path = 'http://angular.github.io/angular-phonecat/step-13/app/phones/'+id+'.json';
 
-			$.each(products, function (n, product) {
-				if(product.id === id) phone = product;
-			});
-
-			if(!phone.id) {
-				App.render.page('notFound');
-				return false;
-			}
-
-			App.render.product(phone);
+			App.http.get(path, {}, App.render.product.bind(App.render));
 		},
 		notFound: function (page) {
 			App.render.page('notFound');
 		}
 	},
 	init: function () {
-
-		var _this = this;
-
-		$.getJSON('js/phones.json', {}, function (_data) {
-			_this.data = _data;
-			eRouter.init(_this.handler);
-		});
+		eRouter.init(this.handler);
 	},
 };
 
