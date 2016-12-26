@@ -32,6 +32,9 @@ var App = {
 	handler: {
 		sort: function (obj) {
 
+			// if not index page
+			if(window.location.hash !== '#!/') return false;
+
 			var key = obj.value.toLowerCase();
 			var result = App.data.sort(function(a, b) {
 				if (a[key] > b[key]) return 1;
@@ -42,6 +45,9 @@ var App = {
 			App.render.index(result);
 		},
 		filter: function (obj) {
+
+			// if not index page
+			if(window.location.hash !== '#!/') return false;
 
 			var query = obj.value.toLowerCase();
 			var result = App.data.filter(function (product) {
