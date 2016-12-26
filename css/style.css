@@ -64,8 +64,22 @@ input.form-control {
     padding: 7px 12px 0;
 }
 
+.info {
+    overflow: hidden;
+    padding-left: 26px;
+}
+
+.info h1 {
+    font-weight: bold;
+    color: gray;
+}
+
+.info p {
+    font-size: 18px;
+    line-height: 30px;
+}
+
 .phone img {
-    cursor: pointer;
     width: auto;
     max-width: 100%;
     height: auto;
