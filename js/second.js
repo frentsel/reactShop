@@ -2,6 +2,20 @@
 
 var App = {
 	data: {},
+	cart: {
+		products: [],
+		totalPrice: 0,
+		add: function (id) {
+
+		},
+		remove: function (id) {
+
+		},
+		clear: function () {
+			this.data = [];
+			this.totalPrice = 0;
+		}
+	},
 	render: {
 		_tpl: function (str, data){
 			var fn = new Function("obj", "var p=[],print=function(){p.push.apply(p,arguments);}; with(obj){p.push('" +

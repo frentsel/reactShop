@@ -64,16 +64,11 @@
 		<div class="col-md-6 info">
 			<h1><%=name%></h1>
 			<p><%=description%></p>
-			<a href="#message" class="btn" data-fancybox>Buy <%=name%></a>
-			<div id="message" style="display: none; padding:50px; min-width: 300px; text-align:center;">
-				<h3>Hello!</h3>
-				<p>
-					This is another instance of fancyBox!
-				</p>
-				<p>
-					<button class="btn" data-fancybox-close>Got it!</button>
-				</p>
-			</div>
+			<label for="qtt">Qtt:
+				<input type="number" id="qtt" value="1">
+			</label>
+			<p><strong>Price: 357$</strong></p>
+			<a href="javascript:" class="btn" onclick="App.cart.add()">Buy <%=name%></a>
 			<hr>
 		</div>
 	</div>
