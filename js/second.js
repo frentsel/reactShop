@@ -95,7 +95,7 @@ var App = {
 		},
 		index: function () {
 
-			App.http.get('js/phones.json', {}, function (_data) {
+			App.http.get('data/phones.json', {}, function (_data) {
 
 				App.data = _data;
 				App.render.index(_data);
@@ -109,7 +109,7 @@ var App = {
 		},
 		product: function (id) {
 
-			var path = 'http://angular.github.io/angular-phonecat/step-13/app/phones/'+id+'.json';
+			var path = 'data/'+id+'.json';
 
 			App.http.get(path, {}, App.render.product.bind(App.render));
 		},

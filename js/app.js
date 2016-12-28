@@ -167,10 +167,10 @@ class Store extends React.Component {
 	}
 }
 
-$.getJSON('js/phones.json', {}, function (products) {
+$.getJSON('data/phones.json', {}, function (products) {
 
 	ReactDOM.render(
 		<Store products={products} />,
-		document.getElementById('store')
+		document.querySelector('#store')
 	);
 });
