@@ -4,13 +4,37 @@ html, body {
     height: 100%;
 }
 
+* {
+    outline: none !important;
+}
+
 body {
     font-family: 'Archivo Narrow', monospace, Arial;
     font-size: 16px;
 }
 
-div {
-    transition: all .3s;
+.btn {
+    background: #f85563;
+    border-width: 0;
+    color: #fff;
+    text-decoration: none;
+    padding: 7px 20px;
+    line-height: 1.5;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 90%;
+    margin: 5px 5px 5px 0;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn:hover,
+.btn:visited,
+.btn:active {
+    text-decoration: none;
+    background: #f96874;
+    color: #fff;
 }
 
 #main {
@@ -75,8 +99,8 @@ input.form-control {
 }
 
 .info p {
-    font-size: 18px;
-    line-height: 30px;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .phone img {

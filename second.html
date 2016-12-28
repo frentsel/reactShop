@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ReactJS Test Shop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fancybox.min.css">
 	<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
@@ -55,7 +55,7 @@
 			<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=images[0]%>" alt="<%=name%>">
 			<div class="images">
 				<% images.map(function(img){ %>
-					<a href="javascript:" class="thumbnail">
+					<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/<%=img%>">
 						<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=img%>">
 					</a>
 				<%});%>
@@ -64,7 +64,16 @@
 		<div class="col-md-6 info">
 			<h1><%=name%></h1>
 			<p><%=description%></p>
-			<button class="btn btn-primary"><strong>Buy <%=name%></strong></button>
+			<a href="#message" class="btn" data-fancybox>Buy <%=name%></a>
+			<div id="message" style="display: none; padding:50px; min-width: 300px; text-align:center;">
+				<h3>Hello!</h3>
+				<p>
+					This is another instance of fancyBox!
+				</p>
+				<p>
+					<button class="btn" data-fancybox-close>Got it!</button>
+				</p>
+			</div>
 			<hr>
 		</div>
 	</div>
@@ -131,6 +140,7 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/fancybox.min.js"></script>
 <script src="https://cdn.rawgit.com/frentsel/eRouter/master/eRouter.min.js"></script>
 <script src="js/second.js"></script>
 </body>

@@ -36,6 +36,11 @@ var App = {
 				html = this._tpl(template, product);
 
 			$('#content').html(html);
+
+			$(".fancybox").fancybox({
+				openEffect	: 'none',
+				closeEffect	: 'none'
+			});
 		}
 	},
 	http: {

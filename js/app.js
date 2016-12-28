@@ -19,13 +19,23 @@ class Search extends React.Component {
 	constructor (props) {
 		super(props);
 		this.props = props;
+		this.state = {search: ''};
+
+		this.searchHandle = this.searchHandle.bind(this);
+	}
+
+	searchHandle(e){
+		this.setState({
+			search: e.target.value
+		});
+		this.props.updateFilter(e);
 	}
 
 	render(){
 		return (
 			<form className="navbar-form navbar-left">
 				<div className="form-group">
-					<input type="text" className="form-control" placeholder="Search" onInput={this.props.updateFilter} />
+					<input type="text" className="form-control" placeholder="Search" value={this.state.search} onInput={this.searchHandle} />
 				</div>
 			</form>
 		);
@@ -36,7 +46,18 @@ class Sort extends React.Component {
 
 	constructor (props) {
 		super(props);
+
 		this.rules = props.rules;
+		this.state = {sort: null};
+
+		this.sortHandle = this.sortHandle.bind(this);
+	}
+
+	sortHandle(e){
+		this.setState({
+			sort: e.target.value
+		});
+		this.props.updateSort(e);
 	}
 
 	render(){
@@ -47,7 +68,7 @@ class Sort extends React.Component {
 			<div className="sortBy pull-right">
 				<div className="pull-left">Sort by:&nbsp;</div>
 				<div className="pull-left">
-					<select onChange={this.props.updateSort}>{rules}</select>
+					<select onChange={this.sortHandle} value={this.state.sort}>{rules}</select>
 				</div>
 			</div>
 		)
@@ -117,8 +138,6 @@ class Store extends React.Component {
 		let products = this.props.products.filter(function(product){
 			return product.name.toLowerCase().indexOf(q) > -1;
 		});
-
-		console.info("handleFilter: ", q);
 
 		this.setState({
 			products: products
