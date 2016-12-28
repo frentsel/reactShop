@@ -3,10 +3,22 @@
 var App = {
 	data: {},
 	cart: {
-		products: [],
+		products: {},
 		totalPrice: 0,
+		_getById: function (id) {
+		},
 		add: function (id) {
 
+			var _this = this;
+
+			if(this.products[id] === undefined) {
+
+				App.http.get('data/'+id+'.json', {}, function (res) {
+					_this.products[id] = res;
+
+					console.info(_this.products);
+				});
+			}
 		},
 		remove: function (id) {
 
