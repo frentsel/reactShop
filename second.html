@@ -25,7 +25,6 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#!/">Home</a></li>
 					<li><a href="#!/delivery">Delivery</a></li>
 					<li><a href="#!/contact">Contact</a></li>
 				</ul>
@@ -34,6 +33,18 @@
 						<input type="text" class="form-control" placeholder="Search" oninput="App.handler.filter(this)">
 					</div>
 				</form>
+				<div class="cart pull-right" onclick="eRouter.set('cart')">
+					<table class="cart-options">
+						<tr>
+							<td>Qtt:</td>
+							<td class="cart-option-value quantity">0</td>
+						</tr>
+						<tr>
+							<td>Price:</td>
+							<td class="cart-option-value price">0.0$</td>
+						</tr>
+					</table>
+				</div>
 				<div class="sortBy pull-right">
 					<div class="pull-left">Sort by:&nbsp;</div>
 					<div class="pull-left">
@@ -52,11 +63,11 @@
 <script type="text/html" id="productItemTpl">
 	<div class="row">
 		<div class="col-md-6">
-			<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=images[0]%>" alt="<%=name%>">
+			<img src="images/<%= images[0] %>" alt="<%=name%>">
 			<div class="images">
 				<% images.map(function(img){ %>
-					<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/<%=img%>">
-						<img src="http://angular.github.io/angular-phonecat/step-13/app/<%=img%>">
+					<a data-fancybox="gallery" class="fancybox thumbnail" href="<%=name%>">
+						<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/<%=img%>">
 					</a>
 				<%});%>
 			</div>
@@ -111,6 +122,43 @@
 		</div>
 	</div>
 </script>
+<script type="text/html" id="cartPageTpl">
+	<table class="products-table">
+		<h1>Checkout</h1>
+		<% $.each(products, function(key, product){ %>
+			<tr>
+				<td>
+					<a href="#!/product/<%= product.id %>" data-fancybox="gallery" class="fancybox thumbnail">
+						<img src="images/<%= product.images[0] %>" alt="<%= product.name %>">
+					</a>
+				</td>
+				<td><%= product.name %></td>
+				<td>
+					<input type="number" value="1" oninput="App.cart.change('<%= product.id %>', this);">
+					<button>Delete</button>
+				</td>
+				<td>
+					Price: 123.00$
+				</td>
+			</tr>
+		<% }); %>
+		<tr>
+			<td colspan="2"></td>
+			<td>
+				<div>Total count: 12</div>
+			</td>
+			<td>
+				<div>Total price: 1224.00$</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				<button class="btn" onclick="App.cart.clear()">Clear</button>
+				<button class="btn" onclick="App.cart.checkout()">Checkout</button>
+			</td>
+		</tr>
+	</table>
+</script>
 <script type="text/html" id="contactPageTpl">
 	<h1>Contact page</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consequuntur distinctio ea exercitationem id impedit, incidunt inventore molestias mollitia neque porro provident, quasi quia rem saepe sit ut veritatis voluptas? Adipisci consequatur corporis cum, ducimus ex excepturi fugit, impedit laudantium modi, mollitia nobis nulla numquam rem repellendus ullam veritatis voluptates?</p>
@@ -125,13 +173,15 @@
 	<h1>Error 404!</h1>
 	<p>Page Not Found.</p>
 </script>
-<script type="text/html" id="productTpl">
-	<div id="<%=id%>" class="phone">
-		<a href="#!/product/<%=id%>">
-			<strong><%=name%></strong>
-			<img src="<%=imageUrl%>" alt="<%=name%>">
+<script type="text/html" id="homePageTpl">
+	<% $.each(products, function(key, product){ %>
+	<div id="<%=product.id%>" class="phone">
+		<a href="#!/product/<%= product.id %>">
+			<strong><%= product.name %></strong>
+			<img src="images/<%= product.imageUrl %>" alt="<%= product.name %>">
 		</a>
 	</div>
+	<% }); %>
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

@@ -5,8 +5,6 @@ var App = {
 	cart: {
 		products: {},
 		totalPrice: 0,
-		_getById: function (id) {
-		},
 		add: function (id) {
 
 			var _this = this;
@@ -14,18 +12,34 @@ var App = {
 			if(this.products[id] === undefined) {
 
 				App.http.get('data/'+id+'.json', {}, function (res) {
+
 					_this.products[id] = res;
+					_this.recalculate();
 
 					console.info(_this.products);
 				});
 			}
 		},
-		remove: function (id) {
+		remove: function (id, obj) {
+			delete this.products[id];
+			this.recalculate();
+		},
+		recalculate: function () {
+
+			console.info("products: ", this.products);
+			$('.cart-option-value.quantity').text(1);
+			$('.cart-option-value.price').text(this.totalPrice+'$');
+		},
+		change: function (id, obj) {
 
 		},
+		checkout: function () {
+			this.clear();
+		},
 		clear: function () {
-			this.data = [];
+			this.products = {};
 			this.totalPrice = 0;
+			this.recalculate();
 		}
 	},
 	render: {
@@ -40,26 +54,17 @@ var App = {
 					.split("\r").join("\\'") + "');}return p.join('');");
 			return data ? fn( data ) : fn;
 		},
-		index: function (products) {
+		page: function (page, data) {
 
-			var template = $('#productTpl').html(),
-				html = '',
-				_this = this;
-
-			products.map(function (product) {
-				html += _this._tpl(template, product);
-			});
-
-			$('#content').html(html);
-		},
-		page: function (page) {
 			var html = $('#'+page+'PageTpl').html();
+			html = this._tpl(html, data || {});
+
 			$('#content').html(html);
 		},
-		product: function (product) {
+		product: function (data) {
 
 			var template = $('#productItemTpl').html(),
-				html = this._tpl(template, product);
+				html = this._tpl(template, data);
 
 			$('#content').html(html);
 
@@ -129,7 +134,9 @@ var App = {
 			App.http.get('data/phones.json', {}, function (_data) {
 
 				App.data = _data;
-				App.render.index(_data);
+				App.render.page('home', {
+					products: _data
+				});
 			});
 		},
 		delivery: function () {
@@ -138,10 +145,14 @@ var App = {
 		contact: function () {
 			App.render.page('contact');
 		},
+		cart: function () {
+			App.render.page('cart', {
+				products: App.cart.products
+			});
+		},
 		product: function (id) {
 
 			var path = 'data/'+id+'.json';
-
 			App.http.get(path, {}, App.render.product.bind(App.render));
 		},
 		notFound: function (page) {

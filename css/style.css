@@ -63,7 +63,6 @@ input.form-control {
 .sortBy {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: -15px;
     line-height: 30px;
 }
 
@@ -71,6 +70,48 @@ input.form-control {
     border-color: #ccc;
     padding: 0 5px;
     height: 30px;
+}
+
+.cart {
+    cursor: pointer;
+    overflow: hidden;
+    display: block;
+    height: 30px;
+    margin-top: 10px;
+    width: 60px;
+    margin-right: -15px;
+    margin-left: 10px;
+    line-height: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    border-left: 1px solid #ccc;
+    padding-left: 8px;
+}
+
+.cart-options {
+    width: 100%;
+}
+
+.cart-option-value {
+    color: #f85563;
+}
+
+table.products-table {
+    width: calc(100% - 1px);
+}
+
+table.products-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+table.products-table a.thumbnail {
+    max-width: 80px;
+    margin-bottom: 0;
+}
+
+table.products-table img {
+    width: 100%;
 }
 
 .phone.selected {
