@@ -107,7 +107,9 @@ var App = {
 				return 0;
 			});
 
-			App.render.index(result);
+			App.render.page('home', {
+				products: result
+			});
 		},
 		filter: function (obj) {
 
@@ -119,7 +121,9 @@ var App = {
 				return product.name.toLowerCase().indexOf(query) > -1;
 			});
 
-			App.render.index(result);
+			App.render.page('home', {
+				products: result
+			});
 		},
 		index: function () {
 
