@@ -60,88 +60,67 @@
 		<div id="content"></div>
 	</div>
 </div>
-<script type="text/html" id="productItemTpl">
+<script type="text/x-handlebars-template" id="productItemTpl">
 	<div class="row">
 		<div class="col-md-6">
-			<img src="images/<%= images[0] %>" alt="<%=name%>">
+			<img src="images/{{images.[0]}}" alt="{{name}}">
 			<div class="images">
-				<% images.map(function(img){ %>
-					<a data-fancybox="gallery" class="fancybox thumbnail" href="<%=name%>">
-						<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/<%=img%>">
+				{{#images}}
+					<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
+						<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
 					</a>
-				<%});%>
+				{{/images}}
 			</div>
 		</div>
 		<div class="col-md-6 info">
-			<h1><%=name%></h1>
-			<p><%=description%></p>
+			<h1>{{name}}</h1>
+			<p>{{description}}</p>
 			<label for="qtt">Qtt:
 				<input type="number" id="qtt" value="1">
 			</label>
 			<p><strong>Price: 357$</strong></p>
-			<a href="javascript:" class="btn" onclick="App.cart.add('<%=id%>')">Buy <%=name%></a>
+			<a href="javascript:" class="btn" onclick="App.cart.add('{{id}}')">Buy {{name}}</a>
 			<hr>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
-			<div class="options">
-				<strong>Hardware</strong>
-				<ul>
-					<% $.each(hardware, function(key, val){ %>
-					<li><strong><%= key %></strong>: <%= val %></li>
-					<% }); %>
-				</ul>
-			</div>
-			<div class="options">
-				<strong>Display</strong>
-				<ul>
-					<% $.each(display, function(key, val){ %>
-					<li><strong><%= key %></strong>: <%= val %></li>
-					<% }); %>
-				</ul>
-			</div>
-			<div class="options">
-				<strong>Battery</strong>
-				<ul>
-					<% $.each(battery, function(key, val){ %>
-					<li><strong><%= key %></strong>: <%= val %></li>
-					<% }); %>
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="options">
-				<strong>Connectivity</strong>
-				<ul>
-					<% $.each(connectivity, function(key, val){ %>
-					<li><strong><%= key %></strong>: <%= val %></li>
-					<% }); %>
-				</ul>
-			</div>
-		</div>
+	    <div class="col-md-12">
+	        <table class="options">
+	            <thead>
+	                <tr>
+	                    <th colspan="2">Hardware</th>
+	                </tr>
+	            </thead>
+	            {{#each hardware}}
+	                <tr>
+                        <td><strong>{{@key}}</strong></td>
+                        <td>{{this}}</td>
+                    </tr>
+                {{/each}}
+	        </table>
+	    </div>
 	</div>
 </script>
-<script type="text/html" id="cartPageTpl">
+<script type="text/x-handlebars-template" id="cartPageTpl">
+    <h1>Checkout</h1>
 	<table class="products-table">
-		<h1>Checkout</h1>
-		<% $.each(products, function(key, product){ %>
-			<tr>
-				<td>
-					<a href="#!/product/<%= product.id %>" data-fancybox="gallery" class="fancybox thumbnail">
-						<img src="images/<%= product.images[0] %>" alt="<%= product.name %>">
-					</a>
-				</td>
-				<td><%= product.name %></td>
-				<td>
-					<input type="number" value="1" oninput="App.cart.change('<%= product.id %>', this);">
-					<button>Delete</button>
-				</td>
-				<td>
-					Price: 123.00$
-				</td>
-			</tr>
-		<% }); %>
+        {{#each products}}
+            <tr>
+                <td>
+                    <a href="#!/product/{{id}}" data-fancybox="gallery" class="fancybox thumbnail">
+                        <img src="images/{{images.[0]}}" alt="{{name}}">
+                    </a>
+                </td>
+                <td>{{name}}</td>
+                <td>
+                    <input type="number" value="1" oninput="App.cart.change('{{id}}', this);">
+                    <button type="button" onclick="App.cart.remove('{{id}}', this);">Delete</button>
+                </td>
+                <td>
+                    Price: 123.00$
+                </td>
+            </tr>
+        {{/each}}
 		<tr>
 			<td colspan="2"></td>
 			<td>
@@ -159,34 +138,35 @@
 		</tr>
 	</table>
 </script>
-<script type="text/html" id="contactPageTpl">
+<script type="text/x-handlebars-template" id="contactPageTpl">
 	<h1>Contact page</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consequuntur distinctio ea exercitationem id impedit, incidunt inventore molestias mollitia neque porro provident, quasi quia rem saepe sit ut veritatis voluptas? Adipisci consequatur corporis cum, ducimus ex excepturi fugit, impedit laudantium modi, mollitia nobis nulla numquam rem repellendus ullam veritatis voluptates?</p>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, animi blanditiis delectus dolorum impedit laborum necessitatibus, odio optio provident, reiciendis repellat temporibus. Alias aperiam dolores exercitationem in, itaque minima, modi mollitia natus nisi officiis quaerat quo reprehenderit sed totam voluptatum. Incidunt, labore, nostrum.</p>
 </script>
-<script type="text/html" id="deliveryPageTpl">
+<script type="text/x-handlebars-template" id="deliveryPageTpl">
 	<h1>Delivery page</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor eaque error eum explicabo facere illum itaque minima necessitatibus nihil pariatur placeat porro quia reiciendis, rerum. Assumenda eos ex incidunt labore natus praesentium quis, ratione temporibus voluptas.</p>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur id mollitia repellendus, sequi similique ullam ut voluptatum! Aspernatur atque cum, dolorum esse et exercitationem ipsam itaque nostrum praesentium, quisquam rem vitae. Cum dignissimos ducimus natus repellendus sapiente.</p>
 </script>
-<script type="text/html" id="notFoundPageTpl">
+<script type="text/x-handlebars-template" id="notFoundPageTpl">
 	<h1>Error 404!</h1>
 	<p>Page Not Found.</p>
 </script>
-<script type="text/html" id="homePageTpl">
-	<% $.each(products, function(key, product){ %>
-	<div id="<%=product.id%>" class="phone">
-		<a href="#!/product/<%= product.id %>">
-			<strong><%= product.name %></strong>
-			<img src="images/<%= product.imageUrl %>" alt="<%= product.name %>">
+<script type="text/x-handlebars-template" id="homePageTpl">
+	{{#products}}
+	<div id="{{id}}" class="phone">
+		<a href="#!/product/{{id}}">
+			<strong>{{name}}</strong>
+			<img src="images/{{imageUrl}}" alt="{{name}}">
 		</a>
 	</div>
-	<% }); %>
+	{{/products}}
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/fancybox.min.js"></script>
-<script src="https://cdn.rawgit.com/frentsel/eRouter/master/eRouter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+<script src="js/eRouter.min.js"></script>
 <script src="js/second.js"></script>
 </body>
 </html>
