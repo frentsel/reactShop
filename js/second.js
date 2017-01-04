@@ -45,7 +45,6 @@ var App = {
 			}
 		},
 		change: function (id, obj) {
-
 		},
 		clear: function () {
 
@@ -58,10 +57,9 @@ var App = {
 					keyboard   : false,
 					afterClose : function( instance, e ) {
 
-						var button = e ? e.target || e.currentTarget : null,
-							value = button ? $(button).data('value') : 0;
+						var button = e ? e.target || e.currentTarget : null;
 
-						if(!value) {
+						if(!$(button).data('value')) {
 							return false;
 						}
 
@@ -154,11 +152,18 @@ var App = {
 	},
 	http: {
 		ajaxSpinner: function (status) {
-			$('body').toggleClass('loadMore', status);
+			$('body').toggleClass('loading', status);
 		},
+		cache: {},
 		load: function (path, params, callback) {
 
-			var _this = this;
+			var _this = this,
+				cacheKey = path + $.param(params);
+
+			if(this.cache[cacheKey] !== undefined) {
+				callback(this.cache[cacheKey]);
+				return false;
+			}
 
 			$.ajax({
 				url: path,
@@ -171,7 +176,10 @@ var App = {
 				complete: function(){
 					_this.ajaxSpinner(false);
 				},
-				success: callback,
+				success: function (response) {
+					_this.cache[cacheKey] = response;
+					callback(response);
+				},
 				error: function (e) {
 					if(e.status === 404) {
 						App.render.page('notFound');
@@ -199,9 +207,7 @@ var App = {
 				return 0;
 			});
 
-			App.render.page('index', {
-				products: result
-			});
+			App.render.page('index', {products: result});
 		},
 		filter: function (obj) {
 
@@ -213,9 +219,7 @@ var App = {
 				return product.name.toLowerCase().indexOf(query) > -1;
 			});
 
-			App.render.page('index', {
-				products: result
-			});
+			App.render.page('index', {products: result});
 		},
 		index: function () {
 
@@ -253,11 +257,8 @@ var App = {
 		sendOrder: function () {
 
 			var cart = App.cart;
-
 			console.info("cart.products	: ", cart.products);
-
 			eRouter.set('info');
-
 			return false;
 		},
 		checkout: function () {

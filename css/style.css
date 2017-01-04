@@ -167,6 +167,34 @@ a.thumbnail {
     margin-right: 14px;
 }
 
+form.form-horizontal {
+    max-width: 350px;
+    margin: 20px auto 0;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body.loading #loading {
+    display: block;
+}
+
+#loading img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,.7);
+}
+
 @media (max-width: 768px) {
     .sortBy {
         margin-right: 0;
