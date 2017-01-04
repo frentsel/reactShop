@@ -254,10 +254,14 @@ var App = {
 				price: cart.get.price(),
 			});
 		},
-		sendOrder: function () {
+		sendOrder: function (obj) {
 
-			var cart = App.cart;
-			console.info("cart.products	: ", cart.products);
+			var cart = App.cart,
+				data = $(obj).serializeArray();
+
+			$.extend(cart.products, data);
+			document.cookie = "order="+JSON.stringify(cart.products);
+
 			eRouter.set('info');
 			return false;
 		},
