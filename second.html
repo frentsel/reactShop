@@ -7,6 +7,8 @@
 	<title>ReactJS Test Shop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/fancybox.min.css">
+	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="css/fancybox.css">
 	<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
@@ -60,108 +62,6 @@
 		<div id="content"></div>
 	</div>
 </div>
-<script type="text/x-handlebars-template" id="productItemTpl">
-	<div class="row">
-		<div class="col-md-6">
-			<img src="images/{{images.[0]}}" alt="{{name}}">
-			<div class="images">
-				{{#images}}
-					<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
-						<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
-					</a>
-				{{/images}}
-			</div>
-		</div>
-		<div class="col-md-6 info">
-			<h1>{{name}}</h1>
-			<p>{{description}}</p>
-			<label for="qtt">Qtt:
-				<input type="number" id="qtt" value="1">
-			</label>
-			<p><strong>Price: 357$</strong></p>
-			<a href="javascript:" class="btn" onclick="App.cart.add('{{id}}')">Buy {{name}}</a>
-			<hr>
-		</div>
-	</div>
-	<div class="row">
-	    <div class="col-md-12">
-	        <table class="options">
-	            <thead>
-	                <tr>
-	                    <th colspan="2">Hardware</th>
-	                </tr>
-	            </thead>
-	            {{#each hardware}}
-	                <tr>
-                        <td><strong>{{@key}}</strong></td>
-                        <td>{{this}}</td>
-                    </tr>
-                {{/each}}
-	        </table>
-	    </div>
-	</div>
-</script>
-<script type="text/x-handlebars-template" id="cartPageTpl">
-    <h1>Checkout</h1>
-	<table class="products-table">
-        {{#each products}}
-            <tr>
-                <td>
-                    <a href="#!/product/{{id}}" data-fancybox="gallery" class="fancybox thumbnail">
-                        <img src="images/{{images.[0]}}" alt="{{name}}">
-                    </a>
-                </td>
-                <td>{{name}}</td>
-                <td>
-                    <input type="number" value="1" oninput="App.cart.change('{{id}}', this);">
-                    <button type="button" onclick="App.cart.remove('{{id}}', this);">Delete</button>
-                </td>
-                <td>
-                    Price: 123.00$
-                </td>
-            </tr>
-        {{/each}}
-		<tr>
-			<td colspan="2"></td>
-			<td>
-				<div>Total count: 12</div>
-			</td>
-			<td>
-				<div>Total price: 1224.00$</div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5">
-				<button class="btn" onclick="App.cart.clear()">Clear</button>
-				<button class="btn" onclick="App.cart.checkout()">Checkout</button>
-			</td>
-		</tr>
-	</table>
-</script>
-<script type="text/x-handlebars-template" id="contactPageTpl">
-	<h1>Contact page</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consequuntur distinctio ea exercitationem id impedit, incidunt inventore molestias mollitia neque porro provident, quasi quia rem saepe sit ut veritatis voluptas? Adipisci consequatur corporis cum, ducimus ex excepturi fugit, impedit laudantium modi, mollitia nobis nulla numquam rem repellendus ullam veritatis voluptates?</p>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, animi blanditiis delectus dolorum impedit laborum necessitatibus, odio optio provident, reiciendis repellat temporibus. Alias aperiam dolores exercitationem in, itaque minima, modi mollitia natus nisi officiis quaerat quo reprehenderit sed totam voluptatum. Incidunt, labore, nostrum.</p>
-</script>
-<script type="text/x-handlebars-template" id="deliveryPageTpl">
-	<h1>Delivery page</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor eaque error eum explicabo facere illum itaque minima necessitatibus nihil pariatur placeat porro quia reiciendis, rerum. Assumenda eos ex incidunt labore natus praesentium quis, ratione temporibus voluptas.</p>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur id mollitia repellendus, sequi similique ullam ut voluptatum! Aspernatur atque cum, dolorum esse et exercitationem ipsam itaque nostrum praesentium, quisquam rem vitae. Cum dignissimos ducimus natus repellendus sapiente.</p>
-</script>
-<script type="text/x-handlebars-template" id="notFoundPageTpl">
-	<h1>Error 404!</h1>
-	<p>Page Not Found.</p>
-</script>
-<script type="text/x-handlebars-template" id="homePageTpl">
-	{{#products}}
-	<div id="{{id}}" class="phone">
-		<a href="#!/product/{{id}}">
-			<strong>{{name}}</strong>
-			<img src="images/{{imageUrl}}" alt="{{name}}">
-		</a>
-	</div>
-	{{/products}}
-</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/fancybox.min.js"></script>

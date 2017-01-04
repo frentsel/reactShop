@@ -1,0 +1,50 @@
+{{#if products}}
+	<h1>Checkout</h1>
+	<table class="products-table">
+		{{#each products}}
+		<tr>
+			<td>
+				<a href="#!/product/{{id}}" class="thumbnail">
+					<img src="images/{{images.[0]}}" alt="{{name}}">
+				</a>
+			</td>
+			<td>{{name}}</td>
+			<td>
+				<input type="number" value="1" oninput="App.cart.change('{{id}}', this);" min="1">
+				<button type="button" onclick="App.cart.remove('{{id}}', this);">Delete</button>
+			</td>
+			<td>
+				Price: 123.00$
+			</td>
+		</tr>
+		{{/each}}
+		<tr>
+			<td colspan="2"></td>
+			<td>
+				<div>Total count: <span class="quantity">{{quantity}}</span></div>
+			</td>
+			<td>
+				<div>Total price: <span class="price">{{price}}</span>$</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				<button class="btn" onclick="App.cart.clear()">Clear</button>
+				<button class="btn" onclick="App.cart.checkout()">Checkout</button>
+			</td>
+		</tr>
+	</table>
+{{else}}
+	<h1>Your shoping cart is empty</h1>
+	<a href="#!/">&lt; Back to home page</a>
+{{/if}}
+<script type="text/html" id="clearConfirm">
+	<div class="my_dialog">
+		<h3>Are you sure?</h3>
+		<p>By the way, there are many possibilities for modal dialog to appear using CSS transitions.</p>
+		<p class="tright">
+			<a data-value="0" data-fancybox-close>Cancel</a>
+			<button data-value="1" data-fancybox-close class="btn">Ok</button>
+		</p>
+	</div>
+</script>

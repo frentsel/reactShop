@@ -1,0 +1,71 @@
+<div class="row">
+	<div class="col-md-6">
+		<a href="images/{{images.[0]}}" class="quick_view" data-fancybox="qw1" data-qw-form="qw-form-1">
+			<img src="images/{{images.[0]}}" alt="{{name}}">
+		</a>
+		<div class="images">
+			{{#images}}
+			<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
+				<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
+			</a>
+			{{/images}}
+		</div>
+	</div>
+	<div class="col-md-6 info">
+		<h1>{{name}}</h1>
+		<p>{{description}}</p>
+		<label for="qtt">Qtt:
+			<input type="number" id="qtt" value="1">
+		</label>
+		<p><strong>Price: 357$</strong></p>
+		<a href="javascript:" class="btn" onclick="App.cart.add('{{id}}')">Add to cart</a>
+		<hr>
+
+		<span class="hidden">
+			{{#each images}}
+				{{#if @first}}
+				{{else}}
+				<a class="quick_view" data-fancybox="qw1" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">#</a>
+				{{/if}}
+			{{/each}}
+		</span>
+		<div id="qw-form-1" class="hidden">
+			<h3>{{name}}</h3>
+			<p>{{description}}</p>
+			<p>
+				<button class="btn" data-fancybox-close="" onclick="App.cart.add('{{id}}')">Add to cart</button>
+			</p>
+		</div>
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="options">
+			<thead>
+			<tr>
+				<th colspan="2">Hardware</th>
+			</tr>
+			</thead>
+			{{#each hardware}}
+			<tr>
+				<td><strong>{{@key}}</strong></td>
+				<td>{{this}}</td>
+			</tr>
+			{{/each}}
+		</table>
+	</div>
+</div>
+<script type="text/html" id="demoProduct">
+	<div class="fancybox-container" role="dialog">
+		<div class="quick-view-content">
+			<div class="quick-view-carousel">
+				<div class="fancybox-slider-wrap">
+					<ul class="fancybox-slider"></ul>
+				</div>
+			</div>
+			<div class="quick-view-aside"></div>
+			<button data-fancybox-close class="quick-view-close">X</button>
+		</div>
+	</div>
+</script>
