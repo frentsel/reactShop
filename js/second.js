@@ -6,13 +6,7 @@ var App = {
 		products: {},
 		get: {
 			quantity: function () {
-
-				var qtt = 0;
-				$.each(App.cart.products, function () {
-					qtt++;
-				});
-
-				return qtt;
+				return Object.keys(App.cart.products).length;
 			},
 			price: function () {
 
@@ -37,27 +31,21 @@ var App = {
 				});
 			}
 		},
-		remove: function (id, obj) {
-
+		remove: function (id) {
 			delete this.products[id];
-			$(obj).closest('tr').fadeOut();
-
 			this.update();
 		},
-		update: function () {
+		update: function (state) {
 
-			var qtt = this.get.quantity(),
-				price = this.get.price();
+			$('.quantity').text(this.get.quantity());
+			$('.price').text(this.get.price());
 
-			$('.quantity').text(qtt);
-			$('.price').text(price);
+			if(state === undefined) {
+				App.handler.cart();
+			}
 		},
 		change: function (id, obj) {
 
-		},
-		checkout: function () {
-
-			this.clear();
 		},
 		clear: function () {
 
@@ -81,8 +69,7 @@ var App = {
 						_this.products = {};
 						_this.update();
 					}
-				}
-			);
+				});
 		}
 	},
 	render: {
@@ -246,11 +233,43 @@ var App = {
 		contact: function () {
 			App.render.page('contact');
 		},
+		info: function () {
+
+			App.cart.products = {};
+			App.cart.update(true);
+
+			App.render.page('info');
+		},
 		cart: function () {
 
 			var cart = App.cart;
 
 			App.render.page('cart', {
+				products: cart.products,
+				quantity: cart.get.quantity(),
+				price: cart.get.price(),
+			});
+		},
+		sendOrder: function () {
+
+			var cart = App.cart;
+
+			console.info("cart.products	: ", cart.products);
+
+			eRouter.set('info');
+
+			return false;
+		},
+		checkout: function () {
+
+			var cart = App.cart;
+
+			if(!cart.get.quantity()) {
+				eRouter.set('cart');
+				return false;
+			}
+
+			App.render.page('checkout', {
 				products: cart.products,
 				quantity: cart.get.quantity(),
 				price: cart.get.price(),
