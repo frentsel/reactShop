@@ -209,6 +209,10 @@ form.form-horizontal {
     margin: 20px auto 0;
 }
 
+.contact-map {
+    max-width: 100%;
+}
+
 #disqus_thread {
     background: #f8f8f8;
     padding: 20px 30px;
