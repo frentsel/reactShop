@@ -7,11 +7,24 @@
 	<div class="col-md-6 info">
 		<h1>{{name}}</h1>
 		<p>{{description}}</p>
-		<label for="qtt">Qtt:
-			<input type="number" id="qtt" value="1">
-		</label>
-		<p><strong>Price: 123$</strong></p>
-		<a href="javascript:" class="btn" onclick="App.cart.add('{{id}}')">Add to cart</a>
+		<table class="product-table">
+			<tr>
+				<td>
+					<label for="qtt">Qtt:
+						<input type="number" id="qtt" class="product-quantity" value="1">
+					</label>
+				</td>
+				<td>
+					<strong>Price: 123.00$</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="javascript:" class="btn product-buy" onclick="App.cart.add('{{id}}')">Add to cart</a>
+				</td>
+			</tr>
+		</table>
+
 		<span class="hidden">
 			{{#each images}}
 				{{#if @first}}

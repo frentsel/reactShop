@@ -138,6 +138,25 @@ table.products-table img {
     padding: 7px 12px 0;
 }
 
+.product-table {
+    width: 100%;
+}
+
+.product-table td {
+    vertical-align: baseline;
+    width: 50%;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.product-quantity {
+    max-width: 80px;
+}
+
+.product-buy {
+    width: 100%;
+}
+
 .info {
     overflow: hidden;
     padding-left: 26px;
@@ -145,7 +164,7 @@ table.products-table img {
 
 .info h1 {
     font-weight: bold;
-    color: gray;
+    color: #5d5d5d;
 }
 
 .info p {
