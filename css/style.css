@@ -13,6 +13,10 @@ body {
     font-size: 16px;
 }
 
+a {
+    color: #567;
+}
+
 .btn {
     background: #f85563;
     border-width: 0;
@@ -29,11 +33,14 @@ body {
     outline: none;
 }
 
+.btn.inverse {
+    background: #8c8c8c;
+}
+
 .btn:hover,
 .btn:visited,
 .btn:active {
     text-decoration: none;
-    background: #f96874;
     color: #fff;
 }
 
@@ -162,7 +169,7 @@ table.products-table img {
 }
 
 a.thumbnail {
-    max-width: 20%;
+    max-width: 100px;
     float: left;
     margin-right: 14px;
 }
@@ -170,6 +177,14 @@ a.thumbnail {
 form.form-horizontal {
     max-width: 350px;
     margin: 20px auto 0;
+}
+
+#disqus_thread {
+    background: #f8f8f8;
+    padding: 20px 30px;
+    border-top: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
 }
 
 #loading {

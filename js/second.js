@@ -71,25 +71,19 @@ var App = {
 		}
 	},
 	render: {
-		_tpl: function (str, data){
-			return Handlebars.compile(str)(data);
-		},
 		_load: function (page, callback) {
 			App.http.load('templates/'+page+'.html', {}, callback);
 		},
 		page: function (page, data) {
-
-			var _this = this;
 			this._load(page, function (html) {
-				$('#content').html(_this._tpl(html, data));
+				$('#content').html(Handlebars.compile(html)(data));
 			});
 		},
 		product: function (data) {
 
-			var _this = this;
 			this._load('product', function (html) {
 
-				$('#content').html(_this._tpl(html, data));
+				$('#content').html(Handlebars.compile(html)(data));
 
 				$(".quick_view").fancybox({
 
@@ -105,8 +99,7 @@ var App = {
 
 					onInit : function( instance ) {
 
-						/* Create bullet navigation links */
-
+						// Create bullet navigation links
 						var bullets = '<ul class="quick-view-bullets">';
 
 						instance.group.map(function (i) {
@@ -125,13 +118,15 @@ var App = {
 
 						}).appendTo( instance.$refs.container.find('.quick-view-carousel') );
 
-						/* Add product form */
+						// Add product form
 						var $element = instance.group[ instance.currIndex ].opts.$orig,
 							form_id = $element.data('qw-form');
 
-						instance.$refs.container.find('.quick-view-aside')
+						instance.$refs.container
+							.find('.quick-view-aside')
 							.append( $( '#' + form_id )
-							.clone( true ).removeClass('hidden') );
+							.clone( true )
+							.removeClass('hidden') );
 					},
 
 					beforeMove : function( instance ) {
@@ -143,12 +138,9 @@ var App = {
 					}
 
 				});
-
 			});
 		},
-		init: function () {
-
-		}
+		init: function () {}
 	},
 	http: {
 		ajaxSpinner: function (status) {
@@ -226,9 +218,7 @@ var App = {
 			App.http.getJSON('data/phones.json', {}, function (_data) {
 
 				App.data = _data;
-				App.render.page('index', {
-					products: _data
-				});
+				App.render.page('index', {products: _data});
 			});
 		},
 		delivery: function () {
@@ -241,7 +231,6 @@ var App = {
 
 			App.cart.products = {};
 			App.cart.update(true);
-
 			App.render.page('info');
 		},
 		cart: function () {

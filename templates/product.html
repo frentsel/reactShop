@@ -3,13 +3,6 @@
 		<a href="images/{{images.[0]}}" class="quick_view" data-fancybox="qw1" data-qw-form="qw-form-1">
 			<img src="images/{{images.[0]}}" alt="{{name}}">
 		</a>
-		<div class="images">
-			{{#images}}
-			<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
-				<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
-			</a>
-			{{/images}}
-		</div>
 	</div>
 	<div class="col-md-6 info">
 		<h1>{{name}}</h1>
@@ -19,8 +12,6 @@
 		</label>
 		<p><strong>Price: 357$</strong></p>
 		<a href="javascript:" class="btn" onclick="App.cart.add('{{id}}')">Add to cart</a>
-		<hr>
-
 		<span class="hidden">
 			{{#each images}}
 				{{#if @first}}
@@ -36,24 +27,42 @@
 				<button class="btn" data-fancybox-close="" onclick="App.cart.add('{{id}}')">Add to cart</button>
 			</p>
 		</div>
-
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 images">
+		{{#images}}
+		<a data-fancybox="gallery" class="fancybox thumbnail" href="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
+			<img src="http://angular.github.io/angular-phonecat/step-13/app/img/phones/{{.}}">
+		</a>
+		{{/images}}
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<table class="options">
-			<thead>
-			<tr>
-				<th colspan="2">Hardware</th>
-			</tr>
-			</thead>
-			{{#each hardware}}
-			<tr>
-				<td><strong>{{@key}}</strong></td>
-				<td>{{this}}</td>
-			</tr>
-			{{/each}}
-		</table>
+		<br>
+		<script id="dsq-count-scr" src="//https-frentsel-github-io.disqus.com/count.js" async></script>
+		<div id="disqus_thread"></div>
+		<script>
+
+			/**
+			 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+			 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+			/*
+			 var disqus_config = function () {
+			 this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+			 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+			 };
+			 */
+			(function() { // DON'T EDIT BELOW THIS LINE
+				var d = document, s = d.createElement('script');
+				s.src = '//https-frentsel-github-io.disqus.com/embed.js';
+				s.setAttribute('data-timestamp', +new Date());
+				(d.head || d.body).appendChild(s);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 	</div>
 </div>
 <script type="text/html" id="demoProduct">
