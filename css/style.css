@@ -187,10 +187,15 @@ table.products-table img {
     text-overflow: ellipsis;
 }
 
+.product-thumbnails {
+    margin-top: 20px;
+}
+
 a.thumbnail {
     max-width: 100px;
     float: left;
     margin-right: 14px;
+    margin-bottom: 0;
 }
 
 a.thumbnail.active,
