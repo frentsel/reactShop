@@ -1,5 +1,8 @@
 window.Cart = function() {
 	return (
-		<h1>Shoping cart</h1>
+		<div>
+			<h1>Shoping cart</h1>
+			<a href="#/">&lt; Back to home page</a>
+		</div>
 	);
 };

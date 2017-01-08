@@ -120,7 +120,7 @@ const Cart = React.createClass({
 		});
 	},
 	show: function () {
-		ReactRouter.go('/cart');
+		ReactRouter.hashHistory.push('/cart');
 	},
 
 	render: function () {
@@ -228,17 +228,14 @@ const Product = React.createClass({
 		});
 	},
 
-	addToCart: function (phone) {
-		console.info("phone: ", phone);
-	},
-
 	render: function () {
 
 		if(this.state.phone.id === undefined){
 			return <div>Loading...</div>
 		}
 
-		let phone = this.state.phone,
+		let addToCartHandler = this.props.route.onAddToCart,
+			phone = this.state.phone,
 			img = '../images/' + phone.images[0],
 			thumbnails = phone.images.map(img =>
 				<a data-fancybox="gallery" className="fancybox thumbnail" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>
@@ -273,7 +270,7 @@ const Product = React.createClass({
 							</tr>
 							<tr>
 								<td>
-									<a href="javascript:" className="btn product-buy" onClick={this.addToCart.bind(this, phone)}>Add to cart</a>
+									<a href="javascript:" className="btn product-buy" onClick={addToCartHandler.bind(this, phone)}>Add to cart</a>
 								</td>
 							</tr>
 						</table>
@@ -284,7 +281,7 @@ const Product = React.createClass({
 							<h3>{phone.name}</h3>
 							<p>{phone.description}</p>
 							<p>
-								<button className="btn" onClick={this.addToCart.bind(this, phone)}>Add to cart</button>
+								<button className="btn" onClick={addToCartHandler.bind(this, phone)}>Add to cart</button>
 							</p>
 						</div>
 					</div>
@@ -328,15 +325,18 @@ const Products = React.createClass({
 	}
 });
 
-function Navigation() {
-	return (
-		<ul className="nav navbar-nav">
-			<li><a href="#/">Home</a></li>
-			<li><a href="#/delivery">Delivery</a></li>
-			<li><a href="#/contact">Contact</a></li>
-		</ul>
-	);
-}
+const Navigation = React.createClass({
+
+	render: function () {
+		return (
+			<ul className="nav navbar-nav">
+				<li><a href="#/">Home</a></li>
+				<li><a href="#/delivery">Delivery</a></li>
+				<li><a href="#/contact">Contact</a></li>
+			</ul>
+		);
+	}
+});
 
 class Search extends React.Component {
 
@@ -399,7 +399,7 @@ class Sort extends React.Component {
 	}
 }
 
-class App extends React.Component {
+const App = React.createClass({
 
 	// constructor(props){
 	//
@@ -444,7 +444,12 @@ class App extends React.Component {
 	// 	});
 	// }
 
-	render(){
+	cartHandler: function (obj) {
+		console.info("cartHandler", this);
+		console.info("cartHandler", obj);
+	},
+
+	render: function(){
 		return (
 			<div>
 				<nav className="navbar navbar-default">
@@ -470,13 +475,13 @@ class App extends React.Component {
 					<Route path="/" component={Products}></Route>
 					<Route path="/delivery" component={window.Delivery}></Route>
 					<Route path="/contact" component={window.Contact}></Route>
-					<Route path="/cart" component={window.Cart}></Route>
-					<Route path="/product/:productId" component={Product}></Route>
+					<Route path="/cart" component={window.Cart} ></Route>
+					<Route path="/product/:productId" component={Product} onAddToCart={this.cartHandler}></Route>
 				</Router>
 			</div>
 		);
 	}
-}
+});
 
 ReactDOM.render(
 	<App />,
