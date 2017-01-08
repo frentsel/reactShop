@@ -9,7 +9,7 @@ function Product (props) {
 	return (
 		<div id={props.phone.id} className="phone">
 			<strong>{props.phone.name}</strong>
-			<img src={props.phone.imageUrl} alt={props.phone.name}/>
+			<img src={'images/'+props.phone.imageUrl} alt={props.phone.name}/>
 		</div>
 	)
 }

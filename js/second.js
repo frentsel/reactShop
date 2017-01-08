@@ -24,7 +24,7 @@ var App = {
 
 			if(this.products[id] === undefined) {
 
-				App.http.getJSON('data/'+id+'.json', {}, function (res) {
+				App.http.getJSON('../data/'+id+'.json', {}, function (res) {
 
 					_this.products[id] = res;
 					_this.update();
@@ -215,7 +215,7 @@ var App = {
 		},
 		index: function () {
 
-			App.http.getJSON('data/phones.json', {}, function (_data) {
+			App.http.getJSON('../data/phones.json', {}, function (_data) {
 
 				App.data = _data;
 				App.render.page('index', {products: _data});
@@ -271,7 +271,7 @@ var App = {
 		},
 		product: function (id) {
 
-			var path = 'data/'+id+'.json';
+			var path = '../data/'+id+'.json';
 			App.http.getJSON(path, {}, App.render.product.bind(App.render));
 		},
 		notFound: function (page) {
