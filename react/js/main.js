@@ -1,17 +1,341 @@
-"use strict";
+const { Router, Route, IndexRoute, IndexLink, Link } = ReactRouter;
+const hashHistory = Router.hashHistory;
+
+const http = {
+	ajaxSpinner: function (status) {
+		$('body').toggleClass('loading', status);
+	},
+	cache: {},
+	load: function (path, params, callback) {
+
+		var _this = this,
+			cacheKey = path + $.param(params);
+
+		if (this.cache[cacheKey] !== undefined) {
+			callback(this.cache[cacheKey]);
+			return false;
+		}
+
+		$.ajax({
+			url: path,
+			type: 'get',
+			dataType: 'text',
+			data: params,
+			beforeSend: function () {
+				_this.ajaxSpinner(true);
+			},
+			complete: function () {
+				_this.ajaxSpinner(false);
+			},
+			success: function (response) {
+				_this.cache[cacheKey] = response;
+				callback(response);
+			},
+			error: function (e) {
+				if (e.status === 404) {
+					render.page('notFound');
+				}
+			}
+		});
+	},
+	getJSON: function (path, params, callback) {
+
+		this.load(path, params, function (response) {
+			callback(JSON.parse(response));
+		});
+	}
+};
 
 const rules = [
 	{key: "name", title: "Alphabetical"},
 	{key: "age", title: "Newest"}
 ];
 
-function Product (props) {
+const Cart = React.createClass({
+
+	products: {},
+	get: {
+		quantity: function () {
+			return Object.keys(cart.products).length;
+		},
+		price: function () {
+
+			var sum = 0;
+			$.each(cart.products, function (n, product) {
+				sum += product.price || 123;
+			});
+
+			return sum;
+		}
+	},
+	add: function (id) {
+
+		var _this = this;
+
+		if (this.products[id] === undefined) {
+
+			http.getJSON('../data/' + id + '.json', {}, function (res) {
+
+				_this.products[id] = res;
+				_this.update();
+			});
+		}
+	},
+	remove: function (id) {
+		delete this.products[id];
+		this.update();
+	},
+	update: function (state) {
+
+		$('.quantity').text(this.get.quantity());
+		$('.price').text(this.get.price());
+
+		if (state === undefined) {
+			handler.cart();
+		}
+	},
+	change: function (id, obj) {
+	},
+	clear: function () {
+
+		var confirm = $('#clearConfirm').html(),
+			_this = this;
+
+		$.fancybox.open(confirm, {
+			smallBtn: false,
+			buttons: false,
+			keyboard: false,
+			afterClose: function (instance, e) {
+
+				var button = e ? e.target || e.currentTarget : null;
+
+				if (!$(button).data('value')) {
+					return false;
+				}
+
+				$(document).find('.products-table tr').remove();
+				_this.products = {};
+				_this.update();
+			}
+		});
+	},
+	show: function () {
+		ReactRouter.go('/cart');
+	},
+
+	render: function () {
+
+		return (
+			<div className="cart pull-right" onClick={this.show}>
+				<table className="cart-options">
+					<tr>
+						<td>Qtt:</td>
+						<td className="cart-option-value quantity">0</td>
+					</tr>
+					<tr>
+						<td>Price:</td>
+						<td className="cart-option-value price">0.0$</td>
+					</tr>
+				</table>
+			</div>
+		);
+	}
+});
+
+const Product = React.createClass({
+
+	getInitialState: function () {
+		return {phone: {}};
+	},
+
+	componentWillMount: function () {
+
+		let path = '../data/'+this.props.params.productId+'.json',
+			_this = this;
+
+		http.getJSON(path, {}, function (_phone) {
+			_this.setState({phone: _phone});
+		});
+	},
+
+	componentDidMount: function () {
+
+		let fancyGalleryBlock =
+			`<div className="fancybox-container" role="dialog">
+				<div className="quick-view-content">
+					<div className="quick-view-carousel">
+						<div className="fancybox-slider-wrap">
+							<ul className="fancybox-slider"></ul>
+						</div>
+					</div>
+					<div className="quick-view-aside"></div>
+					<button data-fancybox-close className="quick-view-close">X</button>
+				</div>
+			</div>`;
+
+		$(".quick_view").fancybox({
+
+			mainClass	: 'quick-view-container',
+			infobar		: false,
+			buttons		: false,
+			thumbs		: false,
+			margin      : 0,
+			touch       : {
+				vertical : false
+			},
+			mainTpl     : fancyGalleryBlock,
+
+			onInit : function( instance ) {
+
+				// Create bullet navigation links
+				var bullets = '<ul className="quick-view-bullets">';
+
+				instance.group.map(function (i) {
+					bullets += '<li><a data-index="' + i + '" href="javascript:;"><span>' + ( i + 1 ) + '</span></a></li>';
+				});
+
+				bullets += '</ul>';
+
+				$( bullets ).on('click touchstart', 'a', function() {
+
+					var index = $(this).data('index');
+
+					$.fancybox.getInstance(function() {
+						this.jumpTo( index );
+					});
+
+				}).appendTo( instance.$refs.container.find('.quick-view-carousel') );
+
+				// Add product form
+				var $element = instance.group[ instance.currIndex ].opts.$orig,
+					form_id = $element.data('qw-form');
+
+				instance.$refs.container
+					.find('.quick-view-aside')
+					.append( $( '#' + form_id )
+						.clone( true )
+						.removeClass('hidden') );
+			},
+
+			beforeMove : function( instance ) {
+				/* Set active current navigation link */
+				instance.$refs.container
+					.find('.quick-view-bullets').children()
+					.removeClass('active').eq( instance.currIndex )
+					.addClass('active');
+			}
+
+		});
+	},
+
+	addToCart: function (phone) {
+		console.info("phone: ", phone);
+	},
+
+	render: function () {
+
+		if(this.state.phone.id === undefined){
+			return <div>Loading...</div>
+		}
+
+		let phone = this.state.phone,
+			img = '../images/' + phone.images[0],
+			thumbnails = phone.images.map(img =>
+				<a data-fancybox="gallery" className="fancybox thumbnail" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>
+					<img src={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img} />
+				</a>
+			),
+			gallery = phone.images.map(img =>
+				<a className="quick_view" data-fancybox="qw1" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>#</a>
+			);
+
+		return (
+			<div>
+				<div className="row">
+					<div className="col-md-6">
+						<a href={img} className="quick_view" data-fancybox="qw1" data-qw-form="qw-form-1">
+							<img src={img} alt={phone.name} />
+						</a>
+					</div>
+					<div className="col-md-6 info">
+						<h1>{phone.name}</h1>
+						<p>{phone.description}</p>
+						<table className="product-table">
+							<tr>
+								<td>
+									<label for="qtt">Qtt:
+										<input type="number" id="qtt" className="product-quantity" value="1" />
+									</label>
+								</td>
+								<td>
+									<strong>Price: 123.00$</strong>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="javascript:" className="btn product-buy" onClick={this.addToCart.bind(this, phone)}>Add to cart</a>
+								</td>
+							</tr>
+						</table>
+						<span className="hidden">
+							{gallery}
+						</span>
+						<div id="qw-form-1" className="hidden">
+							<h3>{phone.name}</h3>
+							<p>{phone.description}</p>
+							<p>
+								<button className="btn" onClick={this.addToCart.bind(this, phone)}>Add to cart</button>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-12 product-thumbnails">
+						{thumbnails}
+					</div>
+				</div>
+			</div>
+		);
+	}
+});
+
+const Products = React.createClass({
+
+	getInitialState: function() {
+		return {products: []};
+	},
+
+	componentWillMount: function() {
+
+		var _this = this;
+		http.getJSON('../data/phones.json', {}, function (_products) {
+			_this.setState({products: _products});
+		});
+	},
+	
+	render: function(){
+
+		var list = this.state.products.map((phone) =>
+			<div id={phone.id} className="phone">
+				<Link to={'/product/'+phone.id}>
+					<strong>{phone.name}</strong>
+					<img src={'../images/'+phone.imageUrl} alt={phone.name} />
+				</Link>
+			</div>
+		);
+
+		return <div>{list}</div>;
+	}
+});
+
+function Navigation() {
 	return (
-		<div id={props.phone.id} className="phone">
-			<strong>{props.phone.name}</strong>
-			<img src={'../images/'+props.phone.imageUrl} alt={props.phone.name}/>
-		</div>
-	)
+		<ul className="nav navbar-nav">
+			<li><a href="#/">Home</a></li>
+			<li><a href="#/delivery">Delivery</a></li>
+			<li><a href="#/contact">Contact</a></li>
+		</ul>
+	);
 }
 
 class Search extends React.Component {
@@ -75,89 +399,52 @@ class Sort extends React.Component {
 	}
 }
 
-class Pages extends React.Component {
+class App extends React.Component {
 
-	constructor(props) {
-
-		super(props);
-
-		this.pages = [
-			{path: "#!/", title: "Home"},
-			{path: "#!/delivery", title: "Delivery"},
-			{path: "#!/contact", title: "Contact"},
-		];
-
-		this.state = {path: 'home'};
-		this.setPage = this.setPage.bind(this);
-	}
-
-	setPage(e){
-		this.setState({page: e.target});
-	}
-
-	render(){
-
-		var pages = this.pages.map(page =>
-			<li><a href={page.path} onClick={this.setPage}>{page.title}</a></li>
-		);
-
-		return (
-			<ul className="nav navbar-nav">
-				{pages}
-			</ul>
-		);
-	}
-}
-
-class Store extends React.Component {
-
-	constructor(props){
-
-		super(props);
-
-		let products = this.props.products;
-
-		products = this._Sort(products, rules[0].key);
-		this.state = {products: products};
-
-		this.handleSort = this.handleSort.bind(this);
-		this.handleFilter = this.handleFilter.bind(this);
-	}
-
-	_Sort(data, key){
-		return data.sort(function(a, b) {
-			if (a[key] > b[key]) return 1;
-			if (a[key] < b[key]) return -1;
-			return 0;
-		});
-	}
-
-	handleFilter(e){
-
-		let q = e.target.value.toLowerCase();
-		let products = this.props.products.filter(function(product){
-			return product.name.toLowerCase().indexOf(q) > -1;
-		});
-
-		this.setState({
-			products: products
-		});
-	}
-
-	handleSort(e){
-
-		let key = e.target.value,
-			products = this.props.products;
-
-		this.setState({
-			products: this._Sort(products, key)
-		});
-	}
+	// constructor(props){
+	//
+	// 	super(props);
+	//
+	// 	console.info("products: ", this.props.products);
+	//
+	// 	this.props.products = this.sort(this.props.products, rules[0].key);
+	// 	this.state = {products: this.props.products};
+	//
+	// 	this.handleSort = this.handleSort.bind(this);
+	// 	this.handleFilter = this.handleFilter.bind(this);
+	// }
+	//
+	// sort(data, key){
+	// 	return data.sort(function(a, b) {
+	// 		if (a[key] > b[key]) return 1;
+	// 		if (a[key] < b[key]) return -1;
+	// 		return 0;
+	// 	});
+	// }
+	//
+	// handleFilter(e){
+	//
+	// 	let q = e.target.value.toLowerCase();
+	// 	let products = this.props.products.filter(function(product){
+	// 		return product.name.toLowerCase().indexOf(q) > -1;
+	// 	});
+	//
+	// 	this.setState({
+	// 		products: products
+	// 	});
+	// }
+	//
+	// handleSort(e){
+	//
+	// 	let key = e.target.value,
+	// 		products = this.props.products = [];
+	//
+	// 	this.setState({
+	// 		products: this.sort(products, key)
+	// 	});
+	// }
 
 	render(){
-
-		let products = this.state.products.map((product) => <Product phone={product} />);
-
 		return (
 			<div>
 				<nav className="navbar navbar-default">
@@ -172,24 +459,26 @@ class Store extends React.Component {
 							<a className="navbar-brand" href="#/">ReactJS Shop</a>
 						</div>
 						<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<Pages />
+							<Navigation />
 							<Search updateFilter={this.handleFilter} />
+							<Cart />
 							<Sort updateSort={this.handleSort} rules={rules} />
 						</div>
 					</div>
 				</nav>
-				<div>
-					{products}
-				</div>
+				<Router history={hashHistory}>
+					<Route path="/" component={Products}></Route>
+					<Route path="/delivery" component={window.Delivery}></Route>
+					<Route path="/contact" component={window.Contact}></Route>
+					<Route path="/cart" component={window.Cart}></Route>
+					<Route path="/product/:productId" component={Product}></Route>
+				</Router>
 			</div>
 		);
 	}
 }
 
-$.getJSON('../data/phones.json', {}, function (products) {
-
-	ReactDOM.render(
-		<Store products={products} />,
-		document.querySelector('#store')
-	);
-});
+ReactDOM.render(
+	<App />,
+	document.querySelector('#store')
+);
