@@ -9,7 +9,7 @@ function Product (props) {
 	return (
 		<div id={props.phone.id} className="phone">
 			<strong>{props.phone.name}</strong>
-			<img src={'images/'+props.phone.imageUrl} alt={props.phone.name}/>
+			<img src={'../images/'+props.phone.imageUrl} alt={props.phone.name}/>
 		</div>
 	)
 }
@@ -186,7 +186,7 @@ class Store extends React.Component {
 	}
 }
 
-$.getJSON('data/phones.json', {}, function (products) {
+$.getJSON('../data/phones.json', {}, function (products) {
 
 	ReactDOM.render(
 		<Store products={products} />,
