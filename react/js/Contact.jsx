@@ -1,4 +1,6 @@
-window.Contact = function() {
+import React from 'react';
+
+const Contact = function() {
 	return (
 		<div>
 			<ol className="breadcrumb">
@@ -10,21 +12,21 @@ window.Contact = function() {
 				<div className="col-md-6">
 					<form className="form-horizontal" onsubmit="return false;">
 						<div className="form-group">
-							<label for="inputEmail3" className="col-sm-2 control-label">Email</label>
+							<label className="col-sm-2 control-label">Email</label>
 							<div className="col-sm-10">
-								<input type="email" className="form-control" name="email" id="inputEmail3" placeholder="Email" required />
+								<input type="email" className="form-control" name="email" placeholder="Email" required />
 							</div>
 						</div>
 						<div className="form-group">
-							<label for="Name" className="col-sm-2 control-label">Name</label>
+							<label className="col-sm-2 control-label">Name</label>
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="name" id="Name" placeholder="Name" required />
+								<input type="text" className="form-control" name="name" placeholder="Name" required />
 							</div>
 						</div>
 						<div className="form-group">
-							<label for="Message" className="col-sm-2 control-label">Message</label>
+							<label className="col-sm-2 control-label">Message</label>
 							<div className="col-sm-10">
-								<textarea name="Message" className="form-control contact-textarea" id="Message" cols="30" rows="3" placeholder="Text..."></textarea>
+								<textarea name="Message" className="form-control contact-textarea" cols="30" rows="3" placeholder="Text..."></textarea>
 							</div>
 						</div>
 						<div className="form-group">
@@ -48,3 +50,5 @@ window.Contact = function() {
 		</div>
 	);
 };
+
+export default Contact;

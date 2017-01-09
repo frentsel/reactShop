@@ -1,4 +1,6 @@
-window.Cart = function() {
+import React from 'react';
+
+const CartPage = function() {
 	return (
 		<div>
 			<ol className="breadcrumb">
@@ -13,3 +15,5 @@ window.Cart = function() {
 		</div>
 	);
 };
+
+export default CartPage

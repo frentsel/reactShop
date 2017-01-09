@@ -1,4 +1,6 @@
-window.Delivery = function() {
+import React from 'react';
+
+const Delivery = function() {
 	return (
 		<div>
 			<ol className="breadcrumb">
@@ -11,3 +13,5 @@ window.Delivery = function() {
 		</div>
 	);
 };
+
+export default Delivery;
