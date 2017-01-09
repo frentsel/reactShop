@@ -1,5 +1,9 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="#!/">Home</a></li>
+	<li class="breadcrumb-item active">Shopping Cart</li>
+</ol>
+<h1>Shoping cart</h1>
 {{#if quantity}}
-	<h1>Shoping cart</h1>
 	<table class="products-table">
 		{{#each products}}
 		<tr>
@@ -35,8 +39,10 @@
 		</tr>
 	</table>
 {{else}}
-	<h1>Your shoping cart is empty</h1>
-	<a href="#!/">&lt; Back to home page</a>
+	<div class="alert alert-info alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		Your shopping cart is empty.
+	</div>
 {{/if}}
 <script type="text/html" id="clearConfirm">
 	<div class="my_dialog">

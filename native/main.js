@@ -3,49 +3,72 @@
 var App = {
 	data: {},
 	cart: {
-		products: {},
-		get: {
+		storage: {
+			getAll: function () {
+
+				var res = [];
+
+				$.each(localStorage, function (key, el) {
+					res.push(JSON.parse(el));
+				});
+
+				return res;
+			},
+			getById: function (id) {
+
+				if(localStorage[id] !== undefined) {
+					return JSON.parse(localStorage[id]);
+				}
+
+				return undefined;
+			},
 			quantity: function () {
-				return Object.keys(App.cart.products).length;
+				return App.cart.storage.getAll().length;
 			},
 			price: function () {
 
 				var sum = 0;
-				$.each(App.cart.products, function (n, product) {
+				var products = App.cart.storage.getAll();
+
+				$.each(products, function (n, product) {
 					sum += product.price || 123;
 				});
 
 				return sum;
+			},
+			set: function (id, obj) {
+				localStorage.setItem(id, JSON.stringify(obj));
+			},
+			remove: function (id) {
+				localStorage.removeItem(id);
+			},
+			clear: function () {
+				localStorage.clear();
 			}
 		},
 		add: function (id) {
 
 			var _this = this;
 
-			if(this.products[id] === undefined) {
-
-				App.http.getJSON('../data/'+id+'.json', {}, function (res) {
-
-					_this.products[id] = res;
-					_this.update();
-				});
-			}
+			App.http.getJSON('../data/'+id+'.json', {}, function (product) {
+				_this.storage.set(id, product);
+				App.cart.update();
+			});
 		},
 		remove: function (id) {
-			delete this.products[id];
+			this.storage.remove(id);
 			this.update();
 		},
 		update: function (state) {
 
-			$('.quantity').text(this.get.quantity());
-			$('.price').text(this.get.price());
+			$('.quantity').text(this.storage.quantity());
+			$('.price').text(this.storage.price());
 
 			if(state === undefined) {
 				App.handler.cart();
 			}
 		},
-		change: function (id, obj) {
-		},
+		change: function (id, obj) {},
 		clear: function () {
 
 			var confirm = $('#clearConfirm').html(),
@@ -64,10 +87,14 @@ var App = {
 						}
 
 						$(document).find('.products-table tr').remove();
-						_this.products = {};
+						_this.storage.clear();
 						_this.update();
 					}
 				});
+		},
+		init: function () {
+			$('.quantity').text(this.storage.quantity());
+			$('.price').text(this.storage.price());
 		}
 	},
 	render: {
@@ -140,7 +167,9 @@ var App = {
 				});
 			});
 		},
-		init: function () {}
+		init: function () {
+			App.cart.init();
+		}
 	},
 	http: {
 		ajaxSpinner: function (status) {
@@ -229,44 +258,46 @@ var App = {
 		},
 		info: function () {
 
-			App.cart.products = {};
+			App.cart.storage.clear();
 			App.cart.update(true);
 			App.render.page('info');
 		},
 		cart: function () {
 
-			var cart = App.cart;
+			var storage = App.cart.storage;
 
 			App.render.page('cart', {
-				products: cart.products,
-				quantity: cart.get.quantity(),
-				price: cart.get.price(),
+				products: storage.getAll(),
+				quantity: storage.quantity(),
+				price: storage.price(),
 			});
 		},
 		sendOrder: function (obj) {
 
-			var cart = App.cart,
-				data = $(obj).serializeArray();
+			var products = App.cart.storage.getAll(),
+				data = $(obj).serializeArray(),
+				key = 'Order: ' + Date.now();
 
-			$.extend(cart.products, data);
-			document.cookie = "order="+JSON.stringify(cart.products);
+			$.extend(products, JSON.stringify(data));
+
+			document.cookie = key+"="+JSON.stringify(products);
 
 			eRouter.set('info');
 			return false;
 		},
 		checkout: function () {
 
-			var cart = App.cart;
+			var storage = App.cart.storage;
 
-			if(!cart.get.quantity()) {
+			if(!storage.quantity()) {
 				eRouter.set('cart');
 				return false;
 			}
 
 			App.render.page('checkout', {
-				products: cart.products,
-				quantity: cart.get.quantity(),
-				price: cart.get.price(),
+				products: storage.getAll(),
+				quantity: storage.quantity(),
+				price: storage.price(),
 			});
 		},
 		product: function (id) {
