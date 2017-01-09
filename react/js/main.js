@@ -53,88 +53,82 @@ const rules = [
 
 const Cart = React.createClass({
 
-	products: {},
-	get: {
-		quantity: function () {
-			return Object.keys(cart.products).length;
-		},
-		price: function () {
+	getAll: function () {
 
-			var sum = 0;
-			$.each(cart.products, function (n, product) {
-				sum += product.price || 123;
-			});
+		var res = [];
 
-			return sum;
-		}
+		$.each(localStorage, function (key, el) {
+			res.push(JSON.parse(el));
+		});
+
+		return res;
 	},
-	add: function (id) {
-
-		var _this = this;
-
-		if (this.products[id] === undefined) {
-
-			http.getJSON('../data/' + id + '.json', {}, function (res) {
-
-				_this.products[id] = res;
-				_this.update();
-			});
-		}
+	quantity: function () {
+		let products = this.state.products;
+		return Object.keys(products).length;
 	},
-	remove: function (id) {
-		delete this.products[id];
+	price: function () {
+
+		let products = this.state.products,
+			sum = 0;
+
+		$.each(products, function (k, phone) {
+			sum += (phone.price || 135);
+		});
+
+		return sum;
+	},
+	add: function (e) {
+
+		let phone = e.data;
+		localStorage.setItem(phone.id, JSON.stringify(phone));
 		this.update();
 	},
-	update: function (state) {
+	update: function () {
 
-		$('.quantity').text(this.get.quantity());
-		$('.price').text(this.get.price());
+		let products = this.getAll();
 
-		if (state === undefined) {
-			handler.cart();
-		}
-	},
-	change: function (id, obj) {
-	},
-	clear: function () {
-
-		var confirm = $('#clearConfirm').html(),
-			_this = this;
-
-		$.fancybox.open(confirm, {
-			smallBtn: false,
-			buttons: false,
-			keyboard: false,
-			afterClose: function (instance, e) {
-
-				var button = e ? e.target || e.currentTarget : null;
-
-				if (!$(button).data('value')) {
-					return false;
-				}
-
-				$(document).find('.products-table tr').remove();
-				_this.products = {};
-				_this.update();
-			}
+		this.setState({
+			products: products,
+			quantity: this.quantity(),
+			price: this.price(),
 		});
 	},
-	show: function () {
-		ReactRouter.hashHistory.push('/cart');
-	},
+	getInitialState: function () {
 
+		return {
+			products: this.getAll(),
+			quantity: 0,
+			price: 0,
+		}
+	},
+	componentDidMount: function () {
+		document.addEventListener(
+			'addToCart',
+			this.add.bind(this),
+			false
+		);
+		this.update();
+	},
+	componentWillUnmount: function () {
+		document.removeEventListener('addToCart');
+	},
+	show: function (e) {
+		ReactRouter.hashHistory.push('cart');
+	},
 	render: function () {
 
+		let cart = this.state;
 		return (
 			<div className="cart pull-right" onClick={this.show}>
 				<table className="cart-options">
 					<tr>
 						<td>Qtt:</td>
-						<td className="cart-option-value quantity">0</td>
+						<td className="cart-option-value quantity">{cart.quantity}</td>
 					</tr>
 					<tr>
 						<td>Price:</td>
-						<td className="cart-option-value price">0.0$</td>
+						<td className="cart-option-value price">{cart.price}$</td>
 					</tr>
 				</table>
 			</div>
@@ -228,14 +222,20 @@ const Product = React.createClass({
 		});
 	},
 
+	addToCartHandler: function (phone) {
+
+		const event = new Event('addToCart');
+		event.data = phone;
+		document.dispatchEvent(event);
+	},
+
 	render: function () {
 
 		if(this.state.phone.id === undefined){
 			return <div>Loading...</div>
 		}
 
-		let addToCartHandler = this.props.route.onAddToCart,
-			phone = this.state.phone,
+		let phone = this.state.phone,
 			img = '../images/' + phone.images[0],
 			thumbnails = phone.images.map(img =>
 				<a data-fancybox="gallery" className="fancybox thumbnail" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>
@@ -270,7 +270,7 @@ const Product = React.createClass({
 							</tr>
 							<tr>
 								<td>
-									<a href="javascript:" className="btn product-buy" onClick={addToCartHandler.bind(this, phone)}>Add to cart</a>
+									<a href="javascript:" className="btn product-buy" onClick={this.addToCartHandler.bind(this, phone)}>Add to cart</a>
 								</td>
 							</tr>
 						</table>
@@ -281,7 +281,7 @@ const Product = React.createClass({
 							<h3>{phone.name}</h3>
 							<p>{phone.description}</p>
 							<p>
-								<button className="btn" onClick={addToCartHandler.bind(this, phone)}>Add to cart</button>
+								<button className="btn" onClick={this.addToCartHandler.bind(this, phone)}>Add to cart</button>
 							</p>
 						</div>
 					</div>
@@ -444,11 +444,6 @@ const App = React.createClass({
 	// 	});
 	// }
 
-	cartHandler: function (obj) {
-		console.info("cartHandler", this);
-		console.info("cartHandler", obj);
-	},
-
 	render: function(){
 		return (
 			<div>
@@ -476,7 +471,7 @@ const App = React.createClass({
 					<Route path="/delivery" component={window.Delivery}></Route>
 					<Route path="/contact" component={window.Contact}></Route>
 					<Route path="/cart" component={window.Cart} ></Route>
-					<Route path="/product/:productId" component={Product} onAddToCart={this.cartHandler}></Route>
+					<Route path="/product/:productId" component={Product}></Route>
 				</Router>
 			</div>
 		);

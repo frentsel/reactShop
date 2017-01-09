@@ -1,6 +1,10 @@
 window.Contact = function() {
 	return (
 		<div>
+			<ol className="breadcrumb">
+				<li className="breadcrumb-item"><a href="#/">Home</a></li>
+				<li className="breadcrumb-item active">Contact</li>
+			</ol>
 			<h1>Contact form</h1>
 			<div className="row">
 				<div className="col-md-6">
