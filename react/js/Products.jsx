@@ -67,8 +67,8 @@ const Products = React.createClass({
     },
 
     componentWillUnmount: function () {
-        document.removeEventListener('productsSorting');
-        document.removeEventListener('productsFiltering');
+        document.removeEventListener('productsSorting', this.sorting);
+        document.removeEventListener('productsFiltering', this.filtering);
     },
 
     render: function(){
