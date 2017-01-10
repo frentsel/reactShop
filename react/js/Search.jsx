@@ -13,10 +13,14 @@ class Search extends React.Component {
     }
 
     searchHandle(e){
+
         this.setState({
-            search: e.target.value
+            search: e.target.value.toLowerCase()
         });
-        this.props.updateFilter(e);
+
+        const event = new Event('productsFiltering');
+        event.key = e.target.value.toLowerCase();
+        document.dispatchEvent(event);
     }
 
     render(){

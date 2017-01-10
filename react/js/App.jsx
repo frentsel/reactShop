@@ -31,7 +31,7 @@ const App = React.createClass({
                         </div>
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <Navigation />
-                            <Search updateFilter={this.handleFilter} />
+                            <Search />
                             <Cart />
                             <Sort />
                         </div>

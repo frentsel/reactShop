@@ -4,6 +4,8 @@ import http from './http.js';
 
 const Products = React.createClass({
 
+    products: [],
+
     _sort: function(data, key){
         return data.sort(function(a, b) {
             if (a[key] > b[key]) return 1;
@@ -22,6 +24,18 @@ const Products = React.createClass({
         });
     },
 
+    filtering: function (e) {
+
+        let q = e.key,
+            products = this.products.filter(function(product){
+                return product.name.toLowerCase().indexOf(q) > -1;
+            });
+
+        this.setState({
+            products: products
+        });
+    },
+
     getInitialState: function() {
         return {products: []};
     },
@@ -33,18 +47,28 @@ const Products = React.createClass({
             this.sorting,
             false
         );
+
+        document.addEventListener(
+            'productsFiltering',
+            this.filtering,
+            false
+        );
     },
 
     componentWillMount: function() {
 
         var _this = this;
+
         http.getJSON('../data/phones.json', {}, function (_products) {
+
             _this.setState({products: _this._sort(_products, 'name')});
+            _this.products = _this.state.products;
         });
     },
 
     componentWillUnmount: function () {
         document.removeEventListener('productsSorting');
+        document.removeEventListener('productsFiltering');
     },
 
     render: function(){
