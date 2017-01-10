@@ -1,31 +1,31 @@
 import React from 'react';
 
-class Sort extends React.Component {
+const Sort = React.createClass({
 
-    // constructor (props) {
-    //
-    //     super(props);
-    //
-    //     this.rules = props.rules;
-    //     this.state = {sort: null};
-    //
-    //     this.sortHandle = this.sortHandle.bind(this);
-    // }
+    getInitialState: function(){
+        return {
+            sort: name
+        }
+    },
 
-    sortHandle(e){
+    sortHandle: function(e){
+
+        const event = new Event('productsSorting');
+        event.key = e.target.value;
+        document.dispatchEvent(event);
+
         this.setState({
             sort: e.target.value
         });
-        // this.props.updateSort(e);
-    }
+    },
 
-    render(){
+    render: function(){
 
         return (
             <div className="sortBy pull-right">
                 <div className="pull-left">Sort by:&nbsp;</div>
                 <div className="pull-left">
-                    <select>
+                    <select onChange={this.sortHandle}>
                         <option key="1" value="name">Alphabetical</option>
                         <option key="2" value="age">Newest</option>
                     </select>
@@ -33,6 +33,6 @@ class Sort extends React.Component {
             </div>
         )
     }
-}
+});
 
 export default Sort;

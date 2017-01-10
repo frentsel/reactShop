@@ -4,16 +4,47 @@ import http from './http.js';
 
 const Products = React.createClass({
 
+    _sort: function(data, key){
+        return data.sort(function(a, b) {
+            if (a[key] > b[key]) return 1;
+            if (a[key] < b[key]) return -1;
+            return 0;
+        });
+    },
+
+    sorting: function (e) {
+
+        let products = this.state.products,
+            key = e.key;
+
+        this.setState({
+            products: this._sort(products, key)
+        });
+    },
+
     getInitialState: function() {
         return {products: []};
+    },
+
+    componentDidMount: function() {
+
+        document.addEventListener(
+            'productsSorting',
+            this.sorting,
+            false
+        );
     },
 
     componentWillMount: function() {
 
         var _this = this;
         http.getJSON('../data/phones.json', {}, function (_products) {
-            _this.setState({products: _products});
+            _this.setState({products: _this._sort(_products, 'name')});
         });
+    },
+
+    componentWillUnmount: function () {
+        document.removeEventListener('productsSorting');
     },
 
     render: function(){

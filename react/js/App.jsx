@@ -14,6 +14,7 @@ import Product from './Product.jsx';
 import Products from './Products.jsx';
 
 const App = React.createClass({
+
     render: function(){
         return (
             <div>
@@ -32,7 +33,7 @@ const App = React.createClass({
                             <Navigation />
                             <Search updateFilter={this.handleFilter} />
                             <Cart />
-                            <Sort updateSort={this.handleSort} />
+                            <Sort />
                         </div>
                     </div>
                 </nav>
