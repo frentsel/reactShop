@@ -36,6 +36,8 @@ const Cart = React.createClass({
 	},
 	update: function () {
 
+		console.info('Cart was updated!');
+
 		let products = this.getAll();
 
 		this.setState({
@@ -53,15 +55,13 @@ const Cart = React.createClass({
 		}
 	},
 	componentDidMount: function () {
-		document.addEventListener(
-			'addToCart',
-			this.add.bind(this),
-			false
-		);
+		document.addEventListener('addToCart', this.add, false);
+		document.addEventListener('updateCart', this.update, false);
 		this.update();
 	},
 	componentWillUnmount: function () {
 		document.removeEventListener('addToCart');
+		document.removeEventListener('updateCart');
 	},
 	show: function (e) {
 		hashHistory.push('cart');

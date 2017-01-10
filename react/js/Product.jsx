@@ -111,6 +111,8 @@ const Product = React.createClass({
                 <a key={num.toString()} className="quick_view" data-fancybox="qw1" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>#</a>
             );
 
+        let addHandler = this.addToCartHandler.bind(null, phone);
+
         return (
             <div>
                 <div className="row">
@@ -136,7 +138,7 @@ const Product = React.createClass({
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="javascript:" className="btn product-buy" onClick={this.addToCartHandler.bind(this, phone)}>Add to cart</a>
+                                        <a href="javascript:" className="btn product-buy" onClick={addHandler}>Add to cart</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -148,7 +150,7 @@ const Product = React.createClass({
                             <h3>{phone.name}</h3>
                             <p>{phone.description}</p>
                             <p>
-                                <button className="btn" onClick={this.addToCartHandler.bind(this, phone)}>Add to cart</button>
+                                <button className="btn" onClick={addHandler}>Add to cart</button>
                             </p>
                         </div>
                     </div>

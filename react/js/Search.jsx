@@ -2,17 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router';
 
-class Search extends React.Component {
+const Search = React.createClass({
 
-    constructor (props) {
-        super(props);
-        this.props = props;
-        this.state = {search: ''};
-
-        this.searchHandle = this.searchHandle.bind(this);
-    }
-
-    searchHandle(e){
+    getInitialState() {
+        return {search: ''};
+    },
+    searchHandle: function(e){
 
         this.setState({
             search: e.target.value.toLowerCase()
@@ -21,9 +16,8 @@ class Search extends React.Component {
         const event = new Event('productsFiltering');
         event.key = e.target.value.toLowerCase();
         document.dispatchEvent(event);
-    }
-
-    render(){
+    },
+    render: function(){
         return (
             <form className="navbar-form navbar-left">
                 <div className="form-group">
@@ -32,6 +26,6 @@ class Search extends React.Component {
             </form>
         );
     }
-}
+});
 
 export default Search;
