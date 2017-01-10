@@ -127,7 +127,7 @@ const Product = React.createClass({
                                 <tr>
                                     <td>
                                         <label>Qtt:
-                                            <input type="number" className="product-quantity" value="1" />
+                                            <input type="number" className="product-quantity" value="1" readOnly="readOnly" />
                                         </label>
                                     </td>
                                     <td>
