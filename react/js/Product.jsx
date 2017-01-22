@@ -1,5 +1,6 @@
 import React from 'react';
 import http from './http.js';
+import {connect} from 'react-redux';
 
 const Product = React.createClass({
 
@@ -87,13 +88,6 @@ const Product = React.createClass({
         });
     },
 
-    addToCartHandler: function (phone) {
-
-        const event = new Event('addToCart');
-        event.data = phone;
-        document.dispatchEvent(event);
-    },
-
     render: function () {
 
         if(this.state.phone.id === undefined){
@@ -111,7 +105,9 @@ const Product = React.createClass({
                 <a key={num.toString()} className="quick_view" data-fancybox="qw1" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>#</a>
             );
 
-        let addHandler = this.addToCartHandler.bind(null, phone);
+        let addHandler = function () {
+            this.props.onAddProduct(phone);
+        };
 
         return (
             <div>
@@ -138,7 +134,7 @@ const Product = React.createClass({
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="javascript:" className="btn product-buy" onClick={addHandler}>Add to cart</a>
+                                        <a href="javascript:" className="btn product-buy" onClick={addHandler.bind(this)}>Add to cart</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -150,7 +146,7 @@ const Product = React.createClass({
                             <h3>{phone.name}</h3>
                             <p>{phone.description}</p>
                             <p>
-                                <button className="btn" onClick={addHandler}>Add to cart</button>
+                                <button className="btn" onClick={addHandler.bind(this)}>Add to cart</button>
                             </p>
                         </div>
                     </div>
@@ -165,4 +161,16 @@ const Product = React.createClass({
     }
 });
 
-export default Product;
+export default connect(
+    state => ({
+        store: state
+    }),
+    dispatch => ({
+        onAddProduct: (phone) => {
+            dispatch({
+                type: 'ADD',
+                phone: phone
+            });
+        }
+    })
+)(Product);

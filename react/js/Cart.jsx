@@ -1,26 +1,12 @@
 import React from 'react';
 import { Router, Route, hashHistory } from 'react-router';
+import {connect} from 'react-redux';
 
 const Cart = React.createClass({
 
-	getAll: function () {
+	price: function (products) {
 
-		var res = [];
-
-		$.each(localStorage, function (key, el) {
-			res.push(JSON.parse(el));
-		});
-
-		return res;
-	},
-	quantity: function () {
-		let products = this.state.products;
-		return Object.keys(products).length;
-	},
-	price: function () {
-
-		let products = this.state.products,
-			sum = 0;
+		let sum = 0;
 
 		$.each(products, function (k, phone) {
 			sum += (phone.price || 135);
@@ -28,58 +14,27 @@ const Cart = React.createClass({
 
 		return sum;
 	},
-	add: function (e) {
-
-		let phone = e.data;
-		localStorage.setItem(phone.id, JSON.stringify(phone));
-		this.update();
-	},
-	update: function () {
-
-		console.info('Cart was updated!');
-
-		let products = this.getAll();
-
-		this.setState({
-			products: products,
-			quantity: this.quantity(),
-			price: this.price(),
-		});
-	},
-	getInitialState: function () {
-
-		return {
-			products: this.getAll(),
-			quantity: 0,
-			price: 0,
-		}
-	},
-	componentDidMount: function () {
-		document.addEventListener('addToCart', this.add, false);
-		document.addEventListener('updateCart', this.update, false);
-		this.update();
-	},
-	componentWillUnmount: function () {
-		document.removeEventListener('addToCart');
-		document.removeEventListener('updateCart');
-	},
 	show: function (e) {
 		hashHistory.push('cart');
 	},
 	render: function () {
 
-		let cart = this.state;
+		const purchases = this.props.store;
+		const price = this.price(purchases);
+
+		console.info("Cart purchases: ", purchases);
+
 		return (
 			<div className="cart pull-right" onClick={this.show}>
 				<table className="cart-options">
 					<tbody>
 						<tr>
 							<td>Qtt:</td>
-							<td className="cart-option-value quantity">{cart.quantity}</td>
+							<td className="cart-option-value quantity">{purchases.length}</td>
 						</tr>
 						<tr>
 							<td>Price:</td>
-							<td className="cart-option-value price">{cart.price}$</td>
+							<td className="cart-option-value price">{price}$</td>
 						</tr>
 					</tbody>
 				</table>
@@ -88,4 +43,8 @@ const Cart = React.createClass({
 	}
 });
 
-export default Cart
+export default connect(
+	state => ({
+		store: state
+	})
+)(Cart);

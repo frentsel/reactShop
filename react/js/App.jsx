@@ -13,8 +13,9 @@ import CartPage from './CartPage.jsx';
 import Product from './Product.jsx';
 import Products from './Products.jsx';
 
-const App = React.createClass({
+import { connect } from 'react-redux';
 
+const App = React.createClass({
     render: function(){
         return (
             <div>
@@ -49,4 +50,9 @@ const App = React.createClass({
     }
 });
 
-export default App;
+export default connect(
+    state => ({
+        store: state
+    }),
+    dispatch => ({})
+)(App);
