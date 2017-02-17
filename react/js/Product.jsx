@@ -172,7 +172,6 @@ const Product = React.createClass({
                     </div>
                     <div className="col-md-12">
                         <br />
-                        <script id="dsq-count-scr" src="//https-frentsel-github-io.disqus.com/count.js" async></script>
                         <div id="disqus_thread"></div>
                         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                     </div>

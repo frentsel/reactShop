@@ -29464,7 +29464,6 @@
 	                    'div',
 	                    { className: 'col-md-12' },
 	                    _react2['default'].createElement('br', null),
-	                    _react2['default'].createElement('script', { id: 'dsq-count-scr', src: '//https-frentsel-github-io.disqus.com/count.js', async: true }),
 	                    _react2['default'].createElement('div', { id: 'disqus_thread' }),
 	                    _react2['default'].createElement(
 	                        'noscript',
