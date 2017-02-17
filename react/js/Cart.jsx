@@ -22,8 +22,6 @@ const Cart = React.createClass({
 		let purchases = this.props.store;
 		let price = this.price(purchases);
 
-		console.info("Cart purchases: ", purchases);
-
 		return (
 			<div className="cart pull-right" onClick={this.show}>
 				<table className="cart-options">

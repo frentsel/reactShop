@@ -92,6 +92,10 @@
 			return $.extend([], state);
 		}
 
+		if (action.type === 'CLEAR') {
+			return state = [];
+		}
+
 		return state;
 	};
 	var store = (0, _redux.createStore)(handler);
@@ -19854,6 +19858,10 @@
 
 	var _ProductsJsx2 = _interopRequireDefault(_ProductsJsx);
 
+	var _CheckoutPageJsx = __webpack_require__(282);
+
+	var _CheckoutPageJsx2 = _interopRequireDefault(_CheckoutPageJsx);
+
 	var _reactRedux = __webpack_require__(227);
 
 	var App = _react2['default'].createClass({
@@ -19907,6 +19915,7 @@
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/delivery', component: _DeliveryJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/contact', component: _ContactJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/cart', component: _CartPageJsx2['default'] }),
+	                _react2['default'].createElement(_reactRouter.Route, { path: '/checkout', component: _CheckoutPageJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/product/:productId', component: _ProductJsx2['default'] })
 	            )
 	        );
@@ -26051,8 +26060,6 @@
 			var purchases = this.props.store;
 			var price = this.price(purchases);
 
-			console.info("Cart purchases: ", purchases);
-
 			return _react2['default'].createElement(
 				'div',
 				{ className: 'cart pull-right', onClick: this.show },
@@ -28958,14 +28965,24 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _PurchasesJsx = __webpack_require__(278);
+	var _PurchaseJsx = __webpack_require__(278);
 
-	var _PurchasesJsx2 = _interopRequireDefault(_PurchasesJsx);
+	var _PurchaseJsx2 = _interopRequireDefault(_PurchaseJsx);
+
+	var _reactRedux = __webpack_require__(227);
+
+	var _reactRouter = __webpack_require__(160);
 
 	var CartPage = _react2['default'].createClass({
 		displayName: 'CartPage',
 
 		render: function render() {
+
+			var products = this.props.store;
+			var purchases = products.map(function (product, index) {
+				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: product.id });
+			}) || [];
+
 			return _react2['default'].createElement(
 				'div',
 				null,
@@ -28976,8 +28993,8 @@
 						'li',
 						{ className: 'breadcrumb-item' },
 						_react2['default'].createElement(
-							'a',
-							{ href: '#/' },
+							_reactRouter.Link,
+							{ to: '/' },
 							'Home'
 						)
 					),
@@ -28990,14 +29007,103 @@
 				_react2['default'].createElement(
 					'h1',
 					null,
-					'Shoping cart'
+					'Shopping cart'
 				),
-				_react2['default'].createElement(_PurchasesJsx2['default'], null)
+				purchases.length ? _react2['default'].createElement(
+					'table',
+					{ className: 'products-table' },
+					_react2['default'].createElement(
+						'thead',
+						null,
+						purchases,
+						_react2['default'].createElement(
+							'tr',
+							null,
+							_react2['default'].createElement(
+								'td',
+								{ colSpan: '2' },
+								' '
+							),
+							_react2['default'].createElement(
+								'td',
+								null,
+								_react2['default'].createElement(
+									'div',
+									null,
+									'Total count: ',
+									_react2['default'].createElement(
+										'span',
+										{ className: 'quantity' },
+										products.length
+									)
+								)
+							),
+							_react2['default'].createElement(
+								'td',
+								null,
+								_react2['default'].createElement(
+									'div',
+									null,
+									'Total price: ',
+									_react2['default'].createElement(
+										'span',
+										{ className: 'price' },
+										135
+									),
+									'$'
+								)
+							)
+						),
+						_react2['default'].createElement(
+							'tr',
+							null,
+							_react2['default'].createElement(
+								'td',
+								{ colSpan: '5' },
+								_react2['default'].createElement(
+									'button',
+									{ className: 'btn inverse', onClick: this.props.onClear.bind(this) },
+									'Clear'
+								),
+								_react2['default'].createElement(
+									_reactRouter.Link,
+									{ className: 'btn', to: '/checkout' },
+									'Checkout'
+								)
+							)
+						)
+					)
+				) : _react2['default'].createElement(
+					'div',
+					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+					_react2['default'].createElement(
+						'button',
+						{ type: 'button', className: 'close', dataDismiss: 'alert', ariaLabel: 'Close' },
+						_react2['default'].createElement(
+							'span',
+							{ ariaHidden: 'true' },
+							'×'
+						)
+					),
+					'Your shopping cart is empty.'
+				)
 			);
 		}
 	});
 
-	exports['default'] = CartPage;
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+		return {
+			store: state
+		};
+	}, function (dispatch) {
+		return {
+			onClear: function onClear() {
+				dispatch({
+					type: 'CLEAR'
+				});
+			}
+		};
+	})(CartPage);
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "CartPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -29022,30 +29128,14 @@
 
 	var _reactRedux = __webpack_require__(227);
 
-	var InfoBlock = function InfoBlock() {
-		return _react2['default'].createElement(
-			'div',
-			{ className: 'alert alert-info alert-dismissible', role: 'alert' },
-			_react2['default'].createElement(
-				'button',
-				{ type: 'button', className: 'close', dataDismiss: 'alert', ariaLabel: 'Close' },
-				_react2['default'].createElement(
-					'span',
-					{ ariaHidden: 'true' },
-					'×'
-				)
-			),
-			'Your shopping cart is empty.'
-		);
-	};
+	var _reactRouter = __webpack_require__(160);
 
 	var Purchase = _react2['default'].createClass({
 		displayName: 'Purchase',
 
 		render: function render() {
 
-			var product = this.props.product;
-			var deleteHandler = this.props.onDelete.bind(this, product);
+			var phone = this.props.phone;
 
 			return _react2['default'].createElement(
 				'tr',
@@ -29054,15 +29144,15 @@
 					'td',
 					null,
 					_react2['default'].createElement(
-						'a',
-						{ href: '#!/product/id', className: 'thumbnail' },
-						_react2['default'].createElement('img', { src: '../images/' + product.images[0], alt: product.name })
+						_reactRouter.Link,
+						{ to: '/product/' + phone.id, className: 'thumbnail' },
+						_react2['default'].createElement('img', { src: '../images/' + phone.images[0], alt: phone.name })
 					)
 				),
 				_react2['default'].createElement(
 					'td',
 					null,
-					product.name
+					phone.name
 				),
 				_react2['default'].createElement(
 					'td',
@@ -29070,7 +29160,7 @@
 					_react2['default'].createElement('input', { type: 'number', value: '1', readOnly: true }),
 					_react2['default'].createElement(
 						'button',
-						{ type: 'button', onClick: deleteHandler },
+						{ type: 'button', onClick: this.props.onDeleteProduct.bind(this, phone) },
 						'Delete'
 					)
 				),
@@ -29078,95 +29168,10 @@
 					'td',
 					null,
 					'Price: ',
-					product.price || 135,
+					phone.price || 135,
 					'$'
 				)
 			);
-		}
-	});
-
-	var Purchases = _react2['default'].createClass({
-		displayName: 'Purchases',
-
-		render: function render() {
-			var _this = this;
-
-			var products = this.props.store;
-			var deleteProduct = function deleteProduct(index) {
-				_this.props.onDeleteProduct(index);
-			};
-
-			var purchases = products.map(function (product, index) {
-				return _react2['default'].createElement(Purchase, { product: product, key: product.id, onDelete: deleteProduct.bind(_this, index) });
-			}) || [];
-
-			var Table = _react2['default'].createElement(
-				'table',
-				{ className: 'products-table' },
-				_react2['default'].createElement(
-					'thead',
-					null,
-					purchases,
-					_react2['default'].createElement(
-						'tr',
-						null,
-						_react2['default'].createElement(
-							'td',
-							{ colSpan: '2' },
-							' '
-						),
-						_react2['default'].createElement(
-							'td',
-							null,
-							_react2['default'].createElement(
-								'div',
-								null,
-								'Total count: ',
-								_react2['default'].createElement(
-									'span',
-									{ className: 'quantity' },
-									products.length
-								)
-							)
-						),
-						_react2['default'].createElement(
-							'td',
-							null,
-							_react2['default'].createElement(
-								'div',
-								null,
-								'Total price: ',
-								_react2['default'].createElement(
-									'span',
-									{ className: 'price' },
-									135
-								),
-								'$'
-							)
-						)
-					),
-					_react2['default'].createElement(
-						'tr',
-						null,
-						_react2['default'].createElement(
-							'td',
-							{ colSpan: '5' },
-							_react2['default'].createElement(
-								'button',
-								{ className: 'btn inverse' },
-								'Clear'
-							),
-							_react2['default'].createElement(
-								'a',
-								{ className: 'btn', href: '#!/checkout' },
-								'Checkout'
-							)
-						)
-					)
-				)
-			);
-
-			return this.props.store.length ? Table : _react2['default'].createElement(InfoBlock, null);
 		}
 	});
 
@@ -29183,10 +29188,10 @@
 				});
 			}
 		};
-	})(Purchases);
+	})(Purchase);
 	module.exports = exports['default'];
 
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Purchases.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Purchase.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
 /* 279 */
@@ -29618,6 +29623,208 @@
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Products.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _PurchaseJsx = __webpack_require__(278);
+
+	var _PurchaseJsx2 = _interopRequireDefault(_PurchaseJsx);
+
+	var _reactRedux = __webpack_require__(227);
+
+	var _reactRouter = __webpack_require__(160);
+
+	var CheckoutPage = _react2['default'].createClass({
+		displayName: 'CheckoutPage',
+
+		render: function render() {
+
+			var products = this.props.store;
+			var purchases = products.map(function (product, index) {
+				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: product.id });
+			}) || [];
+
+			return _react2['default'].createElement(
+				'div',
+				null,
+				_react2['default'].createElement(
+					'ol',
+					{ className: 'breadcrumb' },
+					_react2['default'].createElement(
+						'li',
+						{ className: 'breadcrumb-item' },
+						_react2['default'].createElement(
+							_reactRouter.Link,
+							{ to: '/' },
+							'Home'
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'breadcrumb-item active' },
+						'Shopping Cart'
+					)
+				),
+				_react2['default'].createElement(
+					'h1',
+					null,
+					'Checkout'
+				),
+				purchases.length ? _react2['default'].createElement(
+					'table',
+					{ className: 'products-table' },
+					_react2['default'].createElement(
+						'thead',
+						null,
+						purchases,
+						_react2['default'].createElement(
+							'tr',
+							null,
+							_react2['default'].createElement(
+								'td',
+								{ colSpan: '2' },
+								' '
+							),
+							_react2['default'].createElement(
+								'td',
+								null,
+								_react2['default'].createElement(
+									'div',
+									null,
+									'Total count: ',
+									_react2['default'].createElement(
+										'span',
+										{ className: 'quantity' },
+										products.length
+									)
+								)
+							),
+							_react2['default'].createElement(
+								'td',
+								null,
+								_react2['default'].createElement(
+									'div',
+									null,
+									'Total price: ',
+									_react2['default'].createElement(
+										'span',
+										{ className: 'price' },
+										135
+									),
+									'$'
+								)
+							)
+						),
+						_react2['default'].createElement(
+							'tr',
+							null,
+							_react2['default'].createElement(
+								'td',
+								{ colSpan: '5' },
+								_react2['default'].createElement(
+									'form',
+									{ className: 'form-horizontal' },
+									_react2['default'].createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2['default'].createElement(
+											'label',
+											{ className: 'col-sm-2 control-label' },
+											'Email'
+										),
+										_react2['default'].createElement(
+											'div',
+											{ className: 'col-sm-10' },
+											_react2['default'].createElement('input', { type: 'email', className: 'form-control', name: 'email', placeholder: 'Email', required: true })
+										)
+									),
+									_react2['default'].createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2['default'].createElement(
+											'label',
+											{ className: 'col-sm-2 control-label' },
+											'Name'
+										),
+										_react2['default'].createElement(
+											'div',
+											{ className: 'col-sm-10' },
+											_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name', required: true })
+										)
+									),
+									_react2['default'].createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2['default'].createElement(
+											'label',
+											{ className: 'col-sm-2 control-label' },
+											'Phone'
+										),
+										_react2['default'].createElement(
+											'div',
+											{ className: 'col-sm-10' },
+											_react2['default'].createElement('input', { type: 'tel', className: 'form-control', name: 'phone', placeholder: 'Phone', required: true })
+										)
+									),
+									_react2['default'].createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2['default'].createElement(
+											'div',
+											{ className: 'col-sm-offset-2 col-sm-10' },
+											_react2['default'].createElement(
+												'button',
+												{ type: 'submit', className: 'btn btn-default' },
+												'Send order'
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				) : _react2['default'].createElement(
+					'div',
+					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+					_react2['default'].createElement(
+						'button',
+						{ type: 'button', className: 'close', dataDismiss: 'alert', ariaLabel: 'Close' },
+						_react2['default'].createElement(
+							'span',
+							{ ariaHidden: 'true' },
+							'×'
+						)
+					),
+					'Your shopping cart is empty.'
+				)
+			);
+		}
+	});
+
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+		return {
+			store: state
+		};
+	})(CheckoutPage);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "CheckoutPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

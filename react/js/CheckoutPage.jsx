@@ -3,7 +3,7 @@ import Purchase from './Purchase.jsx';
 import {connect} from 'react-redux';
 import { Router, Route, hashHistory, Link } from 'react-router';
 
-const CartPage = React.createClass({
+const CheckoutPage = React.createClass({
 
 	render: function () {
 
@@ -18,7 +18,7 @@ const CartPage = React.createClass({
 					<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
 					<li className="breadcrumb-item active">Shopping Cart</li>
 				</ol>
-				<h1>Shopping cart</h1>
+				<h1>Checkout</h1>
 				{purchases.length ?
 					(<table className="products-table">
 						<thead>
@@ -34,8 +34,31 @@ const CartPage = React.createClass({
 						</tr>
 						<tr>
 							<td colSpan="5">
-								<button className="btn inverse" onClick={this.props.onClear.bind(this)}>Clear</button>
-								<Link className="btn" to={'/checkout'}>Checkout</Link>
+								<form className="form-horizontal">
+									<div className="form-group">
+										<label className="col-sm-2 control-label">Email</label>
+										<div className="col-sm-10">
+											<input type="email" className="form-control" name="email" placeholder="Email" required />
+										</div>
+									</div>
+									<div className="form-group">
+										<label className="col-sm-2 control-label">Name</label>
+										<div className="col-sm-10">
+											<input type="text" className="form-control" name="name" placeholder="Name" required />
+										</div>
+									</div>
+									<div className="form-group">
+										<label className="col-sm-2 control-label">Phone</label>
+										<div className="col-sm-10">
+											<input type="tel" className="form-control" name="phone" placeholder="Phone" required />
+										</div>
+									</div>
+									<div className="form-group">
+										<div className="col-sm-offset-2 col-sm-10">
+											<button type="submit" className="btn btn-default">Send order</button>
+										</div>
+									</div>
+								</form>
 							</td>
 						</tr>
 						</thead>
@@ -54,12 +77,5 @@ const CartPage = React.createClass({
 export default connect(
 	state => ({
 		store: state
-	}),
-	dispatch => ({
-		onClear: () => {
-			dispatch({
-				type: 'CLEAR'
-			});
-		}
 	})
-)(CartPage);
+)(CheckoutPage);

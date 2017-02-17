@@ -12,6 +12,7 @@ import Contact from './Contact.jsx';
 import CartPage from './CartPage.jsx';
 import Product from './Product.jsx';
 import Products from './Products.jsx';
+import CheckoutPage from './CheckoutPage.jsx';
 
 import { connect } from 'react-redux';
 
@@ -43,6 +44,7 @@ const App = React.createClass({
                     <Route path="/delivery" component={Delivery}></Route>
                     <Route path="/contact" component={Contact}></Route>
                     <Route path="/cart" component={CartPage}></Route>
+                    <Route path="/checkout" component={CheckoutPage}></Route>
                     <Route path="/product/:productId" component={Product}></Route>
                 </Router>
             </div>

@@ -32,6 +32,10 @@ const handler = function (state = [], action) {
 		return $.extend([], state);
 	}
 
+	if (action.type === 'CLEAR') {
+		return state = [];
+	}
+
 	return state;
 };
 const store = createStore(handler);
