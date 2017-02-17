@@ -57,8 +57,32 @@ export default connect(
 	}),
 	dispatch => ({
 		onClear: () => {
-			dispatch({
-				type: 'CLEAR'
+
+			var confirm = `<div class="my_dialog">
+								<h3>Are you sure?</h3>
+								<p>By the way, there are many possibilities for modal dialog to appear using CSS transitions.</p>
+								<p class="tright">
+									<a data-value="0" data-fancybox-close>Cancel</a>
+									<button data-value="1" data-fancybox-close class="btn">Ok</button>
+								</p>
+							</div>`;
+
+			$.fancybox.open(confirm, {
+				smallBtn   : false,
+				buttons    : false,
+				keyboard   : false,
+				afterClose : function( instance, e ) {
+
+					var button = e ? e.target || e.currentTarget : null;
+
+					if(!$(button).data('value')) {
+						return false;
+					}
+
+					dispatch({
+						type: 'CLEAR'
+					});
+				}
 			});
 		}
 	})

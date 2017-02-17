@@ -29098,8 +29098,25 @@
 	}, function (dispatch) {
 		return {
 			onClear: function onClear() {
-				dispatch({
-					type: 'CLEAR'
+
+				var confirm = '<div class="my_dialog">\n\t\t\t\t\t\t\t\t<h3>Are you sure?</h3>\n\t\t\t\t\t\t\t\t<p>By the way, there are many possibilities for modal dialog to appear using CSS transitions.</p>\n\t\t\t\t\t\t\t\t<p class="tright">\n\t\t\t\t\t\t\t\t\t<a data-value="0" data-fancybox-close>Cancel</a>\n\t\t\t\t\t\t\t\t\t<button data-value="1" data-fancybox-close class="btn">Ok</button>\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t</div>';
+
+				$.fancybox.open(confirm, {
+					smallBtn: false,
+					buttons: false,
+					keyboard: false,
+					afterClose: function afterClose(instance, e) {
+
+						var button = e ? e.target || e.currentTarget : null;
+
+						if (!$(button).data('value')) {
+							return false;
+						}
+
+						dispatch({
+							type: 'CLEAR'
+						});
+					}
 				});
 			}
 		};
@@ -29677,8 +29694,17 @@
 					),
 					_react2['default'].createElement(
 						'li',
+						{ className: 'breadcrumb-item' },
+						_react2['default'].createElement(
+							_reactRouter.Link,
+							{ to: '/cart' },
+							'Shopping Cart'
+						)
+					),
+					_react2['default'].createElement(
+						'li',
 						{ className: 'breadcrumb-item active' },
-						'Shopping Cart'
+						'Checkout'
 					)
 				),
 				_react2['default'].createElement(

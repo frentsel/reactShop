@@ -16,7 +16,8 @@ const CheckoutPage = React.createClass({
 			<div>
 				<ol className="breadcrumb">
 					<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
-					<li className="breadcrumb-item active">Shopping Cart</li>
+					<li className="breadcrumb-item"><Link to={'/cart'}>Shopping Cart</Link></li>
+					<li className="breadcrumb-item active">Checkout</li>
 				</ol>
 				<h1>Checkout</h1>
 				{purchases.length ?
