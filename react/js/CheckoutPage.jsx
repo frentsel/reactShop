@@ -5,6 +5,21 @@ import { Router, Route, hashHistory, Link } from 'react-router';
 
 const CheckoutPage = React.createClass({
 
+	sendForm: function (e) {
+
+		e.preventDefault();
+
+		hashHistory.push({
+			pathname: '/info',
+			query: {
+				name: e.target.name.value,
+				// email: e.target.name.email,
+				// phone: e.target.name.phone,
+				status: true
+			}
+		});
+	},
+
 	render: function () {
 
 		let products = this.props.store;
@@ -35,7 +50,7 @@ const CheckoutPage = React.createClass({
 						</tr>
 						<tr>
 							<td colSpan="5">
-								<form className="form-horizontal">
+								<form className="form-horizontal" onSubmit={this.sendForm.bind(this)}>
 									<div className="form-group">
 										<label className="col-sm-2 control-label">Email</label>
 										<div className="col-sm-10">
@@ -45,13 +60,13 @@ const CheckoutPage = React.createClass({
 									<div className="form-group">
 										<label className="col-sm-2 control-label">Name</label>
 										<div className="col-sm-10">
-											<input type="text" className="form-control" name="name" placeholder="Name" required />
+											<input type="text" className="form-control" name="name" placeholder="Name" />
 										</div>
 									</div>
 									<div className="form-group">
 										<label className="col-sm-2 control-label">Phone</label>
 										<div className="col-sm-10">
-											<input type="tel" className="form-control" name="phone" placeholder="Phone" required />
+											<input type="tel" className="form-control" name="phone" placeholder="Phone" />
 										</div>
 									</div>
 									<div className="form-group">

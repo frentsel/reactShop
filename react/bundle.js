@@ -19862,6 +19862,10 @@
 
 	var _CheckoutPageJsx2 = _interopRequireDefault(_CheckoutPageJsx);
 
+	var _InfoPageJsx = __webpack_require__(283);
+
+	var _InfoPageJsx2 = _interopRequireDefault(_InfoPageJsx);
+
 	var _reactRedux = __webpack_require__(227);
 
 	var App = _react2['default'].createClass({
@@ -19916,6 +19920,7 @@
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/contact', component: _ContactJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/cart', component: _CartPageJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/checkout', component: _CheckoutPageJsx2['default'] }),
+	                _react2['default'].createElement(_reactRouter.Route, { path: '/info', component: _InfoPageJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/product/:productId', component: _ProductJsx2['default'] })
 	            )
 	        );
@@ -29234,6 +29239,8 @@
 
 	var _reactRedux = __webpack_require__(227);
 
+	var _reactRouter = __webpack_require__(160);
+
 	var Product = _react2['default'].createClass({
 	    displayName: 'Product',
 
@@ -29253,7 +29260,7 @@
 
 	    componentDidMount: function componentDidMount() {
 
-	        var fancyGalleryBlock = '<div className="fancybox-container" role="dialog">\n\t\t\t\t<div className="quick-view-content">\n\t\t\t\t\t<div className="quick-view-carousel">\n\t\t\t\t\t\t<div className="fancybox-slider-wrap">\n\t\t\t\t\t\t\t<ul className="fancybox-slider"></ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div className="quick-view-aside"></div>\n\t\t\t\t\t<button data-fancybox-close className="quick-view-close">X</button>\n\t\t\t\t</div>\n\t\t\t</div>';
+	        var fancyGalleryBlock = '<div class="fancybox-container" role="dialog">\n\t\t\t\t<div class="quick-view-content">\n\t\t\t\t\t<div class="quick-view-carousel">\n\t\t\t\t\t\t<div class="fancybox-slider-wrap">\n\t\t\t\t\t\t\t<ul class="fancybox-slider"></ul>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="quick-view-aside"></div>\n\t\t\t\t\t<button data-fancybox-close class="quick-view-close">X</button>\n\t\t\t\t</div>\n\t\t\t</div>';
 
 	        $(".quick_view").fancybox({
 
@@ -29270,7 +29277,7 @@
 	            onInit: function onInit(instance) {
 
 	                // Create bullet navigation links
-	                var bullets = '<ul className="quick-view-bullets">';
+	                var bullets = '<ul class="quick-view-bullets">';
 
 	                instance.group.map(function (i) {
 	                    bullets += '<li><a data-index="' + i + '" href="javascript:;"><span>' + (i + 1) + '</span></a></li>';
@@ -29300,15 +29307,6 @@
 	            }
 	        });
 
-	        /**
-	         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	        /*
-	         var disqus_config = function () {
-	         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-	         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	         };
-	         */
 	        (function () {
 	            // DON'T EDIT BELOW THIS LINE
 	            var d = document,
@@ -29353,6 +29351,24 @@
 	        return _react2['default'].createElement(
 	            'div',
 	            null,
+	            _react2['default'].createElement(
+	                'ol',
+	                { className: 'breadcrumb' },
+	                _react2['default'].createElement(
+	                    'li',
+	                    { className: 'breadcrumb-item' },
+	                    _react2['default'].createElement(
+	                        _reactRouter.Link,
+	                        { to: '/' },
+	                        'Home'
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'li',
+	                    { className: 'breadcrumb-item active' },
+	                    phone.name
+	                )
+	            ),
 	            _react2['default'].createElement(
 	                'div',
 	                { className: 'row' },
@@ -29703,6 +29719,21 @@
 	var CheckoutPage = _react2['default'].createClass({
 		displayName: 'CheckoutPage',
 
+		sendForm: function sendForm(e) {
+
+			e.preventDefault();
+
+			_reactRouter.hashHistory.push({
+				pathname: '/info',
+				query: {
+					name: e.target.name.value,
+					// email: e.target.name.email,
+					// phone: e.target.name.phone,
+					status: true
+				}
+			});
+		},
+
 		render: function render() {
 
 			var products = this.props.store;
@@ -29798,7 +29829,7 @@
 								{ colSpan: '5' },
 								_react2['default'].createElement(
 									'form',
-									{ className: 'form-horizontal' },
+									{ className: 'form-horizontal', onSubmit: this.sendForm.bind(this) },
 									_react2['default'].createElement(
 										'div',
 										{ className: 'form-group' },
@@ -29824,7 +29855,7 @@
 										_react2['default'].createElement(
 											'div',
 											{ className: 'col-sm-10' },
-											_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name', required: true })
+											_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name' })
 										)
 									),
 									_react2['default'].createElement(
@@ -29838,7 +29869,7 @@
 										_react2['default'].createElement(
 											'div',
 											{ className: 'col-sm-10' },
-											_react2['default'].createElement('input', { type: 'tel', className: 'form-control', name: 'phone', placeholder: 'Phone', required: true })
+											_react2['default'].createElement('input', { type: 'tel', className: 'form-control', name: 'phone', placeholder: 'Phone' })
 										)
 									),
 									_react2['default'].createElement(
@@ -29884,6 +29915,106 @@
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "CheckoutPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _PurchaseJsx = __webpack_require__(278);
+
+	var _PurchaseJsx2 = _interopRequireDefault(_PurchaseJsx);
+
+	var _reactRedux = __webpack_require__(227);
+
+	var _reactRouter = __webpack_require__(160);
+
+	var Info = _react2['default'].createClass({
+		displayName: 'Info',
+
+		render: function render() {
+
+			var data = this.props.location.query;
+
+			if (!data.name || !data.status) {
+				console.error("Error :(");
+				_reactRouter.hashHistory.push('/');
+				return false;
+			}
+
+			if (this.props.store.length) {
+				this.props.clear();
+			}
+
+			return _react2['default'].createElement(
+				'div',
+				null,
+				_react2['default'].createElement(
+					'ol',
+					{ className: 'breadcrumb' },
+					_react2['default'].createElement(
+						'li',
+						{ className: 'breadcrumb-item' },
+						_react2['default'].createElement(
+							_reactRouter.Link,
+							{ to: '/' },
+							'Home'
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'breadcrumb-item active' },
+						'Info page'
+					)
+				),
+				_react2['default'].createElement(
+					'h1',
+					null,
+					data.name.toUpperCase(),
+					', Your order was send'
+				),
+				_react2['default'].createElement(
+					'div',
+					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+					_react2['default'].createElement(
+						_reactRouter.Link,
+						{ to: '/' },
+						'Back home'
+					)
+				)
+			);
+		}
+	});
+
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+		return {
+			store: state
+		};
+	}, function (dispatch) {
+		return {
+			clear: function clear() {
+				dispatch({
+					type: 'CLEAR'
+				});
+			}
+		};
+	})(Info);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "InfoPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

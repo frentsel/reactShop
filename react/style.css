@@ -116,7 +116,9 @@ table.products-table td {
 
 table.products-table a.thumbnail {
     max-width: 80px;
-    margin-bottom: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 table.products-table img {

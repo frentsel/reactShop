@@ -1,6 +1,7 @@
 import React from 'react';
 import http from './http.js';
 import {connect} from 'react-redux';
+import { Router, Route, hashHistory, Link } from 'react-router';
 
 const Product = React.createClass({
 
@@ -21,15 +22,15 @@ const Product = React.createClass({
     componentDidMount: function () {
 
         let fancyGalleryBlock =
-            `<div className="fancybox-container" role="dialog">
-				<div className="quick-view-content">
-					<div className="quick-view-carousel">
-						<div className="fancybox-slider-wrap">
-							<ul className="fancybox-slider"></ul>
+            `<div class="fancybox-container" role="dialog">
+				<div class="quick-view-content">
+					<div class="quick-view-carousel">
+						<div class="fancybox-slider-wrap">
+							<ul class="fancybox-slider"></ul>
 						</div>
 					</div>
-					<div className="quick-view-aside"></div>
-					<button data-fancybox-close className="quick-view-close">X</button>
+					<div class="quick-view-aside"></div>
+					<button data-fancybox-close class="quick-view-close">X</button>
 				</div>
 			</div>`;
 
@@ -48,7 +49,7 @@ const Product = React.createClass({
             onInit : function( instance ) {
 
                 // Create bullet navigation links
-                var bullets = '<ul className="quick-view-bullets">';
+                var bullets = '<ul class="quick-view-bullets">';
 
                 instance.group.map(function (i) {
                     bullets += '<li><a data-index="' + i + '" href="javascript:;"><span>' + ( i + 1 ) + '</span></a></li>';
@@ -86,15 +87,6 @@ const Product = React.createClass({
             }
         });
 
-        /**
-         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-        /*
-         var disqus_config = function () {
-         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-         };
-         */
         (function() { // DON'T EDIT BELOW THIS LINE
             var d = document, s = d.createElement('script');
             s.src = '//https-frentsel-github-io-1.disqus.com/embed.js';
@@ -126,6 +118,10 @@ const Product = React.createClass({
 
         return (
             <div>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
+                    <li className="breadcrumb-item active">{phone.name}</li>
+                </ol>
                 <div className="row">
                     <div className="col-md-6">
                         <a href={img} className="quick_view" data-fancybox="qw1" data-qw-form="qw-form-1">
