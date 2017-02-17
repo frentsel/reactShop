@@ -10,12 +10,12 @@ const InfoBlock = function () {
 	);
 };
 
-const Purchase = React.createClass({
+let Purchase = React.createClass({
 
 	render: function () {
 
-		const product = this.props.product;
-		const deleteHandler = this.props.onDelete.bind(this, product);
+		let product = this.props.product;
+		let deleteHandler = this.props.onDelete.bind(this, product);
 
 		return (
 			<tr>
@@ -37,14 +37,13 @@ const Purchase = React.createClass({
 	}
 });
 
-const Purchases = React.createClass({
+let Purchases = React.createClass({
 
 	render: function () {
 
-		const products = this.props.store;
-		const deleteProduct = (index) => {
+		let products = this.props.store;
+		let deleteProduct = (index) => {
 			this.props.onDeleteProduct(index);
-			this.props.getAll();
 		};
 
 		let purchases = products.map((product, index) => {
@@ -83,11 +82,6 @@ export default connect(
 		store: state
 	}),
 	dispatch => ({
-		getAll: () => {
-			dispatch({
-				type: 'GET_ALL'
-			});
-		},
 		onDeleteProduct: (id) => {
 			dispatch({
 				type: 'DELETE',

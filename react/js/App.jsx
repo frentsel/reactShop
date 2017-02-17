@@ -53,6 +53,5 @@ const App = React.createClass({
 export default connect(
     state => ({
         store: state
-    }),
-    dispatch => ({})
+    })
 )(App);

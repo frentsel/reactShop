@@ -1,13 +1,9 @@
 import React from 'react';
 import Purchases from './Purchases.jsx';
-import {connect} from 'react-redux';
 
 const CartPage = React.createClass({
 
 	render: function () {
-
-		console.info("CartPage store: ", this.props.state);
-
 		return (
 			<div>
 				<ol className="breadcrumb">
@@ -21,8 +17,4 @@ const CartPage = React.createClass({
 	}
 });
 
-export default connect(
-	store => ({
-		state: store
-	})
-)(CartPage);
+export default CartPage;

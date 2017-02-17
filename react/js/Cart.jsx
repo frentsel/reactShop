@@ -19,8 +19,8 @@ const Cart = React.createClass({
 	},
 	render: function () {
 
-		const purchases = this.props.store;
-		const price = this.price(purchases);
+		let purchases = this.props.store;
+		let price = this.price(purchases);
 
 		console.info("Cart purchases: ", purchases);
 
@@ -46,5 +46,5 @@ const Cart = React.createClass({
 export default connect(
 	state => ({
 		store: state
-	})
+	}),
 )(Cart);

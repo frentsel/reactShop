@@ -13,28 +13,26 @@ const handler = function (state = [], action) {
 		}, false);
 	};
 
-	switch (action.type) {
-
-		case 'GET_ALL':
-			return state;
-
-		case 'ADD':
-
-			if(state.length === 0)
-				return [...state, action.phone];
-
-			if(!findPhone(action.phone))
-				return [...state, action.phone];
-
-			return state;
-
-		case 'DELETE':
-			state.splice(action.id, 1);
-			return state;
-
-		default:
-			return state
+	if (action.type === 'GET_ALL') {
+		return state;
 	}
+
+	if (action.type === 'ADD') {
+		if(state.length === 0)
+			return [...state, action.phone];
+
+		if(!findPhone(action.phone))
+			return [...state, action.phone];
+
+		return state;
+	}
+
+	if (action.type === 'DELETE') {
+		state.splice(action.id, 1);
+		return $.extend([], state);
+	}
+
+	return state;
 };
 const store = createStore(handler);
 
