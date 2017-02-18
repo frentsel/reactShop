@@ -1,4 +1,5 @@
 {
+  "price": 310,
   "additionalFeatures": "Sensors: proximity, ambient light, barometer, gyroscope",
   "android": {
     "os": "Android 3.0",

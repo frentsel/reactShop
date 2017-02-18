@@ -9,6 +9,7 @@ import Product from './Product.jsx';
 import Products from './Products.jsx';
 import CheckoutPage from './CheckoutPage.jsx';
 import InfoPage from './InfoPage.jsx';
+import NotFound from './NotFound.jsx';
 
 
 const App = React.createClass({
@@ -23,6 +24,7 @@ const App = React.createClass({
                     <Route path="/checkout" component={CheckoutPage}></Route>
                     <Route path="/info" component={InfoPage}></Route>
                     <Route path="/product/:productId" component={Product}></Route>
+                    <Route path="*" component={NotFound}></Route>
                 </Route>
             </Router>
         );

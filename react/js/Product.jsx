@@ -2,7 +2,6 @@ import React from 'react';
 import http from './http.js';
 import {connect} from 'react-redux';
 import { Router, Route, hashHistory, Link } from 'react-router';
-import ReactDisqusThread from 'react-disqus-thread';
 
 const Product = React.createClass({
 
@@ -166,13 +165,6 @@ const Product = React.createClass({
                     <div className="col-md-12">
                         <br />
                         <div id="disqus_thread"></div>
-                        {/*<br />
-                        <ReactDisqusThread
-                            shortname="example"
-                            identifier="something-unique-12345"
-                            title="Example Thread"
-                            url="http://www.example.com/example-thread"
-                            category_id="123456" />*/}
                     </div>
                 </div>
             </div>

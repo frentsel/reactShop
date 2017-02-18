@@ -1,5 +1,4 @@
 import React from 'react';
-import Purchase from './Purchase.jsx';
 import {connect} from 'react-redux';
 import { Router, Route, hashHistory, Link } from 'react-router';
 
@@ -36,7 +35,7 @@ const Info = React.createClass({
 
 export default connect(
 	state => ({
-		store: state
+		store: state.purchases
 	}),
 	dispatch => ({
 		clear: () => {
