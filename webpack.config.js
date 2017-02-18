@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./react/js/main.js",
+    entry: "./react/js/App.jsx",
     output: {
         path: __dirname + '/react/',
         publicPath: "react/",

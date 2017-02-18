@@ -53,8 +53,9 @@ const CheckoutPage = React.createClass({
 							</td>
 						</tr>
 						<tr>
+
 							<td colSpan="5">
-								<form className="form-horizontal" onSubmit={this.sendForm.bind(this)}>
+								<form className="form-horizontal" onSubmit={this.sendForm}>
 									<div className="form-group">
 										<label className="col-sm-2 control-label">Email</label>
 										<div className="col-sm-10">

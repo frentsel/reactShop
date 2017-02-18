@@ -1,5 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { syncHistoryWithStore } from 'react-router-redux';
+
+import reducers from './reducers';
+const store = createStore(reducers);
+const history = syncHistoryWithStore(hashHistory, store);
 
 import Layout from './Layout.jsx';
 import Delivery from './Delivery.jsx';
@@ -11,24 +19,20 @@ import CheckoutPage from './CheckoutPage.jsx';
 import InfoPage from './InfoPage.jsx';
 import NotFound from './NotFound.jsx';
 
-
-const App = React.createClass({
-    render(){
-        return (
-            <Router history={hashHistory}>
-                <Route component={Layout}>
-                    <Route path="/" component={Products}></Route>
-                    <Route path="/delivery" component={Delivery}></Route>
-                    <Route path="/contact" component={Contact}></Route>
-                    <Route path="/cart" component={CartPage}></Route>
-                    <Route path="/checkout" component={CheckoutPage}></Route>
-                    <Route path="/info" component={InfoPage}></Route>
-                    <Route path="/product/:productId" component={Product}></Route>
-                    <Route path="*" component={NotFound}></Route>
-                </Route>
-            </Router>
-        );
-    }
-});
-
-export default App;
+ReactDOM.render(
+    <Provider store={store}>
+        <Router history={history}>
+            <Route component={Layout}>
+                <Route path="/" component={Products}></Route>
+                <Route path="/delivery" component={Delivery}></Route>
+                <Route path="/contact" component={Contact}></Route>
+                <Route path="/cart" component={CartPage}></Route>
+                <Route path="/checkout" component={CheckoutPage}></Route>
+                <Route path="/info" component={InfoPage}></Route>
+                <Route path="/product/:productId" component={Product}></Route>
+                <Route path="*" component={NotFound}></Route>
+            </Route>
+        </Router>
+    </Provider>,
+    document.querySelector('#store')
+);

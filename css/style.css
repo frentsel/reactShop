@@ -14,7 +14,14 @@ body {
 }
 
 a {
-    color: #567;
+    color: #333;
+}
+
+.breadcrumb a,
+.breadcrumb a:hover,
+.breadcrumb a:visited,
+.breadcrumb a:link {
+    color: #f85563;
 }
 
 .btn {
@@ -67,6 +74,10 @@ input.form-control {
     height: 30px;
 }
 
+textarea.form-control.contact-textarea {
+    border-radius: 0;
+}
+
 .sortBy {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -99,6 +110,7 @@ input.form-control {
     width: 100%;
 }
 
+.navbar-default .navbar-brand,
 .cart-option-value {
     color: #f85563;
 }
