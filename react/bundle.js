@@ -29773,6 +29773,10 @@
 		render: function render() {
 
 			var products = this.props.store;
+			var price = products.reduce(function (res, phone) {
+				res += phone.price || 135;
+				return res;
+			}, 0);
 			var purchases = products.map(function (product, index) {
 				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
 			}) || [];
@@ -29851,7 +29855,7 @@
 									_react2['default'].createElement(
 										'span',
 										{ className: 'price' },
-										135
+										price
 									),
 									'$'
 								)
@@ -30034,7 +30038,7 @@
 		return {
 			clear: function clear() {
 				dispatch({
-					type: 'CLEAR'
+					type: 'CLEAR_CART'
 				});
 			}
 		};

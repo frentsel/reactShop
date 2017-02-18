@@ -41,7 +41,7 @@ export default connect(
 	dispatch => ({
 		clear: () => {
 			dispatch({
-				type: 'CLEAR'
+				type: 'CLEAR_CART'
 			});
 		}
 	})

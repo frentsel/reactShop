@@ -23,6 +23,10 @@ const CheckoutPage = React.createClass({
 	render: function () {
 
 		let products = this.props.store;
+		let price = products.reduce(function (res, phone) {
+			res += (phone.price || 135);
+			return res;
+		}, 0);
 		let purchases = products.map((product, index) =>
 				<Purchase phone={product} key={index} />
 			) || [];
@@ -45,7 +49,7 @@ const CheckoutPage = React.createClass({
 								<div>Total count: <span className="quantity">{products.length}</span></div>
 							</td>
 							<td>
-								<div>Total price: <span className="price">{135}</span>$</div>
+								<div>Total price: <span className="price">{price}</span>$</div>
 							</td>
 						</tr>
 						<tr>
