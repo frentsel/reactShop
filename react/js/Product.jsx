@@ -2,6 +2,7 @@ import React from 'react';
 import http from './http.js';
 import {connect} from 'react-redux';
 import { Router, Route, hashHistory, Link } from 'react-router';
+import ReactDisqusThread from 'react-disqus-thread';
 
 const Product = React.createClass({
 
@@ -86,13 +87,6 @@ const Product = React.createClass({
                     .addClass('active');
             }
         });
-
-        (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            s.src = '//https-frentsel-github-io-1.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
     },
 
     render: function () {
@@ -165,11 +159,16 @@ const Product = React.createClass({
                 <div className="row">
                     <div className="col-md-12 product-thumbnails">
                         {thumbnails}
-                    </div>
+                    </div>git
                     <div className="col-md-12">
                         <br />
-                        <div id="disqus_thread"></div>
-                        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                        <ReactDisqusThread
+                            shortname="example"
+                            identifier="something-unique-12345"
+                            title="Example Thread"
+                            url="http://www.example.com/example-thread"
+                            category_id="123456"
+                            onNewComment={this.handleNewComment}/>
                     </div>
                 </div>
             </div>
