@@ -87,6 +87,13 @@ const Product = React.createClass({
                     .addClass('active');
             }
         });
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//https-frentsel-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
     },
 
     render: function () {
@@ -105,10 +112,6 @@ const Product = React.createClass({
             gallery = phone.images.map((img, num) =>
                 <a key={num.toString()} className="quick_view" data-fancybox="qw1" href={'http://angular.github.io/angular-phonecat/step-13/app/img/phones/'+img}>#</a>
             );
-
-        let addHandler = function () {
-            this.props.onAddProduct(phone);
-        };
 
         return (
             <div>
@@ -139,7 +142,7 @@ const Product = React.createClass({
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="javascript:" className="btn product-buy" onClick={addHandler.bind(this)}>Add to cart</a>
+                                        <button className="btn product-buy" onClick={this.props.onAddProduct.bind(this, phone)}>Add to cart</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -151,7 +154,7 @@ const Product = React.createClass({
                             <h3>{phone.name}</h3>
                             <p>{phone.description}</p>
                             <p>
-                                <button className="btn" onClick={addHandler.bind(this)}>Add to cart</button>
+                                <button className="btn" onClick={this.props.onAddProduct.bind(this, phone)}>Add to cart</button>
                             </p>
                         </div>
                     </div>
@@ -159,15 +162,17 @@ const Product = React.createClass({
                 <div className="row">
                     <div className="col-md-12 product-thumbnails">
                         {thumbnails}
-                    </div>git
+                    </div>
                     <div className="col-md-12">
                         <br />
+                        <div id="disqus_thread"></div>
+                        {/*<br />
                         <ReactDisqusThread
                             shortname="example"
                             identifier="something-unique-12345"
                             title="Example Thread"
                             url="http://www.example.com/example-thread"
-                            category_id="123456" />
+                            category_id="123456" />*/}
                     </div>
                 </div>
             </div>
@@ -181,6 +186,7 @@ export default connect(
     }),
     dispatch => ({
         onAddProduct: (phone) => {
+
             dispatch({
                 type: 'ADD_TO_CART',
                 phone: phone

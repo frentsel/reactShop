@@ -29208,6 +29208,15 @@
 	                instance.$refs.container.find('.quick-view-bullets').children().removeClass('active').eq(instance.currIndex).addClass('active');
 	            }
 	        });
+
+	        (function () {
+	            // DON'T EDIT BELOW THIS LINE
+	            var d = document,
+	                s = d.createElement('script');
+	            s.src = '//https-frentsel-github-io.disqus.com/embed.js';
+	            s.setAttribute('data-timestamp', +new Date());
+	            (d.head || d.body).appendChild(s);
+	        })();
 	    },
 
 	    render: function render() {
@@ -29236,10 +29245,6 @@
 	                '#'
 	            );
 	        });
-
-	        var addHandler = function addHandler() {
-	            this.props.onAddProduct(phone);
-	        };
 
 	        return _react2['default'].createElement(
 	            'div',
@@ -29323,8 +29328,8 @@
 	                                    'td',
 	                                    null,
 	                                    _react2['default'].createElement(
-	                                        'a',
-	                                        { href: 'javascript:', className: 'btn product-buy', onClick: addHandler.bind(this) },
+	                                        'button',
+	                                        { className: 'btn product-buy', onClick: this.props.onAddProduct.bind(this, phone) },
 	                                        'Add to cart'
 	                                    )
 	                                )
@@ -29354,7 +29359,7 @@
 	                            null,
 	                            _react2['default'].createElement(
 	                                'button',
-	                                { className: 'btn', onClick: addHandler.bind(this) },
+	                                { className: 'btn', onClick: this.props.onAddProduct.bind(this, phone) },
 	                                'Add to cart'
 	                            )
 	                        )
@@ -29369,17 +29374,11 @@
 	                    { className: 'col-md-12 product-thumbnails' },
 	                    thumbnails
 	                ),
-	                'git',
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'col-md-12' },
 	                    _react2['default'].createElement('br', null),
-	                    _react2['default'].createElement(_reactDisqusThread2['default'], {
-	                        shortname: 'example',
-	                        identifier: 'something-unique-12345',
-	                        title: 'Example Thread',
-	                        url: 'http://www.example.com/example-thread',
-	                        category_id: '123456' })
+	                    _react2['default'].createElement('div', { id: 'disqus_thread' })
 	                )
 	            )
 	        );
@@ -29393,6 +29392,7 @@
 	}, function (dispatch) {
 	    return {
 	        onAddProduct: function onAddProduct(phone) {
+
 	            dispatch({
 	                type: 'ADD_TO_CART',
 	                phone: phone
@@ -29401,6 +29401,13 @@
 	    };
 	})(Product);
 	module.exports = exports['default'];
+	/*<br />
+	<ReactDisqusThread
+	   shortname="example"
+	   identifier="something-unique-12345"
+	   title="Example Thread"
+	   url="http://www.example.com/example-thread"
+	   category_id="123456" />*/
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Product.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
