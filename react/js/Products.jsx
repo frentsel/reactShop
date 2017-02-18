@@ -29,10 +29,11 @@ const Products = React.createClass({
                     <strong>{phone.name}</strong>
                     <img src={'../images/' + phone.imageUrl} alt={phone.name}/>
                 </Link>
+                <div className="price">{Number(phone.price).toFixed(2)}$</div>
             </div>
         );
 
-        return <div>{list}</div>;
+        return <div className="products">{list}</div>;
     }
 });
 

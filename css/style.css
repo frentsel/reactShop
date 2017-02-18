@@ -90,6 +90,10 @@ textarea.form-control.contact-textarea {
     height: 30px;
 }
 
+.alert-info {
+    background-color: #f6fcff;
+}
+
 .cart {
     cursor: pointer;
     overflow: hidden;
@@ -137,19 +141,34 @@ table.products-table img {
     width: 100%;
 }
 
+.products {
+    border-left: 1px solid #e7e7e7;
+    overflow: hidden;
+}
+
 .phone.selected {
     box-shadow: 0 0 4px 2px rgba(0,0,0,.12) inset;
 }
 
+.phone .price {
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto 10px;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    color: #696969;
+}
+
 .phone {
     float: left;
-    margin-top: 10px;
-    width: 25%;
-    height: 200px;
+    width: 20%;
+    height: 240px;
+    border-top: 1px solid #e7e7e7;
     position: relative;
     text-align: center;
-    text-transform: uppercase;
-    padding: 7px 12px 0;
+    padding: 0 20px 0;
+    border-right: 1px solid #e7e7e7;
 }
 
 .product-table {
@@ -195,10 +214,13 @@ table.products-table img {
 
 .phone strong {
     cursor: pointer;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: inline-block;
+    height: 48px;
+    line-height: 18px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #000;
+    font-weight: normal;
 }
 
 .product-thumbnails {

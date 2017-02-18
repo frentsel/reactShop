@@ -1,8 +1,11 @@
-{{#products}}
-<div id="{{id}}" class="phone">
-	<a href="#!/product/{{id}}">
-		<strong>{{name}}</strong>
-		<img src="../images/{{imageUrl}}" alt="{{name}}">
-	</a>
+<div class="products">
+	{{#products}}
+	<div id="{{id}}" class="phone">
+		<a href="#!/product/{{id}}">
+			<strong>{{name}}</strong>
+			<img src="../images/{{imageUrl}}" alt="{{name}}">
+		</a>
+		<div class="price">{Number(price).toFixed(2)}$</div>
+	</div>
+	{{/products}}
 </div>
-{{/products}}
