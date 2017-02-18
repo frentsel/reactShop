@@ -23,8 +23,9 @@ const CheckoutPage = React.createClass({
 	render: function () {
 
 		let products = this.props.store;
+		console.info("products: ", products);
 		let purchases = products.map((product, index) =>
-				<Purchase phone={product} key={product.id} />
+				<Purchase phone={product} key={index} />
 			) || [];
 
 		return (
@@ -81,7 +82,6 @@ const CheckoutPage = React.createClass({
 					</table>)
 					:
 					(<div className="alert alert-info alert-dismissible" role="alert">
-						<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">×</span></button>
 						Your shopping cart is empty.
 					</div>)
 				}
@@ -92,6 +92,6 @@ const CheckoutPage = React.createClass({
 
 export default connect(
 	state => ({
-		store: state
+		store: state.purchases
 	})
 )(CheckoutPage);

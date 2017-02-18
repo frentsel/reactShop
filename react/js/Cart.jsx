@@ -4,23 +4,16 @@ import {connect} from 'react-redux';
 
 const Cart = React.createClass({
 
-	price: function (products) {
-
-		let sum = 0;
-
-		$.each(products, function (k, phone) {
-			sum += (phone.price || 135);
-		});
-
-		return sum;
-	},
 	show: function (e) {
 		hashHistory.push('cart');
 	},
 	render: function () {
 
 		let purchases = this.props.store;
-		let price = this.price(purchases);
+		let price = purchases.reduce(function (res, phone) {
+			res += (phone.price || 135);
+			return res;
+		}, 0);
 
 		return (
 			<div className="cart pull-right" onClick={this.show}>
@@ -43,6 +36,6 @@ const Cart = React.createClass({
 
 export default connect(
 	state => ({
-		store: state
+		store: state.purchases
 	}),
 )(Cart);

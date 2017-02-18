@@ -167,8 +167,7 @@ const Product = React.createClass({
                             identifier="something-unique-12345"
                             title="Example Thread"
                             url="http://www.example.com/example-thread"
-                            category_id="123456"
-                            onNewComment={this.handleNewComment}/>
+                            category_id="123456" />
                     </div>
                 </div>
             </div>
@@ -178,12 +177,12 @@ const Product = React.createClass({
 
 export default connect(
     state => ({
-        store: state
+        store: state.purchases
     }),
     dispatch => ({
         onAddProduct: (phone) => {
             dispatch({
-                type: 'ADD',
+                type: 'ADD_TO_CART',
                 phone: phone
             });
         }

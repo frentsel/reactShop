@@ -30,13 +30,13 @@ let Purchase = React.createClass({
 
 export default connect(
 	state => ({
-		store: state
+		store: state.purchases
 	}),
 	dispatch => ({
-		onDeleteProduct: (id) => {
+		onDeleteProduct: (phone) => {
 			dispatch({
-				type: 'DELETE',
-				id: id
+				type: 'DELETE_FORM_CART',
+				id: phone.id
 			});
 		}
 	})

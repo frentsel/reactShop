@@ -48,8 +48,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -66,39 +64,11 @@
 
 	var _redux = __webpack_require__(238);
 
-	var handler = function handler(state, action) {
-		if (state === undefined) state = [];
+	var _reducers = __webpack_require__(286);
 
-		var findPhone = function findPhone(phone) {
-			return state.reduce(function (res, _phone) {
-				return _phone.id === phone.id ? phone : false;
-			}, false);
-		};
+	var _reducers2 = _interopRequireDefault(_reducers);
 
-		if (action.type === 'GET_ALL') {
-			return state;
-		}
-
-		if (action.type === 'ADD') {
-			if (state.length === 0) return [].concat(_toConsumableArray(state), [action.phone]);
-
-			if (!findPhone(action.phone)) return [].concat(_toConsumableArray(state), [action.phone]);
-
-			return state;
-		}
-
-		if (action.type === 'DELETE') {
-			state.splice(action.id, 1);
-			return $.extend([], state);
-		}
-
-		if (action.type === 'CLEAR') {
-			return state = [];
-		}
-
-		return state;
-	};
-	var store = (0, _redux.createStore)(handler);
+	var store = (0, _redux.createStore)(_reducers2['default']);
 
 	_reactDom2['default'].render(_react2['default'].createElement(
 		_reactRedux.Provider,
@@ -25907,28 +25877,12 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(227);
+
 	var Sort = _react2['default'].createClass({
 	    displayName: 'Sort',
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            sort: name
-	        };
-	    },
-
-	    sortHandle: function sortHandle(e) {
-
-	        var event = new Event('productsSorting');
-	        event.key = e.target.value;
-	        document.dispatchEvent(event);
-
-	        this.setState({
-	            sort: e.target.value
-	        });
-	    },
-
 	    render: function render() {
-
 	        return _react2['default'].createElement(
 	            'div',
 	            { className: 'sortBy pull-right' },
@@ -25942,16 +25896,16 @@
 	                { className: 'pull-left' },
 	                _react2['default'].createElement(
 	                    'select',
-	                    { onChange: this.sortHandle },
+	                    { onChange: this.props.sort.bind(this) },
+	                    _react2['default'].createElement(
+	                        'option',
+	                        { key: '2', checked: true, value: 'age' },
+	                        'Newest'
+	                    ),
 	                    _react2['default'].createElement(
 	                        'option',
 	                        { key: '1', value: 'name' },
 	                        'Alphabetical'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'option',
-	                        { key: '2', value: 'age' },
-	                        'Newest'
 	                    )
 	                )
 	            )
@@ -25959,7 +25913,20 @@
 	    }
 	});
 
-	exports['default'] = Sort;
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        store: state.products
+	    };
+	}, function (dispatch) {
+	    return {
+	        sort: function sort(el) {
+	            dispatch({
+	                type: 'SORT',
+	                key: el.target.value
+	            });
+	        }
+	    };
+	})(Sort);
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Sort.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -25982,28 +25949,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(160);
+	var _reactRedux = __webpack_require__(227);
 
 	var Search = _react2['default'].createClass({
 	    displayName: 'Search',
 
-	    getInitialState: function getInitialState() {
-	        return { search: '' };
-	    },
-	    searchHandle: function searchHandle(e) {
-
-	        this.setState({
-	            search: e.target.value.toLowerCase()
-	        });
-
-	        var event = new Event('productsFiltering');
-	        event.key = e.target.value.toLowerCase();
-	        document.dispatchEvent(event);
-	    },
 	    render: function render() {
 	        return _react2['default'].createElement(
 	            'form',
@@ -26011,13 +25961,26 @@
 	            _react2['default'].createElement(
 	                'div',
 	                { className: 'form-group' },
-	                _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: 'Search', value: this.state.search, onInput: this.searchHandle })
+	                _react2['default'].createElement('input', { type: 'text', className: 'form-control', value: this.props.store.q || '', placeholder: 'Search', onInput: this.props.filter.bind(this) })
 	            )
 	        );
 	    }
 	});
 
-	exports['default'] = Search;
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        store: state.products
+	    };
+	}, function (dispatch) {
+	    return {
+	        filter: function filter(el) {
+	            dispatch({
+	                type: 'FILTER',
+	                q: el.target.value
+	            });
+	        }
+	    };
+	})(Search);
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Search.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -26047,23 +26010,16 @@
 	var Cart = _react2['default'].createClass({
 		displayName: 'Cart',
 
-		price: function price(products) {
-
-			var sum = 0;
-
-			$.each(products, function (k, phone) {
-				sum += phone.price || 135;
-			});
-
-			return sum;
-		},
 		show: function show(e) {
 			_reactRouter.hashHistory.push('cart');
 		},
 		render: function render() {
 
 			var purchases = this.props.store;
-			var price = this.price(purchases);
+			var price = purchases.reduce(function (res, phone) {
+				res += phone.price || 135;
+				return res;
+			}, 0);
 
 			return _react2['default'].createElement(
 				'div',
@@ -26111,7 +26067,7 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state
+			store: state.purchases
 		};
 	})(Cart);
 	module.exports = exports['default'];
@@ -28983,9 +28939,13 @@
 
 		render: function render() {
 
-			var products = this.props.store;
-			var purchases = products.map(function (product, index) {
-				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: product.id });
+			var _purchases = this.props.store;
+			var price = _purchases.reduce(function (res, phone) {
+				res += phone.price || 135;
+				return res;
+			}, 0);
+			var purchases = _purchases.map(function (product, index) {
+				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
 			}) || [];
 
 			return _react2['default'].createElement(
@@ -29039,7 +28999,7 @@
 									_react2['default'].createElement(
 										'span',
 										{ className: 'quantity' },
-										products.length
+										_purchases.length
 									)
 								)
 							),
@@ -29053,7 +29013,7 @@
 									_react2['default'].createElement(
 										'span',
 										{ className: 'price' },
-										135
+										price
 									),
 									'$'
 								)
@@ -29081,15 +29041,6 @@
 				) : _react2['default'].createElement(
 					'div',
 					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
-					_react2['default'].createElement(
-						'button',
-						{ type: 'button', className: 'close', dataDismiss: 'alert', ariaLabel: 'Close' },
-						_react2['default'].createElement(
-							'span',
-							{ ariaHidden: 'true' },
-							'×'
-						)
-					),
 					'Your shopping cart is empty.'
 				)
 			);
@@ -29098,7 +29049,7 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state
+			store: state.purchases
 		};
 	}, function (dispatch) {
 		return {
@@ -29119,7 +29070,7 @@
 						}
 
 						dispatch({
-							type: 'CLEAR'
+							type: 'CLEAR_CART'
 						});
 					}
 				});
@@ -29199,14 +29150,14 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state
+			store: state.purchases
 		};
 	}, function (dispatch) {
 		return {
-			onDeleteProduct: function onDeleteProduct(id) {
+			onDeleteProduct: function onDeleteProduct(phone) {
 				dispatch({
-					type: 'DELETE',
-					id: id
+					type: 'DELETE_FORM_CART',
+					id: phone.id
 				});
 			}
 		};
@@ -29481,8 +29432,7 @@
 	                        identifier: 'something-unique-12345',
 	                        title: 'Example Thread',
 	                        url: 'http://www.example.com/example-thread',
-	                        category_id: '123456',
-	                        onNewComment: this.handleNewComment })
+	                        category_id: '123456' })
 	                )
 	            )
 	        );
@@ -29491,13 +29441,13 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 	    return {
-	        store: state
+	        store: state.purchases
 	    };
 	}, function (dispatch) {
 	    return {
 	        onAddProduct: function onAddProduct(phone) {
 	            dispatch({
-	                type: 'ADD',
+	                type: 'ADD_TO_CART',
 	                phone: phone
 	            });
 	        }
@@ -29760,74 +29710,29 @@
 
 	var _httpJs2 = _interopRequireDefault(_httpJs);
 
+	var _reactRedux = __webpack_require__(227);
+
 	var Products = _react2['default'].createClass({
 	    displayName: 'Products',
 
-	    products: [],
-
-	    _sort: function _sort(data, key) {
-	        return data.sort(function (a, b) {
-	            if (a[key] > b[key]) return 1;
-	            if (a[key] < b[key]) return -1;
-	            return 0;
-	        });
-	    },
-
-	    sorting: function sorting(e) {
-
-	        var products = this.state.products,
-	            key = e.key;
-
-	        this.setState({
-	            products: this._sort(products, key)
-	        });
-	    },
-
-	    filtering: function filtering(e) {
-
-	        var q = e.key,
-	            products = this.products.filter(function (product) {
-	            return product.name.toLowerCase().indexOf(q) > -1;
-	        });
-
-	        this.setState({
-	            products: products
-	        });
-	    },
-
-	    getInitialState: function getInitialState() {
-	        return { products: [] };
-	    },
-
-	    componentDidMount: function componentDidMount() {
-
-	        document.addEventListener('productsSorting', this.sorting, false);
-
-	        document.addEventListener('productsFiltering', this.filtering, false);
-	    },
-
 	    componentWillMount: function componentWillMount() {
-
-	        var _this = this;
-
-	        _httpJs2['default'].getJSON('../data/phones.json', {}, function (_products) {
-
-	            _this.setState({ products: _this._sort(_products, 'name') });
-	            _this.products = _this.state.products;
-	        });
-	    },
-
-	    componentWillUnmount: function componentWillUnmount() {
-	        document.removeEventListener('productsSorting', this.sorting);
-	        document.removeEventListener('productsFiltering', this.filtering);
+	        _httpJs2['default'].getJSON('../data/phones.json', {}, this.props.init.bind(this));
 	    },
 
 	    render: function render() {
 
-	        var list = this.state.products.map(function (phone) {
+	        var products = this.props.store;
+
+	        if (products.q) {
+	            products = products.filter(function (product) {
+	                return product.name && product.name.toLowerCase().indexOf(products.q) > -1;
+	            });
+	        }
+
+	        var list = products.map(function (phone, index) {
 	            return _react2['default'].createElement(
 	                'div',
-	                { id: phone.id, className: 'phone', key: phone.id },
+	                { id: phone.id, className: 'phone', key: index },
 	                _react2['default'].createElement(
 	                    _reactRouter.Link,
 	                    { to: '/product/' + phone.id },
@@ -29849,7 +29754,20 @@
 	    }
 	});
 
-	exports['default'] = Products;
+	exports['default'] = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        store: state.products
+	    };
+	}, function (dispatch) {
+	    return {
+	        init: function init(products) {
+	            dispatch({
+	                type: 'INIT',
+	                products: products
+	            });
+	        }
+	    };
+	})(Products);
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Products.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -29901,8 +29819,9 @@
 		render: function render() {
 
 			var products = this.props.store;
+			console.info("products: ", products);
 			var purchases = products.map(function (product, index) {
-				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: product.id });
+				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
 			}) || [];
 
 			return _react2['default'].createElement(
@@ -30056,15 +29975,6 @@
 				) : _react2['default'].createElement(
 					'div',
 					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
-					_react2['default'].createElement(
-						'button',
-						{ type: 'button', className: 'close', dataDismiss: 'alert', ariaLabel: 'Close' },
-						_react2['default'].createElement(
-							'span',
-							{ ariaHidden: 'true' },
-							'×'
-						)
-					),
 					'Your shopping cart is empty.'
 				)
 			);
@@ -30073,7 +29983,7 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state
+			store: state.purchases
 		};
 	})(CheckoutPage);
 	module.exports = exports['default'];
@@ -30165,13 +30075,13 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state
+			store: state.purchases
 		};
 	}, function (dispatch) {
 		return {
 			clear: function clear() {
 				dispatch({
-					type: 'CLEAR'
+					type: 'CLEAR_CART'
 				});
 			}
 		};
@@ -30179,6 +30089,122 @@
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "InfoPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _redux = __webpack_require__(238);
+
+	var _products = __webpack_require__(287);
+
+	var _products2 = _interopRequireDefault(_products);
+
+	var _purchases = __webpack_require__(288);
+
+	var _purchases2 = _interopRequireDefault(_purchases);
+
+	exports['default'] = (0, _redux.combineReducers)({
+		products: _products2['default'],
+		purchases: _purchases2['default']
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 287 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	exports['default'] = products;
+
+	function products(state, action) {
+		if (state === undefined) state = [];
+
+		if (action.type === 'GET_ALL_PRODUCTS') {
+			return state;
+		}
+
+		if (action.type === 'SORT') {
+
+			state = state.sort(function (a, b) {
+				if (a[action.key] > b[action.key]) return 1;
+				if (a[action.key] < b[action.key]) return -1;
+				return 0;
+			});
+
+			return $.extend([], state);
+		}
+
+		if (action.type === 'FILTER') {
+
+			var tmpState = $.extend([], state);
+			tmpState.q = action.q;
+			return tmpState;
+		}
+
+		if (action.type === 'INIT') {
+			return state = action.products;
+		}
+
+		return state;
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	exports['default'] = purchases;
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
+	function purchases(state, action) {
+		if (state === undefined) state = [];
+
+		if (action.type === 'GET_ALL') {
+			return state;
+		}
+
+		if (action.type === 'ADD_TO_CART') {
+			return [].concat(_toConsumableArray(state), [action.phone]);
+		}
+
+		if (action.type === 'DELETE_FORM_CART') {
+
+			var index = 0;
+			state.forEach(function (el, n) {
+				if (el.id === action.id) index = n;
+			});
+			state.splice(index, 1);
+			return $.extend([], state);
+		}
+
+		if (action.type === 'CLEAR_CART') {
+			return state = [];
+		}
+
+		return state;
+	}
+
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

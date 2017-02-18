@@ -7,9 +7,13 @@ const CartPage = React.createClass({
 
 	render: function () {
 
-		let products = this.props.store;
-		let purchases = products.map((product, index) =>
-				<Purchase phone={product} key={product.id} />
+		let _purchases = this.props.store;
+		let price = _purchases.reduce(function (res, phone) {
+			res += (phone.price || 135);
+			return res;
+		}, 0);
+		let purchases = _purchases.map((product, index) =>
+				<Purchase phone={product} key={index} />
 			) || [];
 
 		return (
@@ -26,10 +30,10 @@ const CartPage = React.createClass({
 						<tr>
 							<td colSpan="2">&nbsp;</td>
 							<td>
-								<div>Total count: <span className="quantity">{products.length}</span></div>
+								<div>Total count: <span className="quantity">{_purchases.length}</span></div>
 							</td>
 							<td>
-								<div>Total price: <span className="price">{135}</span>$</div>
+								<div>Total price: <span className="price">{price}</span>$</div>
 							</td>
 						</tr>
 						<tr>
@@ -42,7 +46,6 @@ const CartPage = React.createClass({
 					</table>)
 					:
 					(<div className="alert alert-info alert-dismissible" role="alert">
-						<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">×</span></button>
 						Your shopping cart is empty.
 					</div>)
 				}
@@ -53,7 +56,7 @@ const CartPage = React.createClass({
 
 export default connect(
 	state => ({
-		store: state
+		store: state.purchases
 	}),
 	dispatch => ({
 		onClear: () => {
@@ -80,7 +83,7 @@ export default connect(
 					}
 
 					dispatch({
-						type: 'CLEAR'
+						type: 'CLEAR_CART'
 					});
 				}
 			});
