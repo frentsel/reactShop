@@ -1,10 +1,11 @@
 import React from 'react';
+import { Router, Route, hashHistory, Link } from 'react-router';
 
 const Contact = function() {
 	return (
 		<div>
 			<ol className="breadcrumb">
-				<li className="breadcrumb-item"><a href="#/">Home</a></li>
+				<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
 				<li className="breadcrumb-item active">Contact</li>
 			</ol>
 			<h1>Contact form</h1>

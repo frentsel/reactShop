@@ -1,10 +1,11 @@
 import React from 'react';
+import { Router, Route, hashHistory, Link } from 'react-router';
 
 const Delivery = function() {
 	return (
 		<div>
 			<ol className="breadcrumb">
-				<li className="breadcrumb-item"><a href="#/">Home</a></li>
+				<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
 				<li className="breadcrumb-item active">Delivery</li>
 			</ol>
 			<h1>Delivery page</h1>

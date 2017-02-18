@@ -23,7 +23,6 @@ const CheckoutPage = React.createClass({
 	render: function () {
 
 		let products = this.props.store;
-		console.info("products: ", products);
 		let purchases = products.map((product, index) =>
 				<Purchase phone={product} key={index} />
 			) || [];

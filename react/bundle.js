@@ -19786,27 +19786,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var _reactRouter = __webpack_require__(160);
 
-	var _NavigationJsx = __webpack_require__(223);
+	var _LayoutJsx = __webpack_require__(294);
 
-	var _NavigationJsx2 = _interopRequireDefault(_NavigationJsx);
-
-	var _SortJsx = __webpack_require__(224);
-
-	var _SortJsx2 = _interopRequireDefault(_SortJsx);
-
-	var _SearchJsx = __webpack_require__(225);
-
-	var _SearchJsx2 = _interopRequireDefault(_SearchJsx);
-
-	var _CartJsx = __webpack_require__(226);
-
-	var _CartJsx2 = _interopRequireDefault(_CartJsx);
+	var _LayoutJsx2 = _interopRequireDefault(_LayoutJsx);
 
 	var _DeliveryJsx = __webpack_require__(275);
 
@@ -19836,55 +19820,16 @@
 
 	var _InfoPageJsx2 = _interopRequireDefault(_InfoPageJsx);
 
-	var _reactRedux = __webpack_require__(227);
-
 	var App = _react2['default'].createClass({
 	    displayName: 'App',
 
 	    render: function render() {
 	        return _react2['default'].createElement(
-	            'div',
-	            null,
+	            _reactRouter.Router,
+	            { history: _reactRouter.hashHistory },
 	            _react2['default'].createElement(
-	                'nav',
-	                { className: 'navbar navbar-default' },
-	                _react2['default'].createElement(
-	                    'div',
-	                    { className: 'container-fluid' },
-	                    _react2['default'].createElement(
-	                        'div',
-	                        { className: 'navbar-header' },
-	                        _react2['default'].createElement(
-	                            'button',
-	                            { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
-	                            _react2['default'].createElement(
-	                                'span',
-	                                { className: 'sr-only' },
-	                                'Toggle navigation'
-	                            ),
-	                            _react2['default'].createElement('span', { className: 'icon-bar' }),
-	                            _react2['default'].createElement('span', { className: 'icon-bar' }),
-	                            _react2['default'].createElement('span', { className: 'icon-bar' })
-	                        ),
-	                        _react2['default'].createElement(
-	                            'a',
-	                            { className: 'navbar-brand', href: '#/' },
-	                            'ReactJS Shop'
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        'div',
-	                        { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-	                        _react2['default'].createElement(_NavigationJsx2['default'], null),
-	                        _react2['default'].createElement(_SearchJsx2['default'], null),
-	                        _react2['default'].createElement(_CartJsx2['default'], null),
-	                        _react2['default'].createElement(_SortJsx2['default'], null)
-	                    )
-	                )
-	            ),
-	            _react2['default'].createElement(
-	                _reactRouter.Router,
-	                { history: _reactRouter.hashHistory },
+	                _reactRouter.Route,
+	                { component: _LayoutJsx2['default'] },
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/', component: _ProductsJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/delivery', component: _DeliveryJsx2['default'] }),
 	                _react2['default'].createElement(_reactRouter.Route, { path: '/contact', component: _ContactJsx2['default'] }),
@@ -19897,11 +19842,7 @@
 	    }
 	});
 
-	exports['default'] = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        store: state
-	    };
-	})(App);
+	exports['default'] = App;
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "App.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -25813,49 +25754,51 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var Navigation = _react2["default"].createClass({
-	    displayName: "Navigation",
+	var _reactRouter = __webpack_require__(160);
+
+	var Navigation = _react2['default'].createClass({
+	    displayName: 'Navigation',
 
 	    render: function render() {
-	        return _react2["default"].createElement(
-	            "ul",
-	            { className: "nav navbar-nav" },
-	            _react2["default"].createElement(
-	                "li",
+	        return _react2['default'].createElement(
+	            'ul',
+	            { className: 'nav navbar-nav' },
+	            _react2['default'].createElement(
+	                'li',
 	                null,
-	                _react2["default"].createElement(
-	                    "a",
-	                    { href: "#/delivery" },
-	                    "Delivery"
+	                _react2['default'].createElement(
+	                    _reactRouter.Link,
+	                    { to: '/delivery' },
+	                    'Delivery'
 	                )
 	            ),
-	            _react2["default"].createElement(
-	                "li",
+	            _react2['default'].createElement(
+	                'li',
 	                null,
-	                _react2["default"].createElement(
-	                    "a",
-	                    { href: "#/contact" },
-	                    "Contact"
+	                _react2['default'].createElement(
+	                    _reactRouter.Link,
+	                    { to: '/contact' },
+	                    'Contact'
 	                )
 	            )
 	        );
 	    }
 	});
 
-	exports["default"] = Navigation;
-	module.exports = exports["default"];
+	exports['default'] = Navigation;
+	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Navigation.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -28703,60 +28646,62 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 		value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(160);
+
 	var Delivery = function Delivery() {
-		return _react2["default"].createElement(
-			"div",
+		return _react2['default'].createElement(
+			'div',
 			null,
-			_react2["default"].createElement(
-				"ol",
-				{ className: "breadcrumb" },
-				_react2["default"].createElement(
-					"li",
-					{ className: "breadcrumb-item" },
-					_react2["default"].createElement(
-						"a",
-						{ href: "#/" },
-						"Home"
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item' },
+					_react2['default'].createElement(
+						_reactRouter.Link,
+						{ to: '/' },
+						'Home'
 					)
 				),
-				_react2["default"].createElement(
-					"li",
-					{ className: "breadcrumb-item active" },
-					"Delivery"
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'Delivery'
 				)
 			),
-			_react2["default"].createElement(
-				"h1",
+			_react2['default'].createElement(
+				'h1',
 				null,
-				"Delivery page"
+				'Delivery page'
 			),
-			_react2["default"].createElement(
-				"p",
+			_react2['default'].createElement(
+				'p',
 				null,
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor eaque error eum explicabo facere illum itaque minima necessitatibus nihil pariatur placeat porro quia reiciendis, rerum. Assumenda eos ex incidunt labore natus praesentium quis, ratione temporibus voluptas."
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor eaque error eum explicabo facere illum itaque minima necessitatibus nihil pariatur placeat porro quia reiciendis, rerum. Assumenda eos ex incidunt labore natus praesentium quis, ratione temporibus voluptas.'
 			),
-			_react2["default"].createElement(
-				"p",
+			_react2['default'].createElement(
+				'p',
 				null,
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur id mollitia repellendus, sequi similique ullam ut voluptatum! Aspernatur atque cum, dolorum esse et exercitationem ipsam itaque nostrum praesentium, quisquam rem vitae. Cum dignissimos ducimus natus repellendus sapiente."
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur id mollitia repellendus, sequi similique ullam ut voluptatum! Aspernatur atque cum, dolorum esse et exercitationem ipsam itaque nostrum praesentium, quisquam rem vitae. Cum dignissimos ducimus natus repellendus sapiente.'
 			)
 		);
 	};
 
-	exports["default"] = Delivery;
-	module.exports = exports["default"];
+	exports['default'] = Delivery;
+	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Delivery.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -28766,145 +28711,147 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 		value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(160);
+
 	var Contact = function Contact() {
-		return _react2["default"].createElement(
-			"div",
+		return _react2['default'].createElement(
+			'div',
 			null,
-			_react2["default"].createElement(
-				"ol",
-				{ className: "breadcrumb" },
-				_react2["default"].createElement(
-					"li",
-					{ className: "breadcrumb-item" },
-					_react2["default"].createElement(
-						"a",
-						{ href: "#/" },
-						"Home"
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item' },
+					_react2['default'].createElement(
+						_reactRouter.Link,
+						{ to: '/' },
+						'Home'
 					)
 				),
-				_react2["default"].createElement(
-					"li",
-					{ className: "breadcrumb-item active" },
-					"Contact"
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'Contact'
 				)
 			),
-			_react2["default"].createElement(
-				"h1",
+			_react2['default'].createElement(
+				'h1',
 				null,
-				"Contact form"
+				'Contact form'
 			),
-			_react2["default"].createElement(
-				"div",
-				{ className: "row" },
-				_react2["default"].createElement(
-					"div",
-					{ className: "col-md-6" },
-					_react2["default"].createElement(
-						"form",
-						{ className: "form-horizontal", onsubmit: "return false;" },
-						_react2["default"].createElement(
-							"div",
-							{ className: "form-group" },
-							_react2["default"].createElement(
-								"label",
-								{ className: "col-sm-2 control-label" },
-								"Email"
+			_react2['default'].createElement(
+				'div',
+				{ className: 'row' },
+				_react2['default'].createElement(
+					'div',
+					{ className: 'col-md-6' },
+					_react2['default'].createElement(
+						'form',
+						{ className: 'form-horizontal', onsubmit: 'return false;' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2['default'].createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Email'
 							),
-							_react2["default"].createElement(
-								"div",
-								{ className: "col-sm-10" },
-								_react2["default"].createElement("input", { type: "email", className: "form-control", name: "email", placeholder: "Email", required: true })
+							_react2['default'].createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2['default'].createElement('input', { type: 'email', className: 'form-control', name: 'email', placeholder: 'Email', required: true })
 							)
 						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "form-group" },
-							_react2["default"].createElement(
-								"label",
-								{ className: "col-sm-2 control-label" },
-								"Name"
+						_react2['default'].createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2['default'].createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Name'
 							),
-							_react2["default"].createElement(
-								"div",
-								{ className: "col-sm-10" },
-								_react2["default"].createElement("input", { type: "text", className: "form-control", name: "name", placeholder: "Name", required: true })
+							_react2['default'].createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name', required: true })
 							)
 						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "form-group" },
-							_react2["default"].createElement(
-								"label",
-								{ className: "col-sm-2 control-label" },
-								"Message"
+						_react2['default'].createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2['default'].createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Message'
 							),
-							_react2["default"].createElement(
-								"div",
-								{ className: "col-sm-10" },
-								_react2["default"].createElement("textarea", { name: "Message", className: "form-control contact-textarea", cols: "30", rows: "3", placeholder: "Text..." })
+							_react2['default'].createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2['default'].createElement('textarea', { name: 'Message', className: 'form-control contact-textarea', cols: '30', rows: '3', placeholder: 'Text...' })
 							)
 						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "form-group" },
-							_react2["default"].createElement(
-								"div",
-								{ className: "col-sm-offset-2 col-sm-10" },
-								_react2["default"].createElement(
-									"button",
-									{ type: "submit", className: "btn btn-default" },
-									"Send message"
+						_react2['default'].createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2['default'].createElement(
+								'div',
+								{ className: 'col-sm-offset-2 col-sm-10' },
+								_react2['default'].createElement(
+									'button',
+									{ type: 'submit', className: 'btn btn-default' },
+									'Send message'
 								)
 							)
 						)
 					)
 				),
-				_react2["default"].createElement(
-					"div",
-					{ className: "col-md-6" },
-					_react2["default"].createElement("img", { border: "0", src: "../img/staticmap.png", className: "contact-map" })
+				_react2['default'].createElement(
+					'div',
+					{ className: 'col-md-6' },
+					_react2['default'].createElement('img', { border: '0', src: '../img/staticmap.png', className: 'contact-map' })
 				)
 			),
-			_react2["default"].createElement(
-				"div",
-				{ className: "row" },
-				_react2["default"].createElement(
-					"div",
-					{ className: "col-md-12" },
-					_react2["default"].createElement(
-						"p",
+			_react2['default'].createElement(
+				'div',
+				{ className: 'row' },
+				_react2['default'].createElement(
+					'div',
+					{ className: 'col-md-12' },
+					_react2['default'].createElement(
+						'p',
 						null,
-						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium amet architecto aut deleniti dolor dolorem dolores eaque ex facilis harum, labore laborum libero minus nostrum numquam odio qui quibusdam quos rerum soluta tempora voluptates voluptatum!"
+						'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium amet architecto aut deleniti dolor dolorem dolores eaque ex facilis harum, labore laborum libero minus nostrum numquam odio qui quibusdam quos rerum soluta tempora voluptates voluptatum!'
 					),
-					_react2["default"].createElement(
-						"p",
+					_react2['default'].createElement(
+						'p',
 						null,
-						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci ea, error hic ipsum quia quis similique sit?"
+						'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci ea, error hic ipsum quia quis similique sit?'
 					),
-					_react2["default"].createElement(
-						"p",
+					_react2['default'].createElement(
+						'p',
 						null,
-						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aperiam aut autem blanditiis consectetur, delectus deserunt ex illo illum, ipsam iste labore molestiae mollitia natus neque nihil, perferendis quae quis ratione sequi suscipit veniam! Amet architecto atque, consequatur consequuntur dolores ex excepturi exercitationem facilis fugiat illum itaque labore necessitatibus officiis quae unde!"
+						'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aperiam aut autem blanditiis consectetur, delectus deserunt ex illo illum, ipsam iste labore molestiae mollitia natus neque nihil, perferendis quae quis ratione sequi suscipit veniam! Amet architecto atque, consequatur consequuntur dolores ex excepturi exercitationem facilis fugiat illum itaque labore necessitatibus officiis quae unde!'
 					)
 				)
 			)
 		);
 	};
 
-	exports["default"] = Contact;
-	module.exports = exports["default"];
+	exports['default'] = Contact;
+	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Contact.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -29819,7 +29766,6 @@
 		render: function render() {
 
 			var products = this.props.store;
-			console.info("products: ", products);
 			var purchases = products.map(function (product, index) {
 				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
 			}) || [];
@@ -30075,13 +30021,13 @@
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state.purchases
+			store: state
 		};
 	}, function (dispatch) {
 		return {
 			clear: function clear() {
 				dispatch({
-					type: 'CLEAR_CART'
+					type: 'CLEAR'
 				});
 			}
 		};
@@ -30205,6 +30151,101 @@
 	}
 
 	module.exports = exports['default'];
+
+/***/ },
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\node_modules\\react-hot-api\\modules\\index.js"), RootInstanceProvider = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(160);
+
+	var _NavigationJsx = __webpack_require__(223);
+
+	var _NavigationJsx2 = _interopRequireDefault(_NavigationJsx);
+
+	var _SortJsx = __webpack_require__(224);
+
+	var _SortJsx2 = _interopRequireDefault(_SortJsx);
+
+	var _SearchJsx = __webpack_require__(225);
+
+	var _SearchJsx2 = _interopRequireDefault(_SearchJsx);
+
+	var _CartJsx = __webpack_require__(226);
+
+	var _CartJsx2 = _interopRequireDefault(_CartJsx);
+
+	var Layout = _react2['default'].createClass({
+		displayName: 'Layout',
+
+		render: function render() {
+			return _react2['default'].createElement(
+				'div',
+				null,
+				_react2['default'].createElement(
+					'nav',
+					{ className: 'navbar navbar-default' },
+					_react2['default'].createElement(
+						'div',
+						{ className: 'container-fluid' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'navbar-header' },
+							_react2['default'].createElement(
+								'button',
+								{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+								_react2['default'].createElement(
+									'span',
+									{ className: 'sr-only' },
+									'Toggle navigation'
+								),
+								_react2['default'].createElement('span', { className: 'icon-bar', key: '1' }),
+								_react2['default'].createElement('span', { className: 'icon-bar', key: '2' }),
+								_react2['default'].createElement('span', { className: 'icon-bar', key: '3' })
+							),
+							_react2['default'].createElement(
+								_reactRouter.Link,
+								{ className: 'navbar-brand', to: '/' },
+								'ReactJS Shop'
+							)
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+							_react2['default'].createElement(_NavigationJsx2['default'], null),
+							_react2['default'].createElement(_SearchJsx2['default'], null),
+							_react2['default'].createElement(_CartJsx2['default'], null),
+							_react2['default'].createElement(_SortJsx2['default'], null)
+						)
+					)
+				),
+				this.props.children
+			);
+		}
+	});
+
+	exports['default'] = Layout;
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("D:\\WebServers\\hosts\\reactShop\\node_modules\\react-hot-loader\\makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Layout.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
