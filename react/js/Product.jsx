@@ -14,7 +14,7 @@ const Product = React.createClass({
         let path = '../data/'+this.props.params.productId+'.json',
             _this = this;
 
-        http.getJSON(path, {}, function (_phone) {
+        http.getJSON(path).then(function (_phone) {
             _this.setState({phone: _phone});
         });
     },

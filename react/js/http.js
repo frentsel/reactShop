@@ -3,42 +3,43 @@ const http = {
         $('body').toggleClass('loading', status);
     },
     cache: {},
-    load: function (path, params, callback) {
+    getJSON: function (path, params) {
+        return this.get(path, params, 'json');
+    },
+    get: function (path, _params, _type) {
 
         var _this = this,
+            params = _params || {},
+            type = _type || 'text',
             cacheKey = path + $.param(params);
 
-        if (this.cache[cacheKey] !== undefined) {
-            callback(this.cache[cacheKey]);
-            return false;
-        }
+        return new Promise(function (resolve, reject) {
 
-        $.ajax({
-            url: path,
-            type: 'get',
-            dataType: 'text',
-            data: params,
-            beforeSend: function () {
-                _this.ajaxSpinner(true);
-            },
-            complete: function () {
-                _this.ajaxSpinner(false);
-            },
-            success: function (response) {
-                _this.cache[cacheKey] = response;
-                callback(response);
-            },
-            error: function (e) {
-                if (e.status === 404) {
-                    render.page('notFound');
-                }
+            if(_this.cache[cacheKey] !== undefined) {
+                resolve(_this.cache[cacheKey]);
+                return false;
             }
-        });
-    },
-    getJSON: function (path, params, callback) {
 
-        this.load(path, params, function (response) {
-            callback(JSON.parse(response));
+            $.ajax({
+                url: path,
+                type: 'get',
+                dataType: type,
+                data: params,
+                beforeSend: function() {
+                    _this.ajaxSpinner(true);
+                },
+                complete: function(){
+                    _this.ajaxSpinner(false);
+                },
+                success: function (response) {
+                    _this.cache[cacheKey] = response;
+                    resolve(type === 'json' ? (response) : response);
+                },
+                error: function (e) {
+                    reject(e);
+                    console.error(arguments);
+                }
+            });
         });
     }
 };

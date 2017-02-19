@@ -29148,7 +29148,7 @@
 	        var path = '../data/' + this.props.params.productId + '.json',
 	            _this = this;
 
-	        _httpJs2['default'].getJSON(path, {}, function (_phone) {
+	        _httpJs2['default'].getJSON(path).then(function (_phone) {
 	            _this.setState({ phone: _phone });
 	        });
 	    },
@@ -29413,42 +29413,43 @@
 	        $('body').toggleClass('loading', status);
 	    },
 	    cache: {},
-	    load: function load(path, params, callback) {
+	    getJSON: function getJSON(path, params) {
+	        return this.get(path, params, 'json');
+	    },
+	    get: function get(path, _params, _type) {
 
 	        var _this = this,
+	            params = _params || {},
+	            type = _type || 'text',
 	            cacheKey = path + $.param(params);
 
-	        if (this.cache[cacheKey] !== undefined) {
-	            callback(this.cache[cacheKey]);
-	            return false;
-	        }
+	        return new Promise(function (resolve, reject) {
 
-	        $.ajax({
-	            url: path,
-	            type: 'get',
-	            dataType: 'text',
-	            data: params,
-	            beforeSend: function beforeSend() {
-	                _this.ajaxSpinner(true);
-	            },
-	            complete: function complete() {
-	                _this.ajaxSpinner(false);
-	            },
-	            success: function success(response) {
-	                _this.cache[cacheKey] = response;
-	                callback(response);
-	            },
-	            error: function error(e) {
-	                if (e.status === 404) {
-	                    render.page('notFound');
-	                }
+	            if (_this.cache[cacheKey] !== undefined) {
+	                resolve(_this.cache[cacheKey]);
+	                return false;
 	            }
-	        });
-	    },
-	    getJSON: function getJSON(path, params, callback) {
 
-	        this.load(path, params, function (response) {
-	            callback(JSON.parse(response));
+	            $.ajax({
+	                url: path,
+	                type: 'get',
+	                dataType: type,
+	                data: params,
+	                beforeSend: function beforeSend() {
+	                    _this.ajaxSpinner(true);
+	                },
+	                complete: function complete() {
+	                    _this.ajaxSpinner(false);
+	                },
+	                success: function success(response) {
+	                    _this.cache[cacheKey] = response;
+	                    resolve(type === 'json' ? response : response);
+	                },
+	                error: function error(e) {
+	                    reject(e);
+	                    console.error(arguments);
+	                }
+	            });
 	        });
 	    }
 	};
@@ -29486,7 +29487,7 @@
 	    displayName: 'Products',
 
 	    componentWillMount: function componentWillMount() {
-	        _httpJs2['default'].getJSON('../data/phones.json', {}, this.props.init.bind(this));
+	        _httpJs2['default'].getJSON('../data/phones.json').then(this.props.init.bind(this));
 	    },
 
 	    render: function render() {

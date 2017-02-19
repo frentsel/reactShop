@@ -6,11 +6,8 @@ import {connect} from 'react-redux';
 const Products = React.createClass({
 
     componentWillMount: function() {
-        http.getJSON(
-            '../data/phones.json',
-            {},
-            this.props.init.bind(this)
-        );
+        http.getJSON('../data/phones.json')
+            .then(this.props.init.bind(this));
     },
 
     render: function(){
