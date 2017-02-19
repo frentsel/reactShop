@@ -100,11 +100,11 @@ textarea.form-control.contact-textarea {
     display: block;
     height: 30px;
     margin-top: 10px;
-    width: 60px;
+    width: 80px;
     margin-right: -15px;
     margin-left: 10px;
     line-height: 15px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     border-left: 1px solid #ccc;
     padding-left: 8px;

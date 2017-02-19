@@ -28618,7 +28618,7 @@
 							_react2['default'].createElement(
 								'td',
 								{ className: 'cart-option-value price' },
-								price,
+								Number(price).toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 }),
 								'$'
 							)
 						)

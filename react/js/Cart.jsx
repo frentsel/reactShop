@@ -25,7 +25,7 @@ const Cart = React.createClass({
 						</tr>
 						<tr>
 							<td>Price:</td>
-							<td className="cart-option-value price">{price}$</td>
+							<td className="cart-option-value price">{Number(price).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})}$</td>
 						</tr>
 					</tbody>
 				</table>

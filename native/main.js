@@ -34,7 +34,7 @@ var App = {
 					sum += product.price || 123;
 				});
 
-				return sum;
+				return sum.toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2});
 			},
 			set: function (id, obj) {
 				localStorage.setItem(id, JSON.stringify(obj));
@@ -312,7 +312,7 @@ var App = {
 	init: function () {
 
 		Handlebars.registerHelper('toFixed', function(price) {
-			return price.toFixed(2);
+			return Number(price).toFixed(2);
 		});
 
 		eRouter.init(this.handler);
