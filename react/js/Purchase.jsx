@@ -21,7 +21,7 @@ let Purchase = React.createClass({
 					<button type="button" onClick={this.props.onDeleteProduct.bind(this, phone)}>Delete</button>
 				</td>
 				<td>
-					Price: {phone.price || 135}$
+					Price: {Number(phone.price).toFixed(2)}$
 				</td>
 			</tr>
 		)

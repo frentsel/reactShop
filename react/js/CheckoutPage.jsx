@@ -49,7 +49,7 @@ const CheckoutPage = React.createClass({
 								<div>Total count: <span className="quantity">{products.length}</span></div>
 							</td>
 							<td>
-								<div>Total price: <span className="price">{price}</span>$</div>
+								<div>Total price: <span className="price">{Number(price).toFixed(2)}</span>$</div>
 							</td>
 						</tr>
 						<tr>

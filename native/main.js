@@ -310,6 +310,11 @@ var App = {
 		}
 	},
 	init: function () {
+
+		Handlebars.registerHelper('toFixed', function(price) {
+			return price.toFixed(2);
+		});
+
 		eRouter.init(this.handler);
 		this.render.init();
 	},

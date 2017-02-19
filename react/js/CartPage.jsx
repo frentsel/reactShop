@@ -33,7 +33,7 @@ const CartPage = React.createClass({
 								<div>Total count: <span className="quantity">{_purchases.length}</span></div>
 							</td>
 							<td>
-								<div>Total price: <span className="price">{price}</span>$</div>
+								<div>Total price: <span className="price">{Number(price).toFixed(2)}</span>$</div>
 							</td>
 						</tr>
 						<tr>

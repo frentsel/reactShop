@@ -136,7 +136,7 @@ const Product = React.createClass({
                                         </label>
                                     </td>
                                     <td>
-                                        <strong>Price: 123.00$</strong>
+                                        <strong>Price: {Number(phone.price).toFixed(2)}$</strong>
                                     </td>
                                 </tr>
                                 <tr>

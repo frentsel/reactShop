@@ -18,7 +18,7 @@
 				<button type="button" onclick="App.cart.remove('{{id}}');">Delete</button>
 			</td>
 			<td>
-				Price: 123.00$
+				Price: {{toFixed price}}$
 			</td>
 		</tr>
 		{{/each}}
@@ -28,7 +28,7 @@
 				<div>Total count: <span class="quantity">{{quantity}}</span></div>
 			</td>
 			<td>
-				<div>Total price: <span class="price">{{price}}</span>$</div>
+				<div>Total price: <span class="price">{{toFixed price}}</span>$</div>
 			</td>
 		</tr>
 		<tr>
