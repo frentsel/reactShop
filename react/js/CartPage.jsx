@@ -3,60 +3,57 @@ import Purchase from './Purchase.jsx';
 import {connect} from 'react-redux';
 import { Router, Route, hashHistory, Link } from 'react-router';
 
-const CartPage = React.createClass({
+const CartPage = ({ purchases, onClear }) => {
 
-	render: function () {
+	let price = purchases.reduce((res, phone) => {
+		res += phone.price;
+		return res;
+	}, 0).toFixed(2);
 
-		let _purchases = this.props.store;
-		let price = _purchases.reduce(function (res, phone) {
-			res += (phone.price || 135);
-			return res;
-		}, 0);
-		let purchases = _purchases.map((product, index) =>
-				<Purchase phone={product} key={index} />
-			) || [];
+	let _purchases = purchases.map((product, index) =>
+			<Purchase phone={product} key={index}/>
+		) || [];
 
-		return (
-			<div>
-				<ol className="breadcrumb">
-					<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
-					<li className="breadcrumb-item active">Shopping Cart</li>
-				</ol>
-				<h1>Shopping cart</h1>
-				{purchases.length ?
-					(<table className="products-table">
-						<thead>
-						{purchases}
-						<tr>
-							<td colSpan="2">&nbsp;</td>
-							<td>
-								<div>Total count: <span className="quantity">{_purchases.length}</span></div>
-							</td>
-							<td>
-								<div>Total price: <span className="price">{Number(price).toFixed(2)}</span>$</div>
-							</td>
-						</tr>
-						<tr>
-							<td colSpan="5">
-								<button className="btn inverse" onClick={this.props.onClear.bind(this)}>Clear</button>
-								<Link className="btn" to={'/checkout'}>Checkout</Link>
-							</td>
-						</tr>
-						</thead>
-					</table>)
-					:
-					(<div className="alert alert-info alert-dismissible" role="alert">
-						Your shopping cart is empty.
-					</div>)
-				}
-			</div>
-		);
-	}
-});
+	return (
+		<div>
+			<ol className="breadcrumb">
+				<li className="breadcrumb-item"><Link to={'/'}>Home</Link></li>
+				<li className="breadcrumb-item active">Shopping Cart</li>
+			</ol>
+			<h1>Shopping cart</h1>
+			{purchases.length ?
+				(<table className="products-table">
+					<thead>
+					{_purchases}
+					<tr>
+						<td colSpan="2">&nbsp;</td>
+						<td>
+							<div>Total count: <span className="quantity">{purchases.length}</span></div>
+						</td>
+						<td>
+							<div>Total price: <span className="price">{price}</span>$</div>
+						</td>
+					</tr>
+					<tr>
+						<td colSpan="5">
+							<button className="btn inverse" onClick={onClear}>Clear</button>
+							<Link className="btn" to={'/checkout'}>Checkout</Link>
+						</td>
+					</tr>
+					</thead>
+				</table>)
+				:
+				(<div className="alert alert-info alert-dismissible" role="alert">
+					Your shopping cart is empty.
+				</div>)
+			}
+		</div>
+	);
+};
 
 export default connect(
 	state => ({
-		store: state.purchases
+		purchases: state.purchases
 	}),
 	dispatch => ({
 		onClear: () => {

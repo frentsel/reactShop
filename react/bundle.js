@@ -28314,54 +28314,52 @@
 
 	var _CartJsx2 = _interopRequireDefault(_CartJsx);
 
-	var Layout = _react2['default'].createClass({
-		displayName: 'Layout',
+	var Layout = function Layout(_ref) {
+		var children = _ref.children;
 
-		render: function render() {
-			return _react2['default'].createElement(
-				'div',
-				null,
+		return _react2['default'].createElement(
+			'div',
+			null,
+			_react2['default'].createElement(
+				'nav',
+				{ className: 'navbar navbar-default' },
 				_react2['default'].createElement(
-					'nav',
-					{ className: 'navbar navbar-default' },
+					'div',
+					{ className: 'container-fluid' },
 					_react2['default'].createElement(
 						'div',
-						{ className: 'container-fluid' },
+						{ className: 'navbar-header' },
 						_react2['default'].createElement(
-							'div',
-							{ className: 'navbar-header' },
+							'button',
+							{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
 							_react2['default'].createElement(
-								'button',
-								{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
-								_react2['default'].createElement(
-									'span',
-									{ className: 'sr-only' },
-									'Toggle navigation'
-								),
-								_react2['default'].createElement('span', { className: 'icon-bar', key: '1' }),
-								_react2['default'].createElement('span', { className: 'icon-bar', key: '2' }),
-								_react2['default'].createElement('span', { className: 'icon-bar', key: '3' })
+								'span',
+								{ className: 'sr-only' },
+								'Toggle navigation'
 							),
-							_react2['default'].createElement(
-								_reactRouter.Link,
-								{ className: 'navbar-brand', to: '/' },
-								'ReactJS Shop'
-							)
+							_react2['default'].createElement('span', { className: 'icon-bar', key: '1' }),
+							_react2['default'].createElement('span', { className: 'icon-bar', key: '2' }),
+							_react2['default'].createElement('span', { className: 'icon-bar', key: '3' })
 						),
 						_react2['default'].createElement(
-							'div',
-							{ className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-							_react2['default'].createElement(_NavigationJsx2['default'], null),
-							_react2['default'].createElement(_SearchJsx2['default'], null),
-							_react2['default'].createElement(_CartJsx2['default'], null),
-							_react2['default'].createElement(_SortJsx2['default'], null)
+							_reactRouter.Link,
+							{ className: 'navbar-brand', to: '/' },
+							'ReactJS Shop'
 						)
+					),
+					_react2['default'].createElement(
+						'div',
+						{ className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+						_react2['default'].createElement(_NavigationJsx2['default'], null),
+						_react2['default'].createElement(_SearchJsx2['default'], null),
+						_react2['default'].createElement(_CartJsx2['default'], null),
+						_react2['default'].createElement(_SortJsx2['default'], null)
 					)
-				),
-				this.props.children
-			);
-		}
-	});
+				)
+			),
+			children
+		);
+	};
 
 	exports['default'] = Layout;
 	module.exports = exports['default'];
@@ -28388,34 +28386,30 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var Navigation = _react2['default'].createClass({
-	    displayName: 'Navigation',
-
-	    render: function render() {
-	        return _react2['default'].createElement(
-	            'ul',
-	            { className: 'nav navbar-nav' },
+	var Navigation = function Navigation() {
+	    return _react2['default'].createElement(
+	        'ul',
+	        { className: 'nav navbar-nav' },
+	        _react2['default'].createElement(
+	            'li',
+	            null,
 	            _react2['default'].createElement(
-	                'li',
-	                null,
-	                _react2['default'].createElement(
-	                    _reactRouter.Link,
-	                    { to: '/delivery' },
-	                    'Delivery'
-	                )
-	            ),
-	            _react2['default'].createElement(
-	                'li',
-	                null,
-	                _react2['default'].createElement(
-	                    _reactRouter.Link,
-	                    { to: '/contact' },
-	                    'Contact'
-	                )
+	                _reactRouter.Link,
+	                { to: '/delivery' },
+	                'Delivery'
 	            )
-	        );
-	    }
-	});
+	        ),
+	        _react2['default'].createElement(
+	            'li',
+	            null,
+	            _react2['default'].createElement(
+	                _reactRouter.Link,
+	                { to: '/contact' },
+	                'Contact'
+	            )
+	        )
+	    );
+	};
 
 	exports['default'] = Navigation;
 	module.exports = exports['default'];
@@ -28442,39 +28436,37 @@
 
 	var _reactRedux = __webpack_require__(215);
 
-	var Sort = _react2['default'].createClass({
-	    displayName: 'Sort',
+	var Sort = function Sort(_ref) {
+	    var sort = _ref.sort;
 
-	    render: function render() {
-	        return _react2['default'].createElement(
+	    return _react2['default'].createElement(
+	        'div',
+	        { className: 'sortBy pull-right' },
+	        _react2['default'].createElement(
 	            'div',
-	            { className: 'sortBy pull-right' },
+	            { className: 'pull-left' },
+	            'Sort by: '
+	        ),
+	        _react2['default'].createElement(
+	            'div',
+	            { className: 'pull-left' },
 	            _react2['default'].createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                'Sort by: '
-	            ),
-	            _react2['default'].createElement(
-	                'div',
-	                { className: 'pull-left' },
+	                'select',
+	                { onChange: sort },
 	                _react2['default'].createElement(
-	                    'select',
-	                    { onChange: this.props.sort.bind(this) },
-	                    _react2['default'].createElement(
-	                        'option',
-	                        { key: '2', checked: true, value: 'age' },
-	                        'Newest'
-	                    ),
-	                    _react2['default'].createElement(
-	                        'option',
-	                        { key: '1', value: 'name' },
-	                        'Alphabetical'
-	                    )
+	                    'option',
+	                    { key: '2', checked: true, value: 'age' },
+	                    'Newest'
+	                ),
+	                _react2['default'].createElement(
+	                    'option',
+	                    { key: '1', value: 'name' },
+	                    'Alphabetical'
 	                )
 	            )
-	        );
-	    }
-	});
+	        )
+	    );
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 	    return {
@@ -28514,21 +28506,20 @@
 
 	var _reactRedux = __webpack_require__(215);
 
-	var Search = _react2['default'].createClass({
-	    displayName: 'Search',
+	var Search = function Search(_ref) {
+	    var store = _ref.store;
+	    var filter = _ref.filter;
 
-	    render: function render() {
-	        return _react2['default'].createElement(
-	            'form',
-	            { className: 'navbar-form navbar-left' },
-	            _react2['default'].createElement(
-	                'div',
-	                { className: 'form-group' },
-	                _react2['default'].createElement('input', { type: 'text', className: 'form-control', value: this.props.store.q || '', placeholder: 'Search', onInput: this.props.filter.bind(this) })
-	            )
-	        );
-	    }
-	});
+	    return _react2['default'].createElement(
+	        'form',
+	        { className: 'navbar-form navbar-left' },
+	        _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement('input', { type: 'text', className: 'form-control', value: store.q || '', placeholder: 'Search', onInput: filter })
+	        )
+	    );
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 	    return {
@@ -28570,67 +28561,69 @@
 
 	var _reactRedux = __webpack_require__(215);
 
-	var Cart = _react2['default'].createClass({
-		displayName: 'Cart',
+	var Cart = function Cart(_ref) {
+		var purchases = _ref.purchases;
 
-		show: function show(e) {
-			_reactRouter.hashHistory.push('cart');
-		},
-		render: function render() {
+		var showCart = function showCart() {
+			return _reactRouter.hashHistory.push('cart');
+		};
 
-			var purchases = this.props.store;
-			var price = purchases.reduce(function (res, phone) {
-				res += phone.price || 135;
-				return res;
-			}, 0);
+		var price = purchases.reduce(function (res, phone) {
+			res += phone.price;
+			return res;
+		}, 0);
 
-			return _react2['default'].createElement(
-				'div',
-				{ className: 'cart pull-right', onClick: this.show },
+		price = price.toLocaleString('en-US', {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2
+		});
+
+		return _react2['default'].createElement(
+			'div',
+			{ className: 'cart pull-right', onClick: showCart },
+			_react2['default'].createElement(
+				'table',
+				{ className: 'cart-options' },
 				_react2['default'].createElement(
-					'table',
-					{ className: 'cart-options' },
+					'tbody',
+					null,
 					_react2['default'].createElement(
-						'tbody',
+						'tr',
 						null,
 						_react2['default'].createElement(
-							'tr',
+							'td',
 							null,
-							_react2['default'].createElement(
-								'td',
-								null,
-								'Qtt:'
-							),
-							_react2['default'].createElement(
-								'td',
-								{ className: 'cart-option-value quantity' },
-								purchases.length
-							)
+							'Qtt:'
 						),
 						_react2['default'].createElement(
-							'tr',
+							'td',
+							{ className: 'cart-option-value quantity' },
+							purchases.length
+						)
+					),
+					_react2['default'].createElement(
+						'tr',
+						null,
+						_react2['default'].createElement(
+							'td',
 							null,
-							_react2['default'].createElement(
-								'td',
-								null,
-								'Price:'
-							),
-							_react2['default'].createElement(
-								'td',
-								{ className: 'cart-option-value price' },
-								Number(price).toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 }),
-								'$'
-							)
+							'Price:'
+						),
+						_react2['default'].createElement(
+							'td',
+							{ className: 'cart-option-value price' },
+							price,
+							'$'
 						)
 					)
 				)
-			);
-		}
-	});
+			)
+		);
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state.purchases
+			purchases: state.purchases
 		};
 	})(Cart);
 	module.exports = exports['default'];
@@ -28878,122 +28871,120 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var CartPage = _react2['default'].createClass({
-		displayName: 'CartPage',
+	var CartPage = function CartPage(_ref) {
+		var purchases = _ref.purchases;
+		var onClear = _ref.onClear;
 
-		render: function render() {
+		var price = purchases.reduce(function (res, phone) {
+			res += phone.price;
+			return res;
+		}, 0).toFixed(2);
 
-			var _purchases = this.props.store;
-			var price = _purchases.reduce(function (res, phone) {
-				res += phone.price || 135;
-				return res;
-			}, 0);
-			var purchases = _purchases.map(function (product, index) {
-				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
-			}) || [];
+		var _purchases = purchases.map(function (product, index) {
+			return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
+		}) || [];
 
-			return _react2['default'].createElement(
-				'div',
-				null,
+		return _react2['default'].createElement(
+			'div',
+			null,
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
 				_react2['default'].createElement(
-					'ol',
-					{ className: 'breadcrumb' },
+					'li',
+					{ className: 'breadcrumb-item' },
 					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item' },
-						_react2['default'].createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							'Home'
-						)
-					),
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item active' },
-						'Shopping Cart'
+						_reactRouter.Link,
+						{ to: '/' },
+						'Home'
 					)
 				),
 				_react2['default'].createElement(
-					'h1',
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'Shopping Cart'
+				)
+			),
+			_react2['default'].createElement(
+				'h1',
+				null,
+				'Shopping cart'
+			),
+			purchases.length ? _react2['default'].createElement(
+				'table',
+				{ className: 'products-table' },
+				_react2['default'].createElement(
+					'thead',
 					null,
-					'Shopping cart'
-				),
-				purchases.length ? _react2['default'].createElement(
-					'table',
-					{ className: 'products-table' },
+					_purchases,
 					_react2['default'].createElement(
-						'thead',
+						'tr',
 						null,
-						purchases,
 						_react2['default'].createElement(
-							'tr',
+							'td',
+							{ colSpan: '2' },
+							' '
+						),
+						_react2['default'].createElement(
+							'td',
 							null,
 							_react2['default'].createElement(
-								'td',
-								{ colSpan: '2' },
-								' '
-							),
-							_react2['default'].createElement(
-								'td',
+								'div',
 								null,
+								'Total count: ',
 								_react2['default'].createElement(
-									'div',
-									null,
-									'Total count: ',
-									_react2['default'].createElement(
-										'span',
-										{ className: 'quantity' },
-										_purchases.length
-									)
-								)
-							),
-							_react2['default'].createElement(
-								'td',
-								null,
-								_react2['default'].createElement(
-									'div',
-									null,
-									'Total price: ',
-									_react2['default'].createElement(
-										'span',
-										{ className: 'price' },
-										Number(price).toFixed(2)
-									),
-									'$'
+									'span',
+									{ className: 'quantity' },
+									purchases.length
 								)
 							)
 						),
 						_react2['default'].createElement(
-							'tr',
+							'td',
 							null,
 							_react2['default'].createElement(
-								'td',
-								{ colSpan: '5' },
+								'div',
+								null,
+								'Total price: ',
 								_react2['default'].createElement(
-									'button',
-									{ className: 'btn inverse', onClick: this.props.onClear.bind(this) },
-									'Clear'
+									'span',
+									{ className: 'price' },
+									price
 								),
-								_react2['default'].createElement(
-									_reactRouter.Link,
-									{ className: 'btn', to: '/checkout' },
-									'Checkout'
-								)
+								'$'
+							)
+						)
+					),
+					_react2['default'].createElement(
+						'tr',
+						null,
+						_react2['default'].createElement(
+							'td',
+							{ colSpan: '5' },
+							_react2['default'].createElement(
+								'button',
+								{ className: 'btn inverse', onClick: onClear },
+								'Clear'
+							),
+							_react2['default'].createElement(
+								_reactRouter.Link,
+								{ className: 'btn', to: '/checkout' },
+								'Checkout'
 							)
 						)
 					)
-				) : _react2['default'].createElement(
-					'div',
-					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
-					'Your shopping cart is empty.'
 				)
-			);
-		}
-	});
+			) : _react2['default'].createElement(
+				'div',
+				{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+				'Your shopping cart is empty.'
+			)
+		);
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state.purchases
+			purchases: state.purchases
 		};
 	}, function (dispatch) {
 		return {
@@ -29047,50 +29038,46 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var Purchase = _react2['default'].createClass({
-		displayName: 'Purchase',
+	var Purchase = function Purchase(_ref) {
+		var phone = _ref.phone;
+		var deleteProduct = _ref.deleteProduct;
 
-		render: function render() {
-
-			var phone = this.props.phone;
-
-			return _react2['default'].createElement(
-				'tr',
+		return _react2['default'].createElement(
+			'tr',
+			null,
+			_react2['default'].createElement(
+				'td',
 				null,
 				_react2['default'].createElement(
-					'td',
-					null,
-					_react2['default'].createElement(
-						_reactRouter.Link,
-						{ to: '/product/' + phone.id, className: 'thumbnail' },
-						_react2['default'].createElement('img', { src: '../images/' + phone.images[0], alt: phone.name })
-					)
-				),
-				_react2['default'].createElement(
-					'td',
-					null,
-					phone.name
-				),
-				_react2['default'].createElement(
-					'td',
-					null,
-					_react2['default'].createElement('input', { type: 'number', value: '1', readOnly: true }),
-					_react2['default'].createElement(
-						'button',
-						{ type: 'button', onClick: this.props.onDeleteProduct.bind(this, phone) },
-						'Delete'
-					)
-				),
-				_react2['default'].createElement(
-					'td',
-					null,
-					'Price: ',
-					Number(phone.price).toFixed(2),
-					'$'
+					_reactRouter.Link,
+					{ to: '/product/' + phone.id, className: 'thumbnail' },
+					_react2['default'].createElement('img', { src: '../images/' + phone.images[0], alt: phone.name })
 				)
-			);
-		}
-	});
+			),
+			_react2['default'].createElement(
+				'td',
+				null,
+				phone.name
+			),
+			_react2['default'].createElement(
+				'td',
+				null,
+				_react2['default'].createElement('input', { type: 'number', value: '1', readOnly: true }),
+				_react2['default'].createElement(
+					'button',
+					{ type: 'button', onClick: deleteProduct.bind(undefined, phone) },
+					'Delete'
+				)
+			),
+			_react2['default'].createElement(
+				'td',
+				null,
+				'Price: ',
+				Number(phone.price).toFixed(2),
+				'$'
+			)
+		);
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
@@ -29098,7 +29085,7 @@
 		};
 	}, function (dispatch) {
 		return {
-			onDeleteProduct: function onDeleteProduct(phone) {
+			deleteProduct: function deleteProduct(phone) {
 				dispatch({
 					type: 'DELETE_FORM_CART',
 					id: phone.id
@@ -29575,10 +29562,10 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var CheckoutPage = _react2['default'].createClass({
-		displayName: 'CheckoutPage',
+	var CheckoutPage = function CheckoutPage(_ref) {
+		var purchases = _ref.purchases;
 
-		sendForm: function sendForm(e) {
+		var sendForm = function sendForm(e) {
 
 			e.preventDefault();
 
@@ -29591,179 +29578,176 @@
 					status: true
 				}
 			});
-		},
+		};
 
-		render: function render() {
+		var price = purchases.reduce(function (res, phone) {
+			res += phone.price;
+			return res;
+		}, 0).toFixed(2);
 
-			var products = this.props.store;
-			var price = products.reduce(function (res, phone) {
-				res += phone.price || 135;
-				return res;
-			}, 0);
-			var purchases = products.map(function (product, index) {
-				return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
-			}) || [];
+		var _purchases = purchases.map(function (product, index) {
+			return _react2['default'].createElement(_PurchaseJsx2['default'], { phone: product, key: index });
+		}) || [];
 
-			return _react2['default'].createElement(
-				'div',
-				null,
+		return _react2['default'].createElement(
+			'div',
+			null,
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
 				_react2['default'].createElement(
-					'ol',
-					{ className: 'breadcrumb' },
+					'li',
+					{ className: 'breadcrumb-item' },
 					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item' },
-						_react2['default'].createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							'Home'
-						)
-					),
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item' },
-						_react2['default'].createElement(
-							_reactRouter.Link,
-							{ to: '/cart' },
-							'Shopping Cart'
-						)
-					),
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item active' },
-						'Checkout'
+						_reactRouter.Link,
+						{ to: '/' },
+						'Home'
 					)
 				),
 				_react2['default'].createElement(
-					'h1',
-					null,
-					'Checkout'
-				),
-				purchases.length ? _react2['default'].createElement(
-					'table',
-					{ className: 'products-table' },
+					'li',
+					{ className: 'breadcrumb-item' },
 					_react2['default'].createElement(
-						'thead',
+						_reactRouter.Link,
+						{ to: '/cart' },
+						'Shopping Cart'
+					)
+				),
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'Checkout'
+				)
+			),
+			_react2['default'].createElement(
+				'h1',
+				null,
+				'Checkout'
+			),
+			purchases.length ? _react2['default'].createElement(
+				'table',
+				{ className: 'products-table' },
+				_react2['default'].createElement(
+					'thead',
+					null,
+					_purchases,
+					_react2['default'].createElement(
+						'tr',
 						null,
-						purchases,
 						_react2['default'].createElement(
-							'tr',
+							'td',
+							{ colSpan: '2' },
+							' '
+						),
+						_react2['default'].createElement(
+							'td',
 							null,
 							_react2['default'].createElement(
-								'td',
-								{ colSpan: '2' },
-								' '
-							),
-							_react2['default'].createElement(
-								'td',
+								'div',
 								null,
+								'Total count: ',
 								_react2['default'].createElement(
-									'div',
-									null,
-									'Total count: ',
-									_react2['default'].createElement(
-										'span',
-										{ className: 'quantity' },
-										products.length
-									)
-								)
-							),
-							_react2['default'].createElement(
-								'td',
-								null,
-								_react2['default'].createElement(
-									'div',
-									null,
-									'Total price: ',
-									_react2['default'].createElement(
-										'span',
-										{ className: 'price' },
-										Number(price).toFixed(2)
-									),
-									'$'
+									'span',
+									{ className: 'quantity' },
+									purchases.length
 								)
 							)
 						),
 						_react2['default'].createElement(
-							'tr',
+							'td',
 							null,
 							_react2['default'].createElement(
-								'td',
-								{ colSpan: '5' },
+								'div',
+								null,
+								'Total price: ',
 								_react2['default'].createElement(
-									'form',
-									{ className: 'form-horizontal', onSubmit: this.sendForm },
+									'span',
+									{ className: 'price' },
+									price
+								),
+								'$'
+							)
+						)
+					),
+					_react2['default'].createElement(
+						'tr',
+						null,
+						_react2['default'].createElement(
+							'td',
+							{ colSpan: '5' },
+							_react2['default'].createElement(
+								'form',
+								{ className: 'form-horizontal', onSubmit: sendForm },
+								_react2['default'].createElement(
+									'div',
+									{ className: 'form-group' },
 									_react2['default'].createElement(
-										'div',
-										{ className: 'form-group' },
-										_react2['default'].createElement(
-											'label',
-											{ className: 'col-sm-2 control-label' },
-											'Email'
-										),
-										_react2['default'].createElement(
-											'div',
-											{ className: 'col-sm-10' },
-											_react2['default'].createElement('input', { type: 'email', className: 'form-control', name: 'email', placeholder: 'Email', required: true })
-										)
+										'label',
+										{ className: 'col-sm-2 control-label' },
+										'Email'
 									),
 									_react2['default'].createElement(
 										'div',
-										{ className: 'form-group' },
-										_react2['default'].createElement(
-											'label',
-											{ className: 'col-sm-2 control-label' },
-											'Name'
-										),
-										_react2['default'].createElement(
-											'div',
-											{ className: 'col-sm-10' },
-											_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name' })
-										)
+										{ className: 'col-sm-10' },
+										_react2['default'].createElement('input', { type: 'email', className: 'form-control', name: 'email', placeholder: 'Email', required: true })
+									)
+								),
+								_react2['default'].createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2['default'].createElement(
+										'label',
+										{ className: 'col-sm-2 control-label' },
+										'Name'
 									),
 									_react2['default'].createElement(
 										'div',
-										{ className: 'form-group' },
-										_react2['default'].createElement(
-											'label',
-											{ className: 'col-sm-2 control-label' },
-											'Phone'
-										),
-										_react2['default'].createElement(
-											'div',
-											{ className: 'col-sm-10' },
-											_react2['default'].createElement('input', { type: 'tel', className: 'form-control', name: 'phone', placeholder: 'Phone' })
-										)
+										{ className: 'col-sm-10' },
+										_react2['default'].createElement('input', { type: 'text', className: 'form-control', name: 'name', placeholder: 'Name' })
+									)
+								),
+								_react2['default'].createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2['default'].createElement(
+										'label',
+										{ className: 'col-sm-2 control-label' },
+										'Phone'
 									),
 									_react2['default'].createElement(
 										'div',
-										{ className: 'form-group' },
+										{ className: 'col-sm-10' },
+										_react2['default'].createElement('input', { type: 'tel', className: 'form-control', name: 'phone', placeholder: 'Phone' })
+									)
+								),
+								_react2['default'].createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2['default'].createElement(
+										'div',
+										{ className: 'col-sm-offset-2 col-sm-10' },
 										_react2['default'].createElement(
-											'div',
-											{ className: 'col-sm-offset-2 col-sm-10' },
-											_react2['default'].createElement(
-												'button',
-												{ type: 'submit', className: 'btn btn-default' },
-												'Send order'
-											)
+											'button',
+											{ type: 'submit', className: 'btn btn-default' },
+											'Send order'
 										)
 									)
 								)
 							)
 						)
 					)
-				) : _react2['default'].createElement(
-					'div',
-					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
-					'Your shopping cart is empty.'
 				)
-			);
-		}
-	});
+			) : _react2['default'].createElement(
+				'div',
+				{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+				'Your shopping cart is empty.'
+			)
+		);
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state.purchases
+			purchases: state.purchases
 		};
 	})(CheckoutPage);
 	module.exports = exports['default'];
@@ -29792,66 +29776,65 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var Info = _react2['default'].createClass({
-		displayName: 'Info',
+	var Info = function Info(_ref) {
+		var purchases = _ref.purchases;
+		var location = _ref.location;
+		var clear = _ref.clear;
 
-		render: function render() {
+		var data = location.query;
 
-			var data = this.props.location.query;
+		if (!data.name || !data.status) {
+			console.error("Error :(");
+			_reactRouter.hashHistory.push('/');
+			return;
+		}
 
-			if (!data.name || !data.status) {
-				console.error("Error :(");
-				_reactRouter.hashHistory.push('/');
-				return false;
-			}
+		if (purchases.length) {
+			clear();
+		}
 
-			if (this.props.store.length) {
-				this.props.clear();
-			}
-
-			return _react2['default'].createElement(
-				'div',
-				null,
+		return _react2['default'].createElement(
+			'div',
+			null,
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
 				_react2['default'].createElement(
-					'ol',
-					{ className: 'breadcrumb' },
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item' },
-						_react2['default'].createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							'Home'
-						)
-					),
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item active' },
-						'Info page'
-					)
-				),
-				_react2['default'].createElement(
-					'h1',
-					null,
-					data.name.toUpperCase(),
-					', Your order was send'
-				),
-				_react2['default'].createElement(
-					'div',
-					{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+					'li',
+					{ className: 'breadcrumb-item' },
 					_react2['default'].createElement(
 						_reactRouter.Link,
 						{ to: '/' },
-						'Back home'
+						'Home'
 					)
+				),
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'Info page'
 				)
-			);
-		}
-	});
+			),
+			_react2['default'].createElement(
+				'h1',
+				null,
+				data.name.toUpperCase(),
+				', Your order was send'
+			),
+			_react2['default'].createElement(
+				'div',
+				{ className: 'alert alert-info alert-dismissible', role: 'alert' },
+				_react2['default'].createElement(
+					_reactRouter.Link,
+					{ to: '/' },
+					'Back home'
+				)
+			)
+		);
+	};
 
 	exports['default'] = (0, _reactRedux.connect)(function (state) {
 		return {
-			store: state.purchases
+			purchases: state.purchases
 		};
 	}, function (dispatch) {
 		return {
@@ -29886,35 +29869,31 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var NotFound = _react2['default'].createClass({
-		displayName: 'NotFound',
-
-		render: function render() {
-			return _react2['default'].createElement(
-				'div',
-				null,
+	var NotFound = function NotFound() {
+		return _react2['default'].createElement(
+			'div',
+			null,
+			_react2['default'].createElement(
+				'ol',
+				{ className: 'breadcrumb' },
 				_react2['default'].createElement(
-					'ol',
-					{ className: 'breadcrumb' },
+					'li',
+					{ className: 'breadcrumb-item' },
 					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item' },
-						_react2['default'].createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							'Home'
-						)
-					),
-					_react2['default'].createElement(
-						'li',
-						{ className: 'breadcrumb-item active' },
-						'404'
+						_reactRouter.Link,
+						{ to: '/' },
+						'Home'
 					)
 				),
-				_react2['default'].createElement('img', { src: '../img/404.png', alt: '404' })
-			);
-		}
-	});
+				_react2['default'].createElement(
+					'li',
+					{ className: 'breadcrumb-item active' },
+					'404'
+				)
+			),
+			_react2['default'].createElement('img', { src: '../img/404.png', alt: '404' })
+		);
+	};
 
 	exports['default'] = NotFound;
 	module.exports = exports['default'];
