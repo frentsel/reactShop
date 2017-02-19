@@ -3,7 +3,7 @@
 var App = {
 	store: {},
 	current: {},
-	data: {},
+	products: {},
 	cart: {
 		add: function () {
 			App.store.dispatch('ADD', App.current);
@@ -56,74 +56,74 @@ var App = {
 		}
 	},
 	render: {
-		_load: function (page, callback) {
-			App.http.load('templates/'+page+'.html', {}, callback);
-		},
 		page: function (page, data) {
-			this._load(page, function (html) {
-				$('#content').html(Handlebars.compile(html)(data));
-			});
+
+			App.http.get('templates/'+page+'.html')
+				.then(function (html) {
+					$('#content').html(Handlebars.compile(html)(data));
+				});
 		},
 		product: function (data) {
 
-			this._load('product', function (html) {
+			App.http.get('templates/product.html')
+				.then(function (html) {
 
-				$('#content').html(Handlebars.compile(html)(data));
+					$('#content').html(Handlebars.compile(html)(data));
 
-				$(".quick_view").fancybox({
+					$(".quick_view").fancybox({
 
-					mainClass	: 'quick-view-container',
-					infobar		: false,
-					buttons		: false,
-					thumbs		: false,
-					margin      : 0,
-					touch       : {
-						vertical : false
-					},
-					mainTpl     : $('#demoProduct').html(),
+						mainClass: 'quick-view-container',
+						infobar: false,
+						buttons: false,
+						thumbs: false,
+						margin: 0,
+						touch: {
+							vertical: false
+						},
+						mainTpl: $('#demoProduct').html(),
 
-					onInit : function( instance ) {
+						onInit: function (instance) {
 
-						// Create bullet navigation links
-						var bullets = '<ul class="quick-view-bullets">';
+							// Create bullet navigation links
+							var bullets = '<ul class="quick-view-bullets">';
 
-						instance.group.map(function (i) {
-							bullets += '<li><a data-index="' + i + '" href="javascript:;"><span>' + ( i + 1 ) + '</span></a></li>';
-						});
-
-						bullets += '</ul>';
-
-						$( bullets ).on('click touchstart', 'a', function() {
-
-							var index = $(this).data('index');
-
-							$.fancybox.getInstance(function() {
-								this.jumpTo( index );
+							instance.group.map(function (i) {
+								bullets += '<li><a data-index="' + i + '" href="javascript:;"><span>' + ( i + 1 ) + '</span></a></li>';
 							});
 
-						}).appendTo( instance.$refs.container.find('.quick-view-carousel') );
+							bullets += '</ul>';
 
-						// Add product form
-						var $element = instance.group[ instance.currIndex ].opts.$orig,
-							form_id = $element.data('qw-form');
+							$(bullets).on('click touchstart', 'a', function () {
 
-						instance.$refs.container
-							.find('.quick-view-aside')
-							.append( $( '#' + form_id )
-							.clone( true )
-							.removeClass('hidden') );
-					},
+								var index = $(this).data('index');
 
-					beforeMove : function( instance ) {
-						/* Set active current navigation link */
-						instance.$refs.container
-							.find('.quick-view-bullets').children()
-							.removeClass('active').eq( instance.currIndex )
-							.addClass('active');
-					}
+								$.fancybox.getInstance(function () {
+									this.jumpTo(index);
+								});
 
+							}).appendTo(instance.$refs.container.find('.quick-view-carousel'));
+
+							// Add product form
+							var $element = instance.group[instance.currIndex].opts.$orig,
+								form_id = $element.data('qw-form');
+
+							instance.$refs.container
+								.find('.quick-view-aside')
+								.append($('#' + form_id)
+									.clone(true)
+									.removeClass('hidden'));
+						},
+
+						beforeMove: function (instance) {
+							/* Set active current navigation link */
+							instance.$refs.container
+								.find('.quick-view-bullets').children()
+								.removeClass('active').eq(instance.currIndex)
+								.addClass('active');
+						}
+
+					});
 				});
-			});
 		}
 	},
 	http: {
@@ -131,42 +131,43 @@ var App = {
 			$('body').toggleClass('loading', status);
 		},
 		cache: {},
-		load: function (path, params, callback) {
+		getJSON: function (path, params) {
+			return this.get(path, params, 'json');
+		},
+		get: function (path, _params, _type) {
 
 			var _this = this,
+				params = _params || {},
+				type = _type || 'text',
 				cacheKey = path + $.param(params);
 
-			if(this.cache[cacheKey] !== undefined) {
-				callback(this.cache[cacheKey]);
-				return false;
-			}
+			return new Promise(function (resolve, reject) {
 
-			$.ajax({
-				url: path,
-				type: 'get',
-				dataType: 'text',
-				data: params,
-				beforeSend: function() {
-					_this.ajaxSpinner(true);
-				},
-				complete: function(){
-					_this.ajaxSpinner(false);
-				},
-				success: function (response) {
-					_this.cache[cacheKey] = response;
-					callback(response);
-				},
-				error: function (e) {
-					if(e.status === 404) {
-						App.render.page('notFound');
-					}
+				if(_this.cache[cacheKey] !== undefined) {
+					resolve(_this.cache[cacheKey]);
+					return false;
 				}
-			});
-		},
-		getJSON: function (path, params, callback) {
 
-			this.load(path, params, function (response) {
-				callback(JSON.parse(response));
+				$.ajax({
+					url: path,
+					type: 'get',
+					dataType: type,
+					data: params,
+					beforeSend: function() {
+						_this.ajaxSpinner(true);
+					},
+					complete: function(){
+						_this.ajaxSpinner(false);
+					},
+					success: function (response) {
+						_this.cache[cacheKey] = response;
+						resolve(type === 'json' ? (response) : response);
+					},
+					error: function (e) {
+						reject(e);
+						console.error(arguments);
+					}
+				});
 			});
 		}
 	},
@@ -177,7 +178,7 @@ var App = {
 			if(window.location.hash !== '#!/') return false;
 
 			var key = obj.value.toLowerCase();
-			var result = App.data.sort(function(a, b) {
+			var result = App.products.sort(function(a, b) {
 				if (a[key] > b[key]) return 1;
 				if (a[key] < b[key]) return -1;
 				return 0;
@@ -191,7 +192,7 @@ var App = {
 			if(window.location.hash !== '#!/') return false;
 
 			var query = obj.value.toLowerCase();
-			var result = App.data.filter(function (product) {
+			var result = App.products.filter(function (product) {
 				return product.name.toLowerCase().indexOf(query) > -1;
 			});
 
@@ -199,10 +200,11 @@ var App = {
 		},
 		index: function () {
 
-			App.http.getJSON('../data/phones.json', {}, function (_data) {
-				App.data = _data;
-				App.render.page('index', {products: _data});
-			});
+			App.http.getJSON('../data/phones.json')
+				.then(function (products) {
+					App.products = products;
+					App.render.page('index', {products: products});
+				});
 		},
 		delivery: function () {
 			App.render.page('delivery');
@@ -265,11 +267,11 @@ var App = {
 		},
 		product: function (id) {
 
-			var path = '../data/'+id+'.json';
-			App.http.getJSON(path, {}, function (product) {
-				App.render.product(product);
-				App.current = product;
-			});
+			App.http.getJSON('../data/' + id + '.json')
+				.then(function (product) {
+					App.render.product(product);
+					App.current = product;
+				});
 		},
 		notFound: function () {
 			App.render.page('notFound');
