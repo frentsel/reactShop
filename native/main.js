@@ -1,74 +1,38 @@
 "use strict";
 
 var App = {
+	store: {},
+	current: {},
 	data: {},
 	cart: {
-		storage: {
-			getAll: function () {
-
-				var res = [];
-
-				$.each(localStorage, function (key, el) {
-					res.push(JSON.parse(el));
-				});
-
-				return res;
-			},
-			getById: function (id) {
-
-				if(localStorage[id] !== undefined) {
-					return JSON.parse(localStorage[id]);
-				}
-
-				return undefined;
-			},
-			quantity: function () {
-				return App.cart.storage.getAll().length;
-			},
-			price: function () {
-
-				var sum = 0;
-				var products = App.cart.storage.getAll();
-
-				$.each(products, function (n, product) {
-					sum += product.price || 123;
-				});
-
-				return sum.toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2});
-			},
-			set: function (id, obj) {
-				localStorage.setItem(id, JSON.stringify(obj));
-			},
-			remove: function (id) {
-				localStorage.removeItem(id);
-			},
-			clear: function () {
-				localStorage.clear();
-			}
-		},
-		add: function (id) {
-
-			var _this = this;
-
-			App.http.getJSON('../data/'+id+'.json', {}, function (product) {
-				_this.storage.set(id, product);
-				App.cart.update();
-			});
+		add: function () {
+			App.store.dispatch('ADD', App.current);
 		},
 		remove: function (id) {
-			this.storage.remove(id);
-			this.update();
-		},
-		update: function (state) {
 
-			$('.quantity').text(this.storage.quantity());
-			$('.price').text(this.storage.price());
+			var products = App.store.getState();
+			var index = 0;
 
-			if(state === undefined) {
-				App.handler.cart();
-			}
+			products.forEach(function (el, n) {
+				if(el.id === id) index = n;
+			});
+
+			App.store.dispatch('DELETE', index);
 		},
-		change: function (id, obj) {},
+		update: function () {
+
+			var products = App.store.getState();
+			var price = products.reduce(function (res, el) {
+				res += el.price;
+				return res;
+			}, 0);
+
+			$('.quantity').text(products.length);
+			$('.price').text(price.toLocaleString('en-US', {
+				maximumFractionDigits: 2,
+				minimumFractionDigits: 2
+			}));
+		},
 		clear: function () {
 
 			var confirm = $('#clearConfirm').html(),
@@ -86,15 +50,9 @@ var App = {
 							return false;
 						}
 
-						$(document).find('.products-table tr').remove();
-						_this.storage.clear();
-						_this.update();
+						App.store.dispatch('CLEAR');
 					}
 				});
-		},
-		init: function () {
-			$('.quantity').text(this.storage.quantity());
-			$('.price').text(this.storage.price());
 		}
 	},
 	render: {
@@ -166,9 +124,6 @@ var App = {
 
 				});
 			});
-		},
-		init: function () {
-			App.cart.init();
 		}
 	},
 	http: {
@@ -245,7 +200,6 @@ var App = {
 		index: function () {
 
 			App.http.getJSON('../data/phones.json', {}, function (_data) {
-
 				App.data = _data;
 				App.render.page('index', {products: _data});
 			});
@@ -257,66 +211,102 @@ var App = {
 			App.render.page('contact');
 		},
 		info: function () {
-
-			App.cart.storage.clear();
-			App.cart.update(true);
 			App.render.page('info');
-		},
-		cart: function () {
-
-			var storage = App.cart.storage;
-
-			App.render.page('cart', {
-				products: storage.getAll(),
-				quantity: storage.quantity(),
-				price: storage.price(),
-			});
-		},
-		sendOrder: function (obj) {
-
-			var products = App.cart.storage.getAll(),
-				data = $(obj).serializeArray(),
-				key = 'Order: ' + Date.now();
-
-			$.extend(products, JSON.stringify(data));
-
-			document.cookie = key+"="+JSON.stringify(products);
-
-			eRouter.set('info');
-			return false;
 		},
 		checkout: function () {
 
-			var storage = App.cart.storage;
+			if(window.location.hash !== '#!/checkout') return false;
 
-			if(!storage.quantity()) {
+			var products = App.store.getState();
+
+			if(!products.length) {
 				eRouter.set('cart');
 				return false;
 			}
 
+			var price = products.reduce(function (res, el) {
+				res += el.price;
+				return res;
+			}, 0);
+
 			App.render.page('checkout', {
-				products: storage.getAll(),
-				quantity: storage.quantity(),
-				price: storage.price(),
+				products: products,
+				quantity: products.length,
+				price: price
 			});
+		},
+		cart: function () {
+
+			if(window.location.hash !== '#!/cart') return false;
+
+			var products = App.store.getState();
+			var price = products.reduce(function (res, el) {
+				res += el.price;
+				return res;
+			}, 0);
+
+			App.render.page('cart', {
+				products: products,
+				quantity: products.length,
+				price: price
+			});
+		},
+		sendOrder: function (obj) {
+
+			var products = App.store.getState(),
+				form = $(obj).serializeArray();
+
+			console.info("form: ", form);
+			console.info("products: ", products);
+
+			App.store.dispatch('CLEAR');
+			eRouter.set('info');
+			return false;
 		},
 		product: function (id) {
 
 			var path = '../data/'+id+'.json';
-			App.http.getJSON(path, {}, App.render.product.bind(App.render));
+			App.http.getJSON(path, {}, function (product) {
+				App.render.product(product);
+				App.current = product;
+			});
 		},
-		notFound: function (page) {
+		notFound: function () {
 			App.render.page('notFound');
 		}
 	},
 	init: function () {
 
-		Handlebars.registerHelper('toFixed', function(price) {
-			return Number(price).toFixed(2);
+		Handlebars.registerHelper('currency', function(price) {
+			return Number(price).toLocaleString('en-US', {
+				maximumFractionDigits: 2,
+				minimumFractionDigits: 2
+			});
+		});
+
+		var _this = this;
+		var initialState = [];
+		this.store = new Store(initialState, {
+			ADD: function (state, item) {
+				state.push(item);
+				return state;
+			},
+			DELETE: function (state, index) {
+				state.splice(index, 1);
+				return state;
+			},
+			CLEAR: function (state) {
+				return state = [];
+			}
+		});
+
+		this.store.subscribe(function (state) {
+			_this.cart.update();
+			_this.handler.cart();
+			_this.handler.checkout();
 		});
 
 		eRouter.init(this.handler);
-		this.render.init();
 	},
 };
 

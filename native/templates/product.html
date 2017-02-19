@@ -19,7 +19,7 @@
 					</label>
 				</td>
 				<td>
-					<strong>Price: {{toFixed price}}$</strong>
+					<strong>Price: {{currency price}}$</strong>
 				</td>
 			</tr>
 			<tr>
@@ -40,7 +40,7 @@
 			<h3>{{name}}</h3>
 			<p>{{description}}</p>
 			<p>
-				<button class="btn" data-fancybox-close="" onclick="App.cart.add('{{id}}')">Add to cart</button>
+				<button class="btn" data-fancybox-close="" onclick="App.cart.add()">Add to cart</button>
 			</p>
 		</div>
 	</div>
