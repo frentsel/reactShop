@@ -9,15 +9,23 @@ const CheckoutPage = ({ purchases }) => {
 
 		e.preventDefault();
 
+		const key = new Date().getTime();
+		const order = {
+			date: new Date().toLocaleString(),
+			name: e.target.name.value,
+			email: e.target.email.value,
+			phone: e.target.phone.value,
+			purchases: JSON.stringify(purchases)
+		};
+
 		hashHistory.push({
 			pathname: '/info',
 			query: {
-				name: e.target.name.value,
-				// email: e.target.name.email,
-				// phone: e.target.name.phone,
-				status: true
+				name: order.name
 			}
 		});
+
+		localStorage.setItem(`Order № ${key}`, JSON.stringify(order));
 	};
 
 	let price = purchases.reduce((res, phone) => {

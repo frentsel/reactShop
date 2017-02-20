@@ -29569,15 +29569,23 @@
 
 			e.preventDefault();
 
+			var key = new Date().getTime();
+			var order = {
+				date: new Date().toLocaleString(),
+				name: e.target.name.value,
+				email: e.target.email.value,
+				phone: e.target.phone.value,
+				purchases: JSON.stringify(purchases)
+			};
+
 			_reactRouter.hashHistory.push({
 				pathname: '/info',
 				query: {
-					name: e.target.name.value,
-					// email: e.target.name.email,
-					// phone: e.target.name.phone,
-					status: true
+					name: order.name
 				}
 			});
+
+			localStorage.setItem('Order № ' + key, JSON.stringify(order));
 		};
 
 		var price = purchases.reduce(function (res, phone) {
@@ -29783,7 +29791,7 @@
 
 		var data = location.query;
 
-		if (!data.name || !data.status) {
+		if (!data.name) {
 			console.error("Error :(");
 			_reactRouter.hashHistory.push('/');
 			return;

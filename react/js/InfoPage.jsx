@@ -6,7 +6,7 @@ const Info = ({ purchases, location, clear }) => {
 
 	const data = location.query;
 
-	if(!data.name || !data.status) {
+	if(!data.name) {
 		console.error("Error :(");
 		hashHistory.push('/');
 		return;
