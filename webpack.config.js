@@ -12,7 +12,12 @@ module.exports = {
             compress: {
                 warnings: false // https://github.com/webpack/webpack/issues/1496
             }
-        })
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': '"production"',
+            DEVELOPMENT: false,
+            DEBUG: false,
+        }),
     ],
     watch: true,
     module: {
