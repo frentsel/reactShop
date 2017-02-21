@@ -144,6 +144,7 @@ table.products-table img {
 .products {
     border-left: 1px solid #e7e7e7;
     border-top: 1px solid #e7e7e7;
+    margin-bottom: 20px;
     overflow: hidden;
 }
 
@@ -218,7 +219,7 @@ table.products-table img {
     display: inline-block;
     height: 48px;
     line-height: 18px;
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 14px;
     color: #000;
     font-weight: normal;

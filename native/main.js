@@ -258,8 +258,13 @@ var App = {
 			var products = App.store.getState(),
 				form = $(obj).serializeArray();
 
-			console.info("form: ", form);
-			console.info("products: ", products);
+			const key = new Date().getTime();
+			const order = {
+				user: JSON.stringify(form),
+				purchases: JSON.stringify(products)
+			};
+
+			localStorage.setItem('Order № '+key, JSON.stringify(order));
 
 			App.store.dispatch('CLEAR');
 			eRouter.set('info');
