@@ -5,8 +5,15 @@ module.exports = {
     output: {
         path: __dirname + '/react/',
         publicPath: "react/",
-        filename: "bundle.js"
+        filename: 'bundle.min.js',
     },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false // https://github.com/webpack/webpack/issues/1496
+            }
+        })
+    ],
     watch: true,
     module: {
         loaders: [
@@ -54,4 +61,4 @@ module.exports = {
             }
         ]
     }
-}
+};
