@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 
-var isProduction = false;
+var isProduction = !1;
 
 var config = {
     entry: "./react/js/App.jsx",
@@ -11,7 +11,7 @@ var config = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': 'development',
+            'process.env.NODE_ENV': '"development"',
             DEVELOPMENT: true,
             DEBUG: true,
         }),
@@ -75,7 +75,7 @@ if (isProduction) {
             }
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': 'production',
+            'process.env.NODE_ENV': '"production"',
             DEVELOPMENT: false,
             DEBUG: false,
         }),
